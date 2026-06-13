@@ -9,22 +9,50 @@ export default function Navbar() {
       <nav className="max-w-6xl mx-auto flex items-center justify-between p-4">
 
         {/* LOGO */}
-        <Link href="/" className="font-bold text-xl">
+        <Link
+          href="/"
+          className="font-bold text-xl text-gray-900 tracking-tight"
+        >
           Starntech
         </Link>
 
         {/* DESKTOP MENU */}
-        <div className="hidden md:flex items-center gap-6 text-sm">
-          <Link href="/">Home</Link>
-          <Link href="/projects">Projects</Link>
-          <Link href="/blog">Blog</Link>
-          <Link href="/contact">Contact</Link>
+        <div className="hidden md:flex items-center gap-6 text-sm font-medium">
+
+          <Link
+            href="/"
+            className="text-gray-800 hover:text-green-600 transition"
+          >
+            Home
+          </Link>
+
+          <Link
+            href="/projects"
+            className="text-gray-800 hover:text-green-600 transition"
+          >
+            Projects
+          </Link>
+
+          <Link
+            href="/blog"
+            className="text-gray-800 hover:text-green-600 transition"
+          >
+            Blog
+          </Link>
+
+          <Link
+            href="/contact"
+            className="text-gray-800 hover:text-green-600 transition"
+          >
+            Contact
+          </Link>
 
           {/* WhatsApp CTA */}
           <a
             href="https://wa.me/2348062991395"
             target="_blank"
-            className="bg-green-500 text-white px-4 py-2 rounded-md"
+            rel="noopener noreferrer"
+            className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md font-medium transition"
           >
             WhatsApp
           </a>
@@ -32,7 +60,7 @@ export default function Navbar() {
 
         {/* MOBILE BUTTON */}
         <button
-          className="md:hidden text-2xl"
+          className="md:hidden text-2xl text-gray-900"
           onClick={() => setOpen(!open)}
         >
           ☰
@@ -41,16 +69,45 @@ export default function Navbar() {
 
       {/* MOBILE MENU */}
       {open && (
-        <div className="md:hidden flex flex-col gap-4 p-4 border-t text-sm bg-white">
-          <Link href="/" onClick={() => setOpen(false)}>Home</Link>
-          <Link href="/projects" onClick={() => setOpen(false)}>Projects</Link>
-          <Link href="/blog" onClick={() => setOpen(false)}>Blog</Link>
-          <Link href="/contact" onClick={() => setOpen(false)}>Contact</Link>
+        <div className="md:hidden flex flex-col gap-4 p-4 border-t bg-white font-medium">
+
+          <Link
+            href="/"
+            className="text-gray-800"
+            onClick={() => setOpen(false)}
+          >
+            Home
+          </Link>
+
+          <Link
+            href="/projects"
+            className="text-gray-800"
+            onClick={() => setOpen(false)}
+          >
+            Projects
+          </Link>
+
+          <Link
+            href="/blog"
+            className="text-gray-800"
+            onClick={() => setOpen(false)}
+          >
+            Blog
+          </Link>
+
+          <Link
+            href="/contact"
+            className="text-gray-800"
+            onClick={() => setOpen(false)}
+          >
+            Contact
+          </Link>
 
           <a
-            href="https://wa.me/234XXXXXXXXXX"
+            href="https://wa.me/2348062991395"
             target="_blank"
-            className="bg-green-500 text-white px-4 py-2 rounded-md text-center"
+            rel="noopener noreferrer"
+            className="bg-green-600 text-white px-4 py-3 rounded-md text-center font-medium"
           >
             Chat on WhatsApp
           </a>
