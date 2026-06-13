@@ -1,94 +1,134 @@
-import Link from "next/link";
+import { useRouter } from "next/router";
 import Image from "next/image";
+import Link from "next/link";
 import { blogPosts } from "../../data/blog";
+import ReactMarkdown from "react-markdown";
 
-export default function Blog() {
+export default function BlogDetails() {
+  const router = useRouter();
+
+  if (!router.isReady) {
+    return <p className="p-10 text-gray-600">Loading...</p>;
+  }
+
+  const { slug } = router.query;
+
+  const post =
+    typeof slug === "string"
+      ? blogPosts.find((p) => p.slug === slug)
+      : null;
+
+  if (!post) {
+    return (
+      <div className="max-w-3xl mx-auto px-4 py-20">
+        <h1 className="text-2xl font-bold text-gray-900">Post not found</h1>
+
+        <Link
+          href="/blog"
+          className="inline-block mt-4 text-green-600 hover:underline"
+        >
+          ← Back to Blog
+        </Link>
+      </div>
+    );
+  }
+
   return (
-    <section className="bg-linear-to-b from-gray-50 to-white py-16 md:py-24">
-      <div className="max-w-6xl mx-auto px-4">
+    <article className="bg-white">
 
-        {/* HERO HEADER */}
-        <div className="text-center mb-14 md:mb-16">
-          <h1 className="text-3xl md:text-5xl font-bold tracking-tight">
-            Solar Insights Blog
+      {/* BACK */}
+      <div className="max-w-4xl mx-auto px-4 pt-10">
+        <Link
+          href="/blog"
+          className="text-sm text-gray-600 hover:text-green-600"
+        >
+          ← Back to Blog
+        </Link>
+      </div>
+
+      {/* HERO */}
+      <div className="bg-linear-to-b from-green-50 to-white py-14 mt-4">
+        <div className="max-w-4xl mx-auto px-4">
+
+          <div className="flex flex-wrap gap-2 mb-4">
+            {post.tags?.map((tag: string) => (
+              <span
+                key={tag}
+                className="text-xs px-3 py-1 bg-green-100 text-green-700 rounded-full"
+              >
+                #{tag}
+              </span>
+            ))}
+          </div>
+
+          <h1 className="text-3xl md:text-5xl font-bold leading-tight text-gray-900">
+            {post.title}
           </h1>
 
-          <p className="text-gray-600 mt-4 max-w-2xl mx-auto text-base md:text-lg leading-7">
-            Practical knowledge from real solar, inverter, and CCTV installations
-            across Nigeria — simplified for homeowners and businesses.
+          <p className="text-gray-500 mt-4 text-sm">
+            {post.date} • 5 min read
+          </p>
+
+          <p className="text-gray-600 mt-6 text-lg leading-7">
+            {post.excerpt}
           </p>
         </div>
+      </div>
 
-        {/* GRID */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {/* IMAGES */}
+      <div className="max-w-5xl mx-auto px-4 mt-10 grid md:grid-cols-2 gap-4">
+        {post.images?.map((img: string) => (
+          <div key={img} className="relative h-72 overflow-hidden rounded-xl">
+            <Image
+              src={img}
+              alt={post.title}
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="object-cover"
+            />
+          </div>
+        ))}
+      </div>
 
-          {blogPosts.map((post, index) => (
-            <article
-              key={post.slug}
-              className="group bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition duration-300"
-            >
+      {/* CONTENT */}
+      <div className="max-w-3xl mx-auto px-4 mt-12 pb-20">
 
-              {/* IMAGE */}
-              <div className="relative w-full h-52 overflow-hidden">
-                <Image
-                  src={post.images?.[0]}
-                  alt={post.title}
-                  fill
-                  priority={index === 0}
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  className="object-cover group-hover:scale-105 transition duration-500"
-                />
+        <div className="bg-gray-50 border-l-4 border-green-500 p-5 rounded-lg text-gray-700 mb-10 text-sm">
+          Real-world solar installation insights based on field experience in Nigeria.
+        </div>
 
-                {/* subtle overlay */}
-                <div className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent" />
-              </div>
+        <div className="text-gray-700 leading-8 text-[16px]">
+          <ReactMarkdown
+            components={{
+              h1: (props) => <h1 className="text-3xl font-bold mt-8 text-gray-900" {...props} />,
+              h2: (props) => <h2 className="text-2xl font-semibold mt-8 text-gray-900" {...props} />,
+              p: (props) => <p className="mt-4 leading-7 text-gray-700" {...props} />,
+              li: (props) => <li className="ml-5 list-disc mt-2" {...props} />,
+            }}
+          >
+            {post.content}
+          </ReactMarkdown>
+        </div>
 
-              {/* CONTENT */}
-              <div className="p-6">
+        {/* CTA */}
+        <div className="mt-16 bg-green-600 text-white rounded-2xl p-8 md:p-10 text-center">
+          <h3 className="text-2xl font-bold">
+            Need a Solar Installation?
+          </h3>
 
-                {/* TAGS */}
-                <div className="flex flex-wrap gap-2 mb-3">
-                  {post.tags?.slice(0, 2).map((tag: string) => (
-                    <span
-                      key={tag}
-                      className="text-xs px-3 py-1 bg-green-50 text-green-700 rounded-full"
-                    >
-                      #{tag}
-                    </span>
-                  ))}
-                </div>
+          <p className="mt-3 text-green-100">
+            We design reliable solar systems based on real field performance.
+          </p>
 
-                {/* TITLE */}
-                <h2 className="font-semibold text-lg md:text-xl leading-snug group-hover:text-green-600 transition">
-                  {post.title}
-                </h2>
-
-                {/* EXCERPT */}
-                <p className="text-sm md:text-[15px] text-gray-600 mt-3 leading-6">
-                  {post.excerpt}
-                </p>
-
-                {/* META */}
-                <div className="flex items-center justify-between mt-5 text-xs text-gray-500">
-                  <span>{post.date}</span>
-                  <span>5 min read</span>
-                </div>
-
-                {/* CTA */}
-                <Link
-                  href={`/blog/${post.slug}`}
-                  className="inline-flex items-center mt-5 text-green-600 font-medium text-sm hover:underline"
-                >
-                  Read Article →
-                </Link>
-
-              </div>
-            </article>
-          ))}
-
+          <a
+            href="https://wa.me/2348062991395"
+            className="inline-block mt-6 bg-white text-green-700 font-semibold px-6 py-3 rounded-lg"
+          >
+            Contact on WhatsApp
+          </a>
         </div>
 
       </div>
-    </section>
+    </article>
   );
 }
