@@ -4,17 +4,17 @@ import { blogPosts } from "@/data/blog";
 
 export default function Blog() {
   return (
-    <section className="bg-linear-to-b from-gray-50 via-white to-white py-12 sm:py-12 md:py-28">
+    <section className="bg-gradient-to-b from-gray-50 via-white to-white py-12 sm:py-12 md:py-28">
       <div className="max-w-6xl mx-auto px-4">
 
         {/* HERO */}
         <div className="text-center mb-12 sm:mb-16">
           <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold tracking-tight text-gray-900">
-            Solar Insights Blog
+            Energy & Security Insights
           </h1>
 
           <p className="text-gray-600 mt-4 sm:mt-5 max-w-2xl mx-auto px-2 text-base md:text-lg leading-7">
-            Practical field experience from solar, inverter, and security installations across Nigeria.
+            Real installation case studies from solar power systems, inverter solutions, and CCTV security setups across Nigeria — focused on how people actually solve power and security problems in real life.
           </p>
         </div>
 
@@ -48,8 +48,8 @@ export default function Blog() {
                     className="object-cover group-hover:scale-110 transition duration-500"
                   />
 
-                  {/* soft overlay for premium feel */}
-                  <div className="absolute inset-0 bg-linear-to-t from-black/30 via-black/10 to-transparent" />
+                  {/* soft overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-black/10 to-transparent" />
                 </div>
 
                 {/* CONTENT */}

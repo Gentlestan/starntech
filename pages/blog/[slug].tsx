@@ -140,7 +140,7 @@ export default function BlogDetails() {
               StarnTech Engineering Team
             </p>
             <p className="text-sm text-gray-600">
-              Solar & Inverter Installation Experts in Nigeria
+              Solar Power Systems & CCTV Security Installation Experts in Nigeria — helping homes and businesses stay powered and protected.
             </p>
           </div>
         </div>
@@ -151,8 +151,11 @@ export default function BlogDetails() {
 
         {/* HIGHLIGHT */}
         <div className="bg-gray-50 border-l-4 border-green-500 p-6 rounded-xl text-gray-700 mb-10 text-sm md:text-base">
-          This article is based on real-world solar installations across Nigeria,
-          showing how systems behave in actual field conditions compared to lab ratings.
+          This article is based on real installations across Nigeria — including solar systems and CCTV security setups.
+
+          It highlights how systems behave in real homes and businesses, not just in theory.
+
+          From unstable power environments to security monitoring challenges, every case here reflects real field experience.
         </div>
 
         {/* MARKDOWN */}
