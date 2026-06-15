@@ -315,6 +315,104 @@ We install solar-powered CCTV systems for homes, shops, and offices in Abuja and
 
 📲 Contact us for a consultation or system recommendation.
   `,
+},
+{
+  slug: "what-every-solar-cctv-owner-must-know",
+  title: "What Every Solar CCTV Owner Must Know (Very Important)",
+  excerpt:
+    "A practical guide every CCTV owner should read to avoid system failures, missing recordings, and surprise downtime when it matters most.",
+
+  date: "2026-06-15",
+  tags: ["cctv", "solar-cctv", "maintenance", "security"],
+
+  images: [
+    "/images/blog/cctv-maintenance-1.jpg",
+    "/images/blog/cctv-maintenance-2.jpg",
+  ],
+
+  content: `
+## What Every Solar CCTV Owner Must Know (Very Important)
+
+A lot of people install CCTV systems and assume everything will keep working automatically.
+
+Until something happens.
+
+They try to check footage and discover that:
+
+- The camera was not recording  
+- The memory card is full or corrupted  
+- The system was offline due to power or network issues  
+- Mobile access was not active or disconnected  
+
+And by then, it is already too late.
+
+---
+
+## ⚠️ The Truth About CCTV Systems
+
+CCTV is not a “install and forget forever” system.
+
+It is a security system that requires basic maintenance and occasional checks to ensure it continues protecting you.
+
+---
+
+## 🔋 What Every Solar CCTV Owner Should Regularly Do
+
+- Confirm that the camera is still recording  
+- Check that the mobile app is still connected  
+- Ensure storage (memory card or NVR) is working properly  
+- Check solar power performance and charging status  
+- Test playback occasionally to confirm recordings are being saved  
+
+---
+
+## 🧠 Why This Matters
+
+Most CCTV disappointments do not happen because the system is bad.
+
+They happen because the system was not checked until an incident occurred.
+
+At that point, there may be no footage, no evidence, and no answers.
+
+---
+
+## ⚠️ A Common Situation Many Owners Face
+
+Sometimes when an incident happens, people try to check playback only to discover that no footage was recorded.
+
+Unfortunately, many immediately assume the installer is at fault.
+
+But in reality, this is not always the case.
+
+Most of the time, it happens due to:
+
+- Lack of regular system monitoring  
+- Memory card or storage issues  
+- Network or power interruptions  
+- System errors that went unnoticed over time  
+
+---
+
+## 💡 Final Advice
+
+If you already have a CCTV system, especially a solar CCTV system, do not wait for an incident before checking it.
+
+Treat it as a security system — not a decoration.
+
+A simple routine check can prevent major disappointments later.
+
+---
+
+## 📍 Conclusion
+
+Security systems are only effective when they are properly maintained.
+
+If you're unsure whether your system is still functioning correctly, it's worth checking before you actually need it.
+
+---
+
+👉 Need a reliable solar CCTV installation or system check? Contact us for professional support.
+  `,
 }
 
 
