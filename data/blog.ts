@@ -428,7 +428,7 @@ If you're unsure whether your system is still functioning correctly, it's worth 
 
   images: [
     "/images/blog/solar-vs-wired-cctv-1.jpg",
-    "/images/blog/solar-vs-wired-cctv-2.jpg",
+    "/images/blog/solar-vs-wired-cctv-3.jpg",
   ],
 
   content: `
