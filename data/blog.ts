@@ -474,5 +474,207 @@ Whether it is an AHD or IP camera system, wired CCTV cameras typically offer:
 - Better performance for larger installations
 - Reliable long-term surveillance
   `,
-}
+},
+
+{
+slug: "should-technicians-charge-for-expertise",
+title: "The Repair That Took 5 Minutes: Should a Technician Still Charge ₦30,000?",
+excerpt:
+"If a technician solves a problem in five minutes because of years of experience, are you paying for the five minutes or the knowledge behind them?",
+
+date: "2026-08-13",
+tags: ["technical-work", "business", "expertise"],
+
+images: [
+"/images/blog/technician-expertise-1.jpeg",
+"/images/blog/technician-expertise-2.jpeg",
+],
+
+content: `
+
+## The Repair That Took 5 Minutes
+
+Sometimes I wonder: **what exactly is a client paying a technician for — the physical work, the time spent, or the knowledge that makes the solution possible?**
+
+Recently, something happened that made me think about this.
+
+One of my installers called me while troubleshooting an inverter system at a client's location. The system wasn't working, an error code was showing on the inverter, and it was continuously giving an alarm.
+
+I asked him to send me the error code.
+
+As soon as I saw it, I already knew what the likely solution was.
+
+I told him to take the system back to what I like to call **“ground zero.”**
+
+Switch off everything — input, output and DC supply. Leave the system completely off for about three to five minutes, then restart it properly.
+
+While we were talking, I jokingly told him, **“Bill them.”**
+
+About thirty minutes later, he called me.
+
+The system was working perfectly.
+
+Problem solved.
+
+But then came the interesting part.
+
+He told me that he had asked the client to pay ₦30,000 for the troubleshooting and repair.
+
+The client was furious.
+
+According to the client, the technician hadn't really done any work. He had only switched the system off, waited, and switched it back on.
+
+The client said he was only willing to pay ₦8,000.
+
+I laughed and told my installer:
+
+**“That's your client. Deal with it how you think is best.”**
+
+But the situation raised an interesting question.
+
+---
+
+## Did the Technician Actually Do Any Work?
+
+From the client's perspective, I can understand the argument.
+
+No component was replaced.
+
+No wire was changed.
+
+The inverter wasn't opened.
+
+There was no major physical repair.
+
+The technician simply switched the system off and restarted it.
+
+So why should that be worth ₦30,000?
+
+But there is another way to look at it.
+
+The technician didn't know the solution. He called someone with more experience.
+
+I recognized the error code, understood what it meant and knew what we should try first.
+
+That knowledge prevented us from spending hours guessing or replacing components that were perfectly fine.
+
+**Sometimes the most valuable part of a technical job is the part the client never sees.**
+
+---
+
+## What Are You Actually Paying For?
+
+Imagine two technicians facing the same problem.
+
+One spends three hours troubleshooting, changing cables, checking components and eventually gets the system working.
+
+Another technician understands the problem almost immediately and gets the system working in ten minutes.
+
+Who did more work?
+
+Physically, probably the first technician.
+
+But that doesn't necessarily mean his service was more valuable.
+
+The second technician's experience allowed him to reach the solution faster.
+
+That experience came from years of working with similar systems, understanding error codes and learning what to check first.
+
+**You are not always paying for the number of minutes a technician spends touching the equipment.**
+
+Sometimes you're paying for the years of experience that allow the technician to know what to do in those few minutes.
+
+---
+
+## But That Doesn't Mean You Can Charge Anything
+
+Expertise has value, but that doesn't mean every price is automatically justified.
+
+There should still be a reasonable basis for the charge.
+
+Was there a call-out fee?
+
+Did the technician travel to the site?
+
+How much time was spent troubleshooting?
+
+Was the price agreed beforehand?
+
+Was the technician's expertise necessary to identify the problem?
+
+These things matter.
+
+The client deserves a fair price, and the technician deserves to be paid fairly for the time, experience and expertise involved.
+
+There is also a responsibility on the technician's side to be truthful.
+
+A simple fault shouldn't suddenly become a major repair just because the client doesn't understand the system.
+
+If a reset fixes the problem, then say so.
+
+**Technical expertise should make you better at solving problems, not better at creating bills.**
+
+---
+
+## What I've Learned From Clients
+
+I've experienced situations like this many times.
+
+Some clients will undervalue technical work because the final solution looks simple.
+
+Others will negotiate aggressively or tell you what they think your service should cost.
+
+I've learned not to argue too much about it anymore.
+
+I explain my price.
+
+If the client is comfortable with it, we work together.
+
+If they aren't, that's okay too.
+
+I'd rather work with a client who understands the value of professional service than spend the entire job trying to convince someone that my expertise has value.
+
+---
+
+## So, What Should a Client Pay For?
+
+I don't think the answer is simply **“pay for the time spent.”**
+
+If that were the case, we would actually be encouraging technicians to work slowly.
+
+A technician who solves a problem in five minutes shouldn't necessarily be paid less than one who takes three hours simply because he is more experienced.
+
+At the same time, technicians shouldn't use expertise as an excuse to charge unreasonable prices.
+
+There has to be a balance.
+
+**The client is paying for a result, but the technician's ability to produce that result quickly is part of the value.**
+
+Sometimes the most impressive repair is the one where nothing gets replaced.
+
+Sometimes the most experienced technician is the one who spends the least time touching the equipment.
+
+And sometimes, what looks like *“he only switched it off and switched it back on”* is actually the result of years of experience knowing exactly what to do.
+
+So the next time a technician fixes your system in five minutes, don't only ask:
+
+**“What did you do?”**
+
+Also ask:
+
+**“What did you know that I didn't?”**
+
+That may be where the real value of the job lies.
+
+---
+
+## Final Thought
+
+Technical work isn't always about how much you can physically do.
+
+Sometimes, it's about knowing **exactly what needs to be done — and what doesn't.**
+
+`,
+},
+
 ];
