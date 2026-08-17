@@ -11,46 +11,54 @@ export default function GadgetOrderForm({
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  event.preventDefault();
 
-    setLoading(true);
+  setLoading(true);
 
-    const form = event.currentTarget;
-    const formData = new FormData(form);
+  const form = event.currentTarget;
+  const formData = new FormData(form);
 
-    const order = {
-      product: productName,
-      name: formData.get("name"),
-      phone: formData.get("phone"),
-      whatsapp: formData.get("whatsapp"),
-      state: formData.get("state"),
-      city: formData.get("city"),
-      address: formData.get("address"),
-      quantity: formData.get("quantity"),
-      note: formData.get("note"),
-    };
-
-    console.log("Gadget order:", order);
-
-    /*
-      We will connect this to the actual lead destination later.
-
-      For example:
-      - Google Sheets
-      - Email notification
-      - WhatsApp
-      - Form backend
-
-      For now, we're only testing the form UI.
-    */
-
-    setTimeout(() => {
-      setLoading(false);
-      setSubmitted(true);
-      form.reset();
-    }, 700);
+  const order = {
+    product: productName,
+    name: formData.get("name"),
+    phone: formData.get("phone"),
+    whatsapp: formData.get("whatsapp"),
+    state: formData.get("state"),
+    city: formData.get("city"),
+    address: formData.get("address"),
+    quantity: formData.get("quantity"),
+    note: formData.get("note"),
   };
 
+  try {
+    const response = await fetch("/api/orders", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(order),
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(result.message || "Something went wrong.");
+    }
+
+    setSubmitted(true);
+    form.reset();
+  } catch (error) {
+    console.error("Order submission error:", error);
+
+    alert(
+      error instanceof Error
+        ? error.message
+        : "Unable to submit your order. Please try again."
+    );
+  } finally {
+    setLoading(false);
+  }
+};
   if (submitted) {
     return (
       <div className="bg-green-50 border border-green-100 rounded-2xl p-7 md:p-10 text-center">
