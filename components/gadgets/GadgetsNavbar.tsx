@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Link from "next/link";
 
-export default function Navbar() {
+export default function GadgetsNavbar() {
   const [open, setOpen] = useState(false);
 
   return (
@@ -10,51 +10,42 @@ export default function Navbar() {
 
         {/* LOGO */}
         <Link
-          href="/"
-          className="font-bold text-xl text-gray-900 tracking-tight"
+          href="/gadgets"
+          className="font-bold text-xl tracking-tight"
         >
-          Starntech
+          <span className="text-gray-900">StarnTech</span>
+          <span className="text-green-600 ml-1">Gadgets</span>
         </Link>
 
         {/* DESKTOP MENU */}
         <div className="hidden md:flex items-center gap-6 text-sm font-medium">
 
+          {/* HOME */}
           <Link
-            href="/"
+            href="/gadgets"
             className="text-gray-800 hover:text-green-600 transition"
           >
             Home
           </Link>
 
+          {/* SMARTWATCH */}
           <Link
-            href="/projects"
+            href="/gadgets/smartwatch"
             className="text-gray-800 hover:text-green-600 transition"
           >
-            Projects
+            Smartwatch
           </Link>
 
-           <Link
-            href="/gadgets"
-            className="text-gray-800 hover:text-green-600 transition"
-          >
-            Gadgets
-          </Link>
-
+          {/* EARBUDS */}
           <Link
-            href="/blog"
+            href="/gadgets/q16-wireless-earbuds"
             className="text-gray-800 hover:text-green-600 transition"
           >
-            Blog
+            Earbuds
           </Link>
 
-          <Link
-            href="/contact"
-            className="text-gray-800 hover:text-green-600 transition"
-          >
-            Contact
-          </Link>
 
-          {/* WhatsApp CTA */}
+          {/* WHATSAPP */}
           <a
             href="https://wa.me/2348062991395"
             target="_blank"
@@ -63,63 +54,67 @@ export default function Navbar() {
           >
             WhatsApp
           </a>
+
         </div>
 
         {/* MOBILE BUTTON */}
         <button
+          type="button"
+          aria-label={open ? "Close menu" : "Open menu"}
           className="md:hidden text-2xl text-gray-900"
           onClick={() => setOpen(!open)}
         >
-          ☰
+          {open ? "✕" : "☰"}
         </button>
+
       </nav>
 
       {/* MOBILE MENU */}
       {open && (
         <div className="md:hidden flex flex-col gap-4 p-4 border-t bg-white font-medium">
 
+          {/* HOME */}
           <Link
-            href="/"
-            className="text-gray-800"
+            href="/gadgets"
+            className="text-gray-800 hover:text-green-600 transition"
             onClick={() => setOpen(false)}
           >
             Home
           </Link>
 
+          {/* SMARTWATCH */}
           <Link
-            href="/projects"
-            className="text-gray-800"
+            href="/gadgets/smartwatch"
+            className="text-gray-800 hover:text-green-600 transition"
             onClick={() => setOpen(false)}
           >
-            Projects
+            Smartwatch
           </Link>
 
+          {/* EARBUDS */}
           <Link
-            href="/blog"
-            className="text-gray-800"
+            href="/gadgets/q16-wireless-earbuds"
+            className="text-gray-800 hover:text-green-600 transition"
             onClick={() => setOpen(false)}
           >
-            Blog
+            Earbuds
           </Link>
 
-          <Link
-            href="/contact"
-            className="text-gray-800"
-            onClick={() => setOpen(false)}
-          >
-            Contact
-          </Link>
+         
 
+          {/* WHATSAPP */}
           <a
             href="https://wa.me/2348062991395"
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-green-600 text-white px-4 py-3 rounded-md text-center font-medium"
+            className="bg-green-600 hover:bg-green-700 text-white px-4 py-3 rounded-md text-center font-medium transition"
           >
             Chat on WhatsApp
           </a>
+
         </div>
       )}
+
     </header>
   );
 }
