@@ -136,7 +136,7 @@ export default function GadgetPage({ gadget }: GadgetPageProps) {
 
               {/* PREMIUM IMAGE LABEL */}
               <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm text-gray-700 text-[11px] font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full shadow-sm">
-                Q16
+                {gadget.name}
               </div>
             </div>
 

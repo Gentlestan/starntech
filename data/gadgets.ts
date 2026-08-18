@@ -128,58 +128,120 @@ export const gadgets = [
 },
 
   {
-    slug: "smartwatch",
-    name: "Smartwatch + Free Rechargeable Clipper",
-    category: "Smartwatches",
+  slug: "y13-smart-watch",
+  name: "Y13 Smartwatch + Free Rechargeable Clipper",
+  category: "Smartwatches",
 
-    price: 45000,
+  price: 45000,
 
-    shortDescription:
-      "A stylish smartwatch with a rechargeable clipper included as a free gift.",
+  shortDescription:
+    "Y13 smart watch with 1.69-inch touchscreen, heart-rate and sleep monitoring, step tracking, IP67 water resistance and a free rechargeable clipper.",
 
-    description:
-      "Stay connected and keep track of your everyday activities with a practical and stylish smartwatch. Get a rechargeable clipper as a free gift with the smartwatch offer.",
+  description:
+    "Stay connected and track your daily activities with this stylish Y13 Smart Watch. It features a 1.69-inch touchscreen display, heart-rate monitoring, sleep monitoring, step tracking and fitness features for everyday use. The watch comes with interchangeable steel and silicone strap options and is designed with IP67 water resistance for everyday protection. Every smartwatch order also comes with a rechargeable clipper completely free as a gift.",
 
-    features: [
-      "Bluetooth connectivity",
-      "Smart notifications",
-      "Fitness tracking",
-      "Touchscreen display",
-      "Rechargeable battery",
-      "Free rechargeable clipper",
-    ],
+  features: [
+    "1.69-inch touchscreen display",
+    "Heart-rate monitoring",
+    "Sleep monitoring",
+    "Step counting and activity tracking",
+    "Sports and fitness tracking",
+    "Bluetooth connectivity",
+    "Touchscreen controls",
+    "IP67 water resistance",
+    "Steel strap option",
+    "Silicone strap option",
+    "Two straps included",
+    "Rechargeable battery",
+    "Free rechargeable clipper",
+  ],
 
-    whats_in_the_box: [
-      "Smartwatch",
-      "Rechargeable Clipper — Free Gift",
-      "Charging Cable",
-      "User Manual",
-    ],
+  specifications: [
+    {
+      name: "Display Size",
+      value: "1.69 inches",
+    },
+    {
+      name: "Display Type",
+      value: "Touchscreen",
+    },
+    {
+      name: "Heart Rate Monitoring",
+      value: "Yes",
+    },
+    {
+      name: "Sleep Monitoring",
+      value: "Yes",
+    },
+    {
+      name: "Step Counter",
+      value: "Yes",
+    },
+    {
+      name: "Fitness Tracking",
+      value: "Yes",
+    },
+    {
+      name: "Water Resistance",
+      value: "IP67",
+    },
+    {
+      name: "Connectivity",
+      value: "Bluetooth",
+    },
+    {
+      name: "Strap Material",
+      value: "Steel and Silicone",
+    },
+    {
+      name: "Straps Included",
+      value: "2 straps",
+    },
+    {
+      name: "Battery",
+      value: "Rechargeable",
+    },
+    {
+      name: "Gift",
+      value: "Free Rechargeable Clipper",
+    },
+  ],
 
-    paymentMethod: "Payment on Delivery",
+  whats_in_the_box: [
+    "Smartwatch",
+    "Steel Strap",
+    "Silicone Strap",
+    "Charging Cable",
+    "User Manual",
+    "Rechargeable Clipper — Free Gift",
+  ],
 
-    paymentDescription:
-      "Pay when your order is delivered. No online payment is required. We will contact you to confirm your order and delivery details before dispatch.",
+  paymentMethod: "Payment on Delivery",
 
-    deliveryMethod: "Free Nationwide Delivery",
+  paymentDescription:
+    "Pay when your order is delivered. No online payment is required. We will contact you to confirm your order and delivery details before dispatch.",
 
-    deliveryDescription:
-      "Enjoy free nationwide delivery. Delivery details will be confirmed with you before dispatch.",
+  deliveryMethod: "Free Nationwide Delivery",
 
-    orderingProcess: [
-      "Fill out the order form or contact us on WhatsApp.",
-      "We contact you to confirm your order and delivery details.",
-      "Your order is dispatched through GIG.",
-      "Pay when your order is delivered.",
-    ],
+  deliveryDescription:
+    "Enjoy free nationwide delivery. Delivery details will be confirmed with you before dispatch.",
 
-    images: [
-      "/images/gadgets/smartwatch-1.jpg",
-      "/images/gadgets/smartwatch-2.jpg",
-      "/images/gadgets/smartwatch-3.jpg",
-    ],
+  orderingProcess: [
+    "Fill out the order form or contact us on WhatsApp.",
+    "We contact you to confirm your order and delivery details.",
+    "Your order is dispatched through GIG.",
+    "Pay when your order is delivered.",
+  ],
 
-    featured: true,
-    available: true,
-  },
+  images: [
+    "/images/gadgets/y13-smartwatch-1.jpg",
+    "/images/gadgets/y13-smartwatch-2.jpg",
+    "/images/gadgets/y13-smartwatch-3.jpg",
+    "/images/gadgets/y13-smartwatch-4.jpg",
+    "/images/gadgets/clipper1.jpg",
+  ],
+
+  featured: true,
+  available: true,
+},
 ];
