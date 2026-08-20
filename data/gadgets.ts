@@ -234,11 +234,11 @@ export const gadgets = [
   ],
 
   images: [
-    "/images/gadgets/y13-smartwatch-1.jpg",
+    "/images/gadgets/y13-smartwatch-1.png",
     "/images/gadgets/y13-smartwatch-2.jpg",
     "/images/gadgets/y13-smartwatch-3.jpg",
     "/images/gadgets/y13-smartwatch-4.jpg",
-    "/images/gadgets/clipper1.jpg",
+    "/images/gadgets/y13-smartwatch-5.png",
   ],
 
   featured: true,
