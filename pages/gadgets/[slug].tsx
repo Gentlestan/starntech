@@ -15,11 +15,11 @@ type GadgetPageProps = {
 export default function GadgetPage({ gadget }: GadgetPageProps) {
   const [selectedImage, setSelectedImage] = useState(0);
 
-  // Use only the 5 product images
+  // Use only the first 5 product images
   const images = gadget.images?.slice(0, 5) ?? [];
 
   return (
-    <section className="bg-linear-to-b from-gray-50 to-white py-10 md:py-20">
+    <section className="bg-gradient-to-b from-gray-50 to-white py-10 md:py-20">
       <div className="max-w-6xl mx-auto px-4">
 
         {/* PREMIUM GALLERY ANIMATIONS */}
@@ -134,7 +134,7 @@ export default function GadgetPage({ gadget }: GadgetPageProps) {
                 </div>
               )}
 
-              {/* PREMIUM IMAGE LABEL */}
+              {/* PRODUCT IMAGE LABEL */}
               <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm text-gray-700 text-[11px] font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full shadow-sm">
                 {gadget.name}
               </div>
@@ -143,7 +143,6 @@ export default function GadgetPage({ gadget }: GadgetPageProps) {
             {/* THUMBNAILS */}
             {images.length > 1 && (
               <div className="grid grid-cols-5 gap-2.5 mt-4">
-
                 {images.map((image, index) => (
                   <button
                     key={image}
@@ -189,19 +188,21 @@ export default function GadgetPage({ gadget }: GadgetPageProps) {
                     )}
                   </button>
                 ))}
-
               </div>
             )}
 
+            {/* DYNAMIC GALLERY TEXT */}
             <p className="text-xs text-gray-400 text-center mt-3">
-              Select an image to explore the Q16 earbuds
+              {images.length > 1
+                ? `Select an image to explore ${gadget.name}`
+                : `Product image of ${gadget.name}`}
             </p>
           </div>
 
           {/* =========================
               PRODUCT INFORMATION
           ========================== */}
-          <div className="flex flex-col justify-center">
+          <div className="flex flex-col justify-center mt-8 lg:mt-0">
 
             {/* CATEGORY */}
             <p className="text-sm uppercase tracking-wide text-green-700 font-semibold">
@@ -209,7 +210,7 @@ export default function GadgetPage({ gadget }: GadgetPageProps) {
             </p>
 
             {/* TITLE */}
-            <h1 className="text-3xl md:text-5xl font-bold text-gray-900 mt-3 leading-tight">
+            <h1 className="text-3xl md:text-5xl font-extrabold text-gray-950 mt-3 leading-tight">
               {gadget.name}
             </h1>
 
@@ -358,7 +359,6 @@ export default function GadgetPage({ gadget }: GadgetPageProps) {
             </ul>
 
           </div>
-
         </div>
 
         {/* =========================
@@ -408,7 +408,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
         slug: gadget.slug,
       },
     })),
-
     fallback: false,
   };
 };
