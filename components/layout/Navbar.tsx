@@ -7,7 +7,6 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 bg-white border-b shadow-sm">
       <nav className="max-w-6xl mx-auto flex items-center justify-between p-4">
-
         {/* LOGO */}
         <Link
           href="/"
@@ -18,7 +17,6 @@ export default function Navbar() {
 
         {/* DESKTOP MENU */}
         <div className="hidden md:flex items-center gap-6 text-sm font-medium">
-
           <Link
             href="/"
             className="text-gray-800 hover:text-green-600 transition"
@@ -31,13 +29,6 @@ export default function Navbar() {
             className="text-gray-800 hover:text-green-600 transition"
           >
             Projects
-          </Link>
-
-           <Link
-            href="/gadgets"
-            className="text-gray-800 hover:text-green-600 transition"
-          >
-            Gadgets
           </Link>
 
           <Link
@@ -56,7 +47,7 @@ export default function Navbar() {
 
           {/* WhatsApp CTA */}
           <a
-            href="https://wa.me/2348062991395"
+            href="https://wa.me/2349017412351"
             target="_blank"
             rel="noopener noreferrer"
             className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md font-medium transition"
@@ -77,7 +68,6 @@ export default function Navbar() {
       {/* MOBILE MENU */}
       {open && (
         <div className="md:hidden flex flex-col gap-4 p-4 border-t bg-white font-medium">
-
           <Link
             href="/"
             className="text-gray-800"
