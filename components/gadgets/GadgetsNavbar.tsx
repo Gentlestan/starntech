@@ -30,7 +30,7 @@ export default function GadgetsNavbar() {
 
           {/* SMARTWATCH */}
           <Link
-            href="/gadgets/y13-smart-watch"
+            href="/gadgets/smartwatches"
             className="text-gray-800 hover:text-green-600 transition"
           >
             Smartwatch
@@ -84,7 +84,7 @@ export default function GadgetsNavbar() {
 
           {/* SMARTWATCH */}
           <Link
-            href="/gadgets/y13-smart-watch"
+            href="/gadgets/smartwatches"
             className="text-gray-800 hover:text-green-600 transition"
             onClick={() => setOpen(false)}
           >

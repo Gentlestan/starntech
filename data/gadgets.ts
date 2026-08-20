@@ -244,4 +244,128 @@ export const gadgets = [
   featured: true,
   available: true,
 },
+{
+  slug: "wk89-smart-watch",
+
+  name: "WK89 Pro Smartwatch (2 Straps)",
+
+  category: "Smartwatches",
+
+  price: 42000,
+
+  shortDescription:
+    "WK89 Pro smartwatch with 44–49mm TFT touchscreen, Bluetooth calling, fitness tracking, IP68 water resistance and two interchangeable straps.",
+
+  description:
+    "The WK89 Pro Smart Watch is a stylish square smartwatch designed for everyday use. It features a 44–49mm TFT touchscreen display, Bluetooth calling, fitness and sleep tracking, heart-rate monitoring, alarm, calendar and app control. With IP68 water resistance and two interchangeable straps (steel and silicone), it's compatible with both Android and iOS devices.",
+
+  features: [
+    "44–49mm TFT touchscreen display",
+    "Bluetooth calling",
+    "Answer and make calls",
+    "Heart-rate monitoring",
+    "Sleep monitoring",
+    "Step counting and activity tracking",
+    "Sports and fitness tracking",
+    "Alarm clock and calendar",
+    "Message notifications",
+    "Music and app control",
+    "IP68 water resistance",
+    "Steel strap included",
+    "Silicone strap included",
+    "Two interchangeable straps",
+    "230mAh rechargeable battery",
+    "Android & iOS compatible",
+  ],
+
+  specifications: [
+    {
+      name: "Model",
+      value: "WK89 Pro",
+    },
+    {
+      name: "Screen Size",
+      value: "44–49mm",
+    },
+    {
+      name: "Display Type",
+      value: "TFT Touchscreen",
+    },
+    {
+      name: "Resolution",
+      value: "320 × 240",
+    },
+    {
+      name: "Battery Capacity",
+      value: "230mAh",
+    },
+    {
+      name: "Water Resistance",
+      value: "IP68",
+    },
+    {
+      name: "Connectivity",
+      value: "Bluetooth",
+    },
+    {
+      name: "Operating System",
+      value: "Android & iOS",
+    },
+    {
+      name: "Case Material",
+      value: "Plastic",
+    },
+    {
+      name: "Strap Material",
+      value: "Steel and Silicone",
+    },
+    {
+      name: "Straps Included",
+      value: "2 straps",
+    },
+    {
+      name: "Camera",
+      value: "No",
+    },
+  ],
+
+  whats_in_the_box: [
+    "WK89 Pro Smartwatch",
+    "Steel Strap",
+    "Silicone Strap",
+    "Charging Cable",
+    "Screen Protector",
+    "Protective Case",
+    "User Manual",
+  ],
+
+  paymentMethod: "Payment on Delivery",
+
+  paymentDescription:
+    "Pay when your order is delivered. No online payment is required. We will contact you to confirm your order and delivery details before dispatch.",
+
+  deliveryMethod: "Free Nationwide Delivery",
+
+  deliveryDescription:
+    "Enjoy free nationwide delivery. Delivery details will be confirmed with you before dispatch.",
+
+  orderingProcess: [
+    "Fill out the order form or contact us on WhatsApp.",
+    "We contact you to confirm your order and delivery details.",
+    "Your order is dispatched through GIG.",
+    "Pay when your order is delivered.",
+  ],
+
+  images: [
+    "/images/gadgets/wk89-smartwatch-1.png",
+    "/images/gadgets/wk89-smartwatch-2.png",
+    "/images/gadgets/wk89-smartwatch-3.png",
+    "/images/gadgets/wk89-smartwatch-4.png",
+    "/images/gadgets/wk89-smartwatch-5.png",
+  ],
+
+  featured: true,
+
+  available: true,
+},
 ];
