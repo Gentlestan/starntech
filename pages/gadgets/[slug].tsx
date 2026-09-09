@@ -18,10 +18,14 @@ export default function GadgetPage({ gadget }: GadgetPageProps) {
   // Use only the first 5 product images
   const images = gadget.images?.slice(0, 5) ?? [];
 
-  return (
-    <section className="bg-gradient-to-b from-gray-50 to-white py-10 md:py-20">
-      <div className="max-w-6xl mx-auto px-4">
+  // Detect whether the product has a bonus/free item
+  const bonusItem = gadget.whats_in_the_box?.find((item) =>
+    /free|bonus|clipper|gift/i.test(item)
+  );
 
+  return (
+    <section className="bg-gradient-to-b from-gray-50 to-white py-6 md:py-12">
+      <div className="max-w-6xl mx-auto px-4">
         {/* PREMIUM GALLERY ANIMATIONS */}
         <style jsx>{`
           @keyframes heroFloat {
@@ -29,7 +33,6 @@ export default function GadgetPage({ gadget }: GadgetPageProps) {
             100% {
               transform: translateY(0) scale(1);
             }
-
             50% {
               transform: translateY(-5px) scale(1.012);
             }
@@ -40,7 +43,6 @@ export default function GadgetPage({ gadget }: GadgetPageProps) {
               opacity: 0;
               transform: scale(0.96);
             }
-
             to {
               opacity: 1;
               transform: scale(1);
@@ -52,7 +54,6 @@ export default function GadgetPage({ gadget }: GadgetPageProps) {
             100% {
               transform: translateY(0);
             }
-
             50% {
               transform: translateY(-2px);
             }
@@ -95,22 +96,21 @@ export default function GadgetPage({ gadget }: GadgetPageProps) {
         {/* BACK LINK */}
         <Link
           href="/gadgets"
-          className="inline-flex items-center text-sm text-green-700 hover:text-green-800 font-medium mb-8 transition"
+          className="inline-flex items-center text-sm text-green-700 hover:text-green-800 font-medium mb-6 md:mb-8 transition"
         >
           ← Back to Gadgets
         </Link>
 
-        {/* PRODUCT HERO */}
+        {/* =========================
+            PRODUCT HERO
+        ========================== */}
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16">
-
           {/* =========================
               PRODUCT IMAGE GALLERY
           ========================== */}
           <div className="w-full">
-
             {/* MAIN IMAGE */}
             <div className="relative w-full aspect-square rounded-3xl overflow-hidden bg-white border border-gray-100 shadow-sm">
-
               {images.length > 0 ? (
                 <Image
                   key={images[selectedImage]}
@@ -134,8 +134,8 @@ export default function GadgetPage({ gadget }: GadgetPageProps) {
                 </div>
               )}
 
-              {/* PRODUCT IMAGE LABEL */}
-              <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm text-gray-700 text-[11px] font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full shadow-sm">
+              {/* PRODUCT LABEL */}
+              <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-sm text-gray-700 text-[11px] font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full shadow-sm">
                 {gadget.name}
               </div>
             </div>
@@ -182,7 +182,6 @@ export default function GadgetPage({ gadget }: GadgetPageProps) {
                       className="object-contain p-1.5 transition-transform duration-500 group-hover:scale-110"
                     />
 
-                    {/* SELECTED INDICATOR */}
                     {selectedImage === index && (
                       <span className="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-5 h-1 rounded-full bg-green-700" />
                     )}
@@ -191,7 +190,6 @@ export default function GadgetPage({ gadget }: GadgetPageProps) {
               </div>
             )}
 
-            {/* DYNAMIC GALLERY TEXT */}
             <p className="text-xs text-gray-400 text-center mt-3">
               {images.length > 1
                 ? `Select an image to explore ${gadget.name}`
@@ -202,68 +200,92 @@ export default function GadgetPage({ gadget }: GadgetPageProps) {
           {/* =========================
               PRODUCT INFORMATION
           ========================== */}
-          <div className="flex flex-col justify-center mt-8 lg:mt-0">
+          <div className="flex flex-col justify-center mt-2 lg:mt-0">
+            {/* OFFER LABEL */}
+            {bonusItem && (
+              <div className="inline-flex w-fit items-center gap-2 bg-green-100 text-green-800 rounded-full px-3.5 py-1.5 text-xs md:text-sm font-bold">
+                🎁 Special Offer Included
+              </div>
+            )}
 
             {/* CATEGORY */}
-            <p className="text-sm uppercase tracking-wide text-green-700 font-semibold">
+            <p className="text-sm uppercase tracking-wide text-green-700 font-semibold mt-4">
               {gadget.category}
             </p>
 
             {/* TITLE */}
-            <h1 className="text-3xl md:text-5xl font-extrabold text-gray-950 mt-3 leading-tight">
+            <h1 className="text-3xl md:text-5xl font-extrabold text-gray-950 mt-2 leading-tight">
               {gadget.name}
             </h1>
 
-            {/* SHORT DESCRIPTION */}
+            {/* BENEFIT-FOCUSED SHORT DESCRIPTION */}
             {gadget.shortDescription && (
               <p className="text-gray-600 text-base md:text-lg leading-7 mt-4">
                 {gadget.shortDescription}
               </p>
             )}
 
-            {/* DESCRIPTION */}
-            <p className="text-gray-700 text-base leading-7 mt-4">
-              {gadget.description}
-            </p>
-
-            {/* PRICE */}
+            {/* PRICE + OFFER */}
             <div className="mt-6">
-              <p className="text-3xl md:text-4xl font-bold text-gray-900">
-                ₦{gadget.price.toLocaleString("en-NG")}
+              <p className="text-xs uppercase tracking-wider font-semibold text-gray-500">
+                Special price
               </p>
+
+              <div className="flex items-end gap-3 mt-1">
+                <p className="text-4xl md:text-5xl font-extrabold text-gray-950">
+                  ₦{gadget.price.toLocaleString("en-NG")}
+                </p>
+              </div>
+            </div>
+
+            {/* QUICK BENEFIT STRIP */}
+            <div className="grid grid-cols-3 gap-2 mt-6">
+              <div className="rounded-xl bg-green-50 border border-green-100 p-3 text-center">
+                <div className="text-lg">💳</div>
+                <p className="text-[11px] md:text-xs font-semibold text-green-900 mt-1">
+                  Pay on Delivery
+                </p>
+              </div>
+
+              <div className="rounded-xl bg-green-50 border border-green-100 p-3 text-center">
+                <div className="text-lg">🚚</div>
+                <p className="text-[11px] md:text-xs font-semibold text-green-900 mt-1">
+                  Nationwide Delivery
+                </p>
+              </div>
+
+              <div className="rounded-xl bg-green-50 border border-green-100 p-3 text-center">
+                <div className="text-lg">🎁</div>
+                <p className="text-[11px] md:text-xs font-semibold text-green-900 mt-1">
+                  Bonus Included
+                </p>
+              </div>
             </div>
 
             {/* PAYMENT */}
-            <div className="mt-6 rounded-2xl bg-green-50 border border-green-100 p-5">
+            <div className="mt-5 rounded-2xl bg-green-50 border border-green-100 p-5">
               <div className="flex items-start gap-3">
-
-                <span className="text-xl">
-                  💳
-                </span>
+                <span className="text-xl">💳</span>
 
                 <div>
-                  <h2 className="font-semibold text-green-900">
-                    Payment on Delivery
+                  <h2 className="font-bold text-green-900">
+                    Pay When Your Order Arrives
                   </h2>
 
                   <p className="text-sm text-green-800 mt-1 leading-6">
                     {gadget.paymentDescription}
                   </p>
                 </div>
-
               </div>
             </div>
 
             {/* DELIVERY */}
-            <div className="mt-4 rounded-2xl bg-white border border-gray-100 p-5">
+            <div className="mt-3 rounded-2xl bg-white border border-gray-100 p-5">
               <div className="flex items-start gap-3">
-
-                <span className="text-xl">
-                  🚚
-                </span>
+                <span className="text-xl">🚚</span>
 
                 <div>
-                  <h2 className="font-semibold text-gray-900">
+                  <h2 className="font-bold text-gray-900">
                     Free Nationwide Delivery
                   </h2>
 
@@ -271,131 +293,224 @@ export default function GadgetPage({ gadget }: GadgetPageProps) {
                     {gadget.deliveryDescription}
                   </p>
                 </div>
-
               </div>
             </div>
 
             {/* PRIMARY CTA */}
             <Link
               href={`/gadgets/${gadget.slug}#order`}
-              className="w-full mt-7 inline-flex items-center justify-center px-6 py-4 rounded-xl bg-green-700 text-white font-semibold hover:bg-green-800 transition"
+              className="w-full mt-6 inline-flex items-center justify-center px-6 py-4.5 rounded-xl bg-green-700 text-white font-bold text-base md:text-lg hover:bg-green-800 active:scale-[0.99] transition shadow-lg shadow-green-700/20"
             >
-              Order Now
-              <span className="ml-2">
-                →
-              </span>
+              Order Now — Pay on Delivery
+              <span className="ml-2">→</span>
             </Link>
 
-            {/* WHATSAPP */}
-            <a
-              href="https://wa.me/2348062991395"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full mt-3 inline-flex items-center justify-center px-6 py-4 rounded-xl border border-green-700 text-green-700 font-semibold hover:bg-green-50 transition"
-            >
-              💬 Order via WhatsApp
-            </a>
 
             <p className="text-xs text-gray-500 text-center mt-3">
-              We will contact you to confirm your order before dispatch.
+              No online payment required. We confirm your order before dispatch.
             </p>
+          </div>
+        </div>
 
+        {/* =========================
+            TRUST / BENEFIT STRIP
+        ========================== */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-12 md:mt-16">
+          <div className="bg-white border border-gray-100 rounded-2xl p-4 text-center">
+            <div className="text-2xl">🇳🇬</div>
+            <h3 className="font-bold text-gray-900 text-sm mt-2">
+              Nationwide
+            </h3>
+            <p className="text-xs text-gray-500 mt-1">
+              We deliver across Nigeria
+            </p>
+          </div>
+
+          <div className="bg-white border border-gray-100 rounded-2xl p-4 text-center">
+            <div className="text-2xl">💳</div>
+            <h3 className="font-bold text-gray-900 text-sm mt-2">
+              Pay on Delivery
+            </h3>
+            <p className="text-xs text-gray-500 mt-1">
+              Pay when your order arrives
+            </p>
+          </div>
+
+          <div className="bg-white border border-gray-100 rounded-2xl p-4 text-center">
+            <div className="text-2xl">📞</div>
+            <h3 className="font-bold text-gray-900 text-sm mt-2">
+              Order Confirmation
+            </h3>
+            <p className="text-xs text-gray-500 mt-1">
+              We contact you before dispatch
+            </p>
+          </div>
+
+          <div className="bg-white border border-gray-100 rounded-2xl p-4 text-center">
+            <div className="text-2xl">🛍️</div>
+            <h3 className="font-bold text-gray-900 text-sm mt-2">
+              Genuine Store
+            </h3>
+            <p className="text-xs text-gray-500 mt-1">
+              Shop with StarnTech Gadgets
+            </p>
           </div>
         </div>
 
         {/* =========================
             PRODUCT DETAILS
         ========================== */}
-        <div className="grid md:grid-cols-2 gap-8 mt-16 md:mt-24">
-
+        <div className="grid md:grid-cols-2 gap-6 md:gap-8 mt-14 md:mt-20">
           {/* FEATURES */}
           <div className="bg-white border border-gray-100 rounded-2xl p-6 md:p-8">
+            <p className="text-sm font-semibold text-green-700 uppercase tracking-wide">
+              Why you'll love it
+            </p>
 
-            <h2 className="text-2xl font-bold text-gray-900">
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mt-2">
               Key Features
             </h2>
 
-            <ul className="mt-5 space-y-3">
+            <ul className="mt-6 space-y-4">
               {gadget.features.map((feature) => (
                 <li
                   key={feature}
                   className="flex items-start gap-3 text-gray-700 text-sm md:text-base"
                 >
-                  <span className="text-green-700 font-bold">
+                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-green-100 text-green-700 flex items-center justify-center text-xs font-bold">
                     ✓
                   </span>
 
-                  <span>
-                    {feature}
-                  </span>
+                  <span className="leading-6">{feature}</span>
                 </li>
               ))}
             </ul>
-
           </div>
 
           {/* WHAT'S INCLUDED */}
           <div className="bg-white border border-gray-100 rounded-2xl p-6 md:p-8">
+            <p className="text-sm font-semibold text-green-700 uppercase tracking-wide">
+              In the package
+            </p>
 
-            <h2 className="text-2xl font-bold text-gray-900">
-              What's Included
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mt-2">
+              What You Get
             </h2>
 
-            <ul className="mt-5 space-y-3">
-              {gadget.whats_in_the_box.map((item) => (
-                <li
-                  key={item}
-                  className="flex items-start gap-3 text-gray-700 text-sm md:text-base"
-                >
-                  <span className="text-green-700 font-bold">
-                    ✓
-                  </span>
+            <ul className="mt-6 space-y-4">
+              {gadget.whats_in_the_box.map((item) => {
+                const isBonus = /free|bonus|clipper|gift/i.test(item);
 
-                  <span>
-                    {item}
-                  </span>
-                </li>
-              ))}
+                return (
+                  <li
+                    key={item}
+                    className={`flex items-start gap-3 text-sm md:text-base ${
+                      isBonus
+                        ? "font-bold text-green-800 bg-green-50 rounded-xl p-3"
+                        : "text-gray-700"
+                    }`}
+                  >
+                    <span className="flex-shrink-0 w-6 h-6 rounded-full bg-green-100 text-green-700 flex items-center justify-center text-xs font-bold">
+                      ✓
+                    </span>
+
+                    <span className="leading-6">
+                      {isBonus && "🎁 "}
+                      {item}
+                    </span>
+                  </li>
+                );
+              })}
             </ul>
-
           </div>
+        </div>
+
+        {/* =========================
+            MID-PAGE CTA
+        ========================== */}
+        <div className="mt-12 md:mt-16 rounded-3xl bg-green-700 px-6 py-8 md:px-10 md:py-10 text-center">
+          <p className="text-green-100 text-sm font-semibold uppercase tracking-wide">
+            Ready to get yours?
+          </p>
+
+          <h2 className="text-2xl md:text-3xl font-extrabold text-white mt-2">
+            Get {gadget.name} today
+          </h2>
+
+          <p className="text-green-50 text-sm md:text-base mt-3 max-w-xl mx-auto">
+            Enjoy nationwide delivery and the convenience of paying when your
+            order arrives.
+          </p>
+
+          <Link
+            href={`/gadgets/${gadget.slug}#order`}
+            className="mt-6 inline-flex items-center justify-center bg-white text-green-800 px-7 py-4 rounded-xl font-bold hover:bg-gray-50 transition shadow-lg"
+          >
+            Order Now — Pay on Delivery
+            <span className="ml-2">→</span>
+          </Link>
         </div>
 
         {/* =========================
             ORDER SECTION
         ========================== */}
-        <div
-          id="order"
-          className="mt-16 md:mt-24"
-        >
-          <div className="bg-gray-900 rounded-2xl p-7 md:p-10">
-
+        <div id="order" className="mt-14 md:mt-20 scroll-mt-6">
+          <div className="bg-gray-950 rounded-3xl p-6 md:p-10 shadow-xl">
             {/* ORDER HEADER */}
             <div className="text-center mb-8">
+              <div className="inline-flex items-center rounded-full bg-green-500/10 border border-green-500/20 px-3 py-1.5">
+                <span className="text-green-400 font-semibold text-xs">
+                  SECURE YOUR ORDER
+                </span>
+              </div>
 
-              <p className="text-green-400 font-semibold text-sm">
-                Ready to order?
-              </p>
-
-              <h2 className="text-2xl md:text-4xl font-bold text-white mt-2">
-                Get {gadget.name}
+              <h2 className="text-2xl md:text-4xl font-extrabold text-white mt-4">
+                Order {gadget.name}
               </h2>
 
               <p className="text-gray-300 max-w-2xl mx-auto mt-4 leading-7">
-                Fill out the order form and we'll contact you to confirm
-                your order, location and delivery details before dispatch.
+                Fill out the form below. We'll contact you to confirm your
+                order, location and delivery details before dispatch.
               </p>
 
+              {/* ORDER SUMMARY */}
+              <div className="max-w-md mx-auto mt-6 rounded-2xl bg-white/5 border border-white/10 p-4">
+                <div className="flex items-center justify-between gap-4">
+                  <span className="text-gray-300 text-sm">
+                    {gadget.name}
+                  </span>
+
+                  <span className="text-white font-bold">
+                    ₦{gadget.price.toLocaleString("en-NG")}
+                  </span>
+                </div>
+
+                <div className="border-t border-white/10 mt-3 pt-3 flex items-center justify-between gap-4">
+                  <span className="text-green-400 text-sm font-semibold">
+                    Payment
+                  </span>
+
+                  <span className="text-gray-200 text-sm">
+                    On Delivery
+                  </span>
+                </div>
+              </div>
             </div>
 
             {/* ORDER FORM */}
             <GadgetOrderForm
-              productName={gadget.name}
-            />
-
+            productName={gadget.name}
+            price={gadget.price}
+          />
           </div>
         </div>
 
+        {/* FINAL REASSURANCE */}
+        <div className="text-center mt-8 md:mt-10 pb-4">
+          <p className="text-sm text-gray-500">
+            🔒 Your information is used only to process and confirm your order.
+          </p>
+        </div>
       </div>
     </section>
   );
@@ -417,9 +532,7 @@ export const getStaticProps: GetStaticProps<GadgetPageProps> = async ({
 }) => {
   const slug = params?.slug;
 
-  const gadget = gadgets.find(
-    (item) => item.slug === slug
-  );
+  const gadget = gadgets.find((item) => item.slug === slug);
 
   if (!gadget) {
     return {

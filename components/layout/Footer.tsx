@@ -59,12 +59,6 @@ export default function Footer() {
             </a>
 
             {/* Click to Call */}
-            <a
-              href="tel:+2348062991395"
-              className="block mt-2 text-green-400 hover:underline"
-            >
-              Click to Call Now
-            </a>
 
           </div>
         </div>

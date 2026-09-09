@@ -99,15 +99,6 @@ export default function Navbar() {
           >
             Contact
           </Link>
-
-          <a
-            href="https://wa.me/2348062991395"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-green-600 text-white px-4 py-3 rounded-md text-center font-medium"
-          >
-            Chat on WhatsApp
-          </a>
         </div>
       )}
     </header>

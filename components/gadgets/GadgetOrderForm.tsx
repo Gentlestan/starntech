@@ -1,83 +1,130 @@
+
 import { FormEvent, useState } from "react";
 
 type GadgetOrderFormProps = {
   productName: string;
+  price: number;
 };
 
 export default function GadgetOrderForm({
   productName,
+  price,
 }: GadgetOrderFormProps) {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [quantity, setQuantity] = useState(1);
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-  event.preventDefault();
+  const total = price * quantity;
 
-  setLoading(true);
-
-  const form = event.currentTarget;
-  const formData = new FormData(form);
-
-  const order = {
-    product: productName,
-    name: formData.get("name"),
-    phone: formData.get("phone"),
-    whatsapp: formData.get("whatsapp"),
-    state: formData.get("state"),
-    city: formData.get("city"),
-    address: formData.get("address"),
-    quantity: formData.get("quantity"),
-    note: formData.get("note"),
+  const formatPrice = (value: number) => {
+    return `₦${value.toLocaleString("en-NG")}`;
   };
 
-  try {
-    const response = await fetch("/api/orders", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(order),
-    });
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setLoading(true);
 
-    const result = await response.json();
+    const form = event.currentTarget;
+    const formData = new FormData(form);
 
-    if (!response.ok) {
-      throw new Error(result.message || "Something went wrong.");
+    const order = {
+      product: productName,
+      name: formData.get("name"),
+      phone: formData.get("phone"),
+      whatsapp: formData.get("whatsapp"),
+      state: formData.get("state"),
+      city: formData.get("city"),
+      address: formData.get("address"),
+      quantity: formData.get("quantity"),
+      note: formData.get("note"),
+    };
+
+    try {
+      const response = await fetch("/api/orders", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(order),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          result.message || "Something went wrong. Please try again."
+        );
+      }
+
+      setSubmitted(true);
+      form.reset();
+      setQuantity(1);
+    } catch (error) {
+      console.error("Order submission error:", error);
+
+      alert(
+        error instanceof Error
+          ? error.message
+          : "Unable to submit your order. Please try again."
+      );
+    } finally {
+      setLoading(false);
     }
+  };
 
-    setSubmitted(true);
-    form.reset();
-  } catch (error) {
-    console.error("Order submission error:", error);
-
-    alert(
-      error instanceof Error
-        ? error.message
-        : "Unable to submit your order. Please try again."
-    );
-  } finally {
-    setLoading(false);
-  }
-};
   if (submitted) {
     return (
       <div className="bg-green-50 border border-green-100 rounded-2xl p-7 md:p-10 text-center">
-        <div className="text-4xl mb-4">✅</div>
+        <div className="w-16 h-16 mx-auto rounded-full bg-green-100 flex items-center justify-center text-3xl mb-5">
+          ✓
+        </div>
 
-        <h3 className="text-2xl font-bold text-gray-900">
+        <p className="text-green-700 font-semibold text-sm">
           Order Request Received
+        </p>
+
+        <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mt-2">
+          Thank You for Your Order!
         </h3>
 
-        <p className="text-gray-700 mt-3 leading-7 max-w-lg mx-auto">
-          Thank you for your order request. We will contact you shortly to
-          confirm your order, delivery location and payment-on-delivery
+        <p className="text-gray-700 mt-4 leading-7 max-w-lg mx-auto">
+          Your request for <strong>{productName}</strong> has been received.
+          We will contact you shortly to confirm your order and delivery
           details before dispatch.
         </p>
+
+        <div className="max-w-md mx-auto mt-7 bg-white border border-green-100 rounded-xl p-5 text-left">
+          <p className="font-semibold text-gray-900 mb-4">
+            What happens next?
+          </p>
+
+          <div className="space-y-3 text-sm text-gray-600">
+            <div className="flex gap-3">
+              <span className="text-green-700 font-bold">1.</span>
+              <span>We contact you to confirm your order.</span>
+            </div>
+
+            <div className="flex gap-3">
+              <span className="text-green-700 font-bold">2.</span>
+              <span>We confirm your delivery location and details.</span>
+            </div>
+
+            <div className="flex gap-3">
+              <span className="text-green-700 font-bold">3.</span>
+              <span>Your order is prepared and dispatched.</span>
+            </div>
+
+            <div className="flex gap-3">
+              <span className="text-green-700 font-bold">4.</span>
+              <span>You pay when your order is delivered.</span>
+            </div>
+          </div>
+        </div>
 
         <button
           type="button"
           onClick={() => setSubmitted(false)}
-          className="mt-6 text-green-700 font-medium text-sm hover:underline"
+          className="mt-7 text-green-700 font-medium text-sm hover:underline"
         >
           Place another order
         </button>
@@ -87,10 +134,9 @@ export default function GadgetOrderForm({
 
   return (
     <div className="bg-white border border-gray-100 rounded-2xl shadow-sm p-6 md:p-8">
-      {/* HEADER */}
       <div className="mb-7">
         <p className="text-green-700 font-semibold text-sm">
-          Order Request
+          Quick Order
         </p>
 
         <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mt-2">
@@ -98,33 +144,85 @@ export default function GadgetOrderForm({
         </h3>
 
         <p className="text-gray-600 mt-3 text-sm md:text-base leading-6">
-          Fill in your details below. We will call you to confirm your order
-          before dispatch.
+          Fill in your details below. We will contact you to confirm your
+          order before dispatch.
         </p>
       </div>
 
-      {/* PAYMENT NOTICE */}
+      {/* Order Summary */}
+      <div className="bg-gray-50 border border-gray-200 rounded-xl p-5 mb-7">
+        <div className="flex justify-between items-start gap-4">
+          <div>
+            <p className="text-xs text-gray-500 uppercase tracking-wide">
+              Product
+            </p>
+
+            <p className="font-semibold text-gray-900 mt-1">
+              {productName}
+            </p>
+          </div>
+
+          <p className="font-semibold text-gray-900">
+            {formatPrice(price)}
+          </p>
+        </div>
+
+        <div className="border-t border-gray-200 my-4" />
+
+        <div className="flex justify-between items-center">
+          <span className="text-sm text-gray-600">
+            Quantity
+          </span>
+
+          <span className="font-medium text-gray-900">
+            × {quantity}
+          </span>
+        </div>
+
+        <div className="flex justify-between items-center mt-3">
+          <span className="font-semibold text-gray-900">
+            Total
+          </span>
+
+          <span className="text-xl font-bold text-green-700">
+            {formatPrice(total)}
+          </span>
+        </div>
+
+        <div className="mt-4 space-y-2 text-sm">
+          <div className="flex items-center gap-2 text-gray-600">
+            <span>🚚</span>
+            <span>Free nationwide delivery</span>
+          </div>
+
+          <div className="flex items-center gap-2 text-gray-600">
+            <span>💳</span>
+            <span>Pay on delivery</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Payment Notice */}
       <div className="bg-green-50 border border-green-100 rounded-xl p-4 mb-7">
         <div className="flex items-start gap-3">
           <span className="text-lg">💳</span>
 
           <div>
             <p className="font-semibold text-green-900 text-sm">
-              Payment on Delivery
+              No Payment Required Now
             </p>
 
             <p className="text-green-800 text-xs md:text-sm mt-1 leading-5">
-              No online payment is required. We will confirm your order and
-              delivery details by phone before dispatch.
+              Simply submit your order request. We will contact you to confirm
+              your order and delivery details before dispatch. You pay when
+              your order is delivered.
             </p>
           </div>
         </div>
       </div>
 
-      {/* FORM */}
       <form onSubmit={handleSubmit} className="space-y-5">
-
-        {/* NAME */}
+        {/* Name */}
         <div>
           <label
             htmlFor="name"
@@ -138,12 +236,13 @@ export default function GadgetOrderForm({
             name="name"
             type="text"
             required
+            autoComplete="name"
             placeholder="Enter your full name"
             className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100"
           />
         </div>
 
-        {/* PHONE */}
+        {/* Phone */}
         <div>
           <label
             htmlFor="phone"
@@ -157,19 +256,25 @@ export default function GadgetOrderForm({
             name="phone"
             type="tel"
             required
+            autoComplete="tel"
+            inputMode="tel"
             placeholder="08012345678"
             className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100"
           />
+
+          <p className="text-xs text-gray-500 mt-1.5">
+            We will call this number to confirm your order.
+          </p>
         </div>
 
-        {/* WHATSAPP */}
+        {/* WhatsApp */}
         <div>
           <label
             htmlFor="whatsapp"
             className="block text-sm font-medium text-gray-800 mb-2"
           >
-            WhatsApp Number
-            <span className="text-gray-400 font-normal ml-1">
+            WhatsApp Number{" "}
+            <span className="text-gray-400 font-normal">
               (Optional)
             </span>
           </label>
@@ -178,15 +283,19 @@ export default function GadgetOrderForm({
             id="whatsapp"
             name="whatsapp"
             type="tel"
+            autoComplete="tel"
+            inputMode="tel"
             placeholder="If different from your phone number"
             className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100"
           />
+
+          <p className="text-xs text-gray-500 mt-1.5">
+            Leave blank if your phone number is also your WhatsApp number.
+          </p>
         </div>
 
-        {/* LOCATION */}
+        {/* Location */}
         <div className="grid sm:grid-cols-2 gap-5">
-
-          {/* STATE */}
           <div>
             <label
               htmlFor="state"
@@ -200,12 +309,12 @@ export default function GadgetOrderForm({
               name="state"
               type="text"
               required
-              placeholder="e.g. Abuja"
+              autoComplete="address-level1"
+              placeholder="e.g. FCT Abuja"
               className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100"
             />
           </div>
 
-          {/* CITY */}
           <div>
             <label
               htmlFor="city"
@@ -219,14 +328,14 @@ export default function GadgetOrderForm({
               name="city"
               type="text"
               required
+              autoComplete="address-level2"
               placeholder="e.g. Gwarinpa"
               className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100"
             />
           </div>
-
         </div>
 
-        {/* ADDRESS */}
+        {/* Address */}
         <div>
           <label
             htmlFor="address"
@@ -240,12 +349,18 @@ export default function GadgetOrderForm({
             name="address"
             required
             rows={3}
-            placeholder="Enter your delivery address"
+            autoComplete="street-address"
+            placeholder="House number, street name, estate, landmark..."
             className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm outline-none resize-none focus:border-green-600 focus:ring-2 focus:ring-green-100"
           />
+
+          <p className="text-xs text-gray-500 mt-1.5">
+            Please provide enough details to help the delivery agent locate
+            you easily.
+          </p>
         </div>
 
-        {/* QUANTITY */}
+        {/* Quantity */}
         <div>
           <label
             htmlFor="quantity"
@@ -258,25 +373,26 @@ export default function GadgetOrderForm({
             id="quantity"
             name="quantity"
             required
-            defaultValue="1"
+            value={quantity}
+            onChange={(event) => setQuantity(Number(event.target.value))}
             className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm bg-white outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100"
           >
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
+            <option value={1}>1</option>
+            <option value={2}>2</option>
+            <option value={3}>3</option>
+            <option value={4}>4</option>
+            <option value={5}>5</option>
           </select>
         </div>
 
-        {/* NOTE */}
+        {/* Note */}
         <div>
           <label
             htmlFor="note"
             className="block text-sm font-medium text-gray-800 mb-2"
           >
-            Additional Note
-            <span className="text-gray-400 font-normal ml-1">
+            Additional Note{" "}
+            <span className="text-gray-400 font-normal">
               (Optional)
             </span>
           </label>
@@ -290,21 +406,45 @@ export default function GadgetOrderForm({
           />
         </div>
 
-        {/* SUBMIT */}
+        {/* Final Total */}
+        <div className="bg-gray-50 rounded-xl p-4">
+          <div className="flex justify-between items-center">
+            <span className="text-sm text-gray-600">
+              Order Total
+            </span>
+
+            <span className="text-xl font-bold text-gray-900">
+              {formatPrice(total)}
+            </span>
+          </div>
+
+          <p className="text-xs text-gray-500 mt-1">
+            Free delivery • Pay on delivery
+          </p>
+        </div>
+
+        {/* Submit */}
         <button
           type="submit"
           disabled={loading}
           className="w-full inline-flex items-center justify-center px-6 py-4 rounded-xl bg-green-700 text-white font-semibold text-sm hover:bg-green-800 disabled:opacity-60 disabled:cursor-not-allowed transition"
         >
-          {loading ? "Submitting Order..." : "Submit Order Request →"}
+          {loading ? (
+            <>
+              <span className="mr-2 h-4 w-4 rounded-full border-2 border-white border-t-transparent animate-spin" />
+              Submitting Order...
+            </>
+          ) : (
+            "Place Order Request →"
+          )}
         </button>
 
         <p className="text-xs text-gray-500 text-center leading-5">
-          By submitting this form, you are requesting an order. We will
-          contact you to confirm the order before dispatch.
+          No payment is required at this stage. We will contact you to
+          confirm your order before dispatch.
         </p>
-
       </form>
     </div>
   );
 }
+

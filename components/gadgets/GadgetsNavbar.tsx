@@ -47,7 +47,7 @@ export default function GadgetsNavbar() {
 
           {/* WHATSAPP */}
           <a
-            href="https://wa.me/2348062991395"
+            href="https://wa.me/2349017412351"
             target="_blank"
             rel="noopener noreferrer"
             className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md font-medium transition"

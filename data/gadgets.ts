@@ -6,7 +6,7 @@ export const gadgets = [
   name: "Q16 Wireless Earbuds",
   category: "Audio",
 
-  price: 25000,
+  price: 28000,
 
   shortDescription:
     "Q16 2-in-1 wireless earbuds with ear-clip and in-ear design, active noise cancellation and Bluetooth 5.4.",
@@ -109,7 +109,7 @@ export const gadgets = [
     "Enjoy free nationwide delivery. Delivery details will be confirmed with you before dispatch.",
 
   orderingProcess: [
-    "Fill out the order form or contact us on WhatsApp.",
+    "Fill out the order form and we'll contact you to confirm your order.",
     "We contact you to confirm your order and delivery details.",
     "Your order is dispatched through GIG.",
     "Pay when your order is delivered.",
@@ -131,6 +131,7 @@ export const gadgets = [
   slug: "y13-smart-watch",
   name: "Y13 Smartwatch + Free Rechargeable Clipper",
   category: "Smartwatches",
+
 
   price: 45000,
 

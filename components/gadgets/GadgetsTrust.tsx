@@ -17,7 +17,7 @@ const trustItems = [
   {
     icon: "💬",
     title: "Customer Support",
-    description: "Get assistance through WhatsApp and phone.",
+    description: "Get assistance from our team before and after your order.",
   },
 ];
 
