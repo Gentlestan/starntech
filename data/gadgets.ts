@@ -7,6 +7,10 @@ export const gadgets = [
   category: "Audio",
 
   price: 28000,
+  comparePrice: 34000,
+  offerLabel: "LIMITED OFFER",
+  stock: 10,
+  freeDelivery: true,
 
   shortDescription:
     "Q16 2-in-1 wireless earbuds with ear-clip and in-ear design, active noise cancellation and Bluetooth 5.4.",
@@ -134,6 +138,10 @@ export const gadgets = [
 
 
   price: 45000,
+  comparePrice: 58000,
+  offerLabel: "LIMITED OFFER",
+  stock: 15,
+  freeDelivery: true,
 
   shortDescription:
     "Y13 smart watch with 1.69-inch touchscreen, heart-rate and sleep monitoring, step tracking, IP67 water resistance and a free rechargeable clipper.",
@@ -253,6 +261,10 @@ export const gadgets = [
   category: "Smartwatches",
 
   price: 42000,
+  comparePrice: 56000,
+  offerLabel: "LIMITED OFFER",
+  stock: 12,
+  freeDelivery: true,
 
   shortDescription:
     "WK89 Pro smartwatch with 44–49mm TFT touchscreen, Bluetooth calling, fitness tracking, IP68 water resistance and two interchangeable straps.",
