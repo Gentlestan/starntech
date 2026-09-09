@@ -1,14 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
+import { gadgets } from "@/data/gadgets";
 
-type Gadget = {
-  slug: string;
-  name: string;
-  category: string;
-  price: number;
-  shortDescription: string;
-  images: string[];
-};
+type Gadget = (typeof gadgets)[number];
 
 type GadgetCardProps = {
   gadget: Gadget;
@@ -19,14 +13,21 @@ export default function GadgetCard({
   gadget,
   priority = false,
 }: GadgetCardProps) {
+  const firstMedia = gadget.media?.[0];
+
+  const imageSrc =
+    firstMedia?.type === "video"
+      ? firstMedia.thumbnail
+      : firstMedia?.src;
+
   return (
     <article className="group bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition duration-300">
       {/* IMAGE */}
       <Link href={`/gadgets/${gadget.slug}`}>
         <div className="relative w-full h-60 overflow-hidden bg-gray-100">
-          {gadget.images?.[0] ? (
+          {imageSrc ? (
             <Image
-              src={gadget.images[0]}
+              src={imageSrc}
               alt={gadget.name}
               fill
               priority={priority}
@@ -48,6 +49,14 @@ export default function GadgetCard({
               Payment on Delivery
             </span>
           </div>
+
+          {firstMedia?.type === "video" && (
+            <div className="absolute bottom-4 right-4">
+              <span className="bg-black/70 text-white text-xs font-semibold px-3 py-1.5 rounded-full">
+                ▶ VIDEO
+              </span>
+            </div>
+          )}
         </div>
       </Link>
 
@@ -86,6 +95,7 @@ export default function GadgetCard({
           className="inline-flex items-center justify-center w-full mt-5 px-5 py-3 rounded-xl bg-green-700 text-white font-medium text-sm hover:bg-green-800 transition"
         >
           View Product
+
           <span className="ml-2 group-hover:translate-x-1 transition">
             →
           </span>

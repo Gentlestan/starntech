@@ -1,9 +1,7 @@
-
 import { useState } from "react";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Image from "next/image";
 import Link from "next/link";
-
 import { gadgets } from "@/data/gadgets";
 import GadgetOrderForm from "@/components/gadgets/GadgetOrderForm";
 
@@ -14,10 +12,10 @@ type GadgetPageProps = {
 };
 
 export default function GadgetPage({ gadget }: GadgetPageProps) {
-  const [selectedImage, setSelectedImage] = useState(0);
+  const [selectedMedia, setSelectedMedia] = useState(0);
 
-  // Use only the first 5 product images
-  const images = gadget.images?.slice(0, 5) ?? [];
+  // Product media: video first when available, followed by images
+  const media = gadget.media?.slice(0, 6) ?? [];
 
   // Detect whether the product has a bonus/free item
   const bonusItem = gadget.whats_in_the_box?.find((item) =>
@@ -25,15 +23,20 @@ export default function GadgetPage({ gadget }: GadgetPageProps) {
   );
 
   const hasDiscount = gadget.comparePrice > gadget.price;
+
   const savings = hasDiscount
     ? gadget.comparePrice - gadget.price
     : 0;
 
-  const hasLimitedStock = gadget.stock > 0 && gadget.stock <= 10;
+  const hasLimitedStock =
+    gadget.stock > 0 && gadget.stock <= 10;
+
+  const selectedItem = media[selectedMedia];
 
   return (
     <section className="bg-gradient-to-b from-gray-50 to-white py-6 md:py-12">
       <div className="max-w-6xl mx-auto px-4">
+
         {/* PREMIUM GALLERY ANIMATIONS */}
         <style jsx>{`
           @keyframes heroFloat {
@@ -41,6 +44,7 @@ export default function GadgetPage({ gadget }: GadgetPageProps) {
             100% {
               transform: translateY(0) scale(1);
             }
+
             50% {
               transform: translateY(-5px) scale(1.012);
             }
@@ -51,6 +55,7 @@ export default function GadgetPage({ gadget }: GadgetPageProps) {
               opacity: 0;
               transform: scale(0.96);
             }
+
             to {
               opacity: 1;
               transform: scale(1);
@@ -62,6 +67,7 @@ export default function GadgetPage({ gadget }: GadgetPageProps) {
             100% {
               transform: translateY(0);
             }
+
             50% {
               transform: translateY(-2px);
             }
@@ -93,6 +99,10 @@ export default function GadgetPage({ gadget }: GadgetPageProps) {
             animation-delay: 1.2s;
           }
 
+          .thumbnail-float:nth-child(6) {
+            animation-delay: 1.5s;
+          }
+
           @media (prefers-reduced-motion: reduce) {
             .hero-float,
             .thumbnail-float {
@@ -112,33 +122,50 @@ export default function GadgetPage({ gadget }: GadgetPageProps) {
         {/* =========================
             PRODUCT HERO
         ========================== */}
+
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16">
+
           {/* =========================
-              PRODUCT IMAGE GALLERY
+              PRODUCT MEDIA GALLERY
           ========================== */}
+
           <div className="w-full">
-            {/* MAIN IMAGE */}
+
+            {/* MAIN MEDIA */}
             <div className="relative w-full aspect-square rounded-3xl overflow-hidden bg-white border border-gray-100 shadow-sm">
-              {images.length > 0 ? (
-                <Image
-                  key={images[selectedImage]}
-                  src={images[selectedImage]}
-                  alt={`${gadget.name} - image ${selectedImage + 1}`}
-                  fill
-                  priority={selectedImage === 0}
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="hero-float object-contain p-5 md:p-8"
-                />
+
+              {selectedItem ? (
+                selectedItem.type === "video" ? (
+                  <video
+                    key={selectedItem.src}
+                    src={selectedItem.src}
+                    poster={selectedItem.thumbnail}
+                    controls
+                    playsInline
+                    preload="metadata"
+                    className="absolute inset-0 h-full w-full object-contain bg-black"
+                  />
+                ) : (
+                  <Image
+                    key={selectedItem.src}
+                    src={selectedItem.src}
+                    alt={`${gadget.name} - image ${selectedMedia + 1}`}
+                    fill
+                    priority={selectedMedia === 0}
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    className="hero-float object-contain p-5 md:p-8"
+                  />
+                )
               ) : (
                 <div className="absolute inset-0 flex items-center justify-center text-gray-400">
-                  Product image coming soon
+                  Product media coming soon
                 </div>
               )}
 
-              {/* MOBILE IMAGE COUNTER */}
-              {images.length > 1 && (
+              {/* MOBILE MEDIA COUNTER */}
+              {media.length > 1 && (
                 <div className="absolute bottom-4 right-4 md:hidden bg-black/70 text-white text-xs font-medium px-3 py-1.5 rounded-full backdrop-blur-sm">
-                  {selectedImage + 1} / {images.length}
+                  {selectedMedia + 1} / {media.length}
                 </div>
               )}
 
@@ -156,15 +183,19 @@ export default function GadgetPage({ gadget }: GadgetPageProps) {
             </div>
 
             {/* THUMBNAILS */}
-            {images.length > 1 && (
+            {media.length > 1 && (
               <div className="grid grid-cols-5 gap-2.5 mt-4">
-                {images.map((image, index) => (
+                {media.map((item, index) => (
                   <button
-                    key={image}
+                    key={`${item.type}-${item.src}`}
                     type="button"
-                    onClick={() => setSelectedImage(index)}
-                    aria-label={`View product image ${index + 1}`}
-                    aria-pressed={selectedImage === index}
+                    onClick={() => setSelectedMedia(index)}
+                    aria-label={
+                      item.type === "video"
+                        ? `Watch ${gadget.name} video`
+                        : `View product image ${index}`
+                    }
+                    aria-pressed={selectedMedia === index}
                     className={`
                       thumbnail-float
                       group
@@ -184,21 +215,47 @@ export default function GadgetPage({ gadget }: GadgetPageProps) {
                       focus:ring-green-600
                       focus:ring-offset-2
                       ${
-                        selectedImage === index
+                        selectedMedia === index
                           ? "border-green-700 shadow-md scale-[1.02]"
                           : "border-gray-100 hover:border-gray-300"
                       }
                     `}
                   >
-                    <Image
-                      src={image}
-                      alt={`${gadget.name} thumbnail ${index + 1}`}
-                      fill
-                      sizes="(max-width: 768px) 20vw, 10vw"
-                      className="object-contain p-1.5 transition-transform duration-500 group-hover:scale-110"
-                    />
 
-                    {selectedImage === index && (
+                    {item.type === "video" ? (
+                      <div className="relative h-full w-full bg-black">
+
+                        {item.thumbnail && (
+                          <Image
+                            src={item.thumbnail}
+                            alt={`${gadget.name} video thumbnail`}
+                            fill
+                            sizes="(max-width: 768px) 20vw, 10vw"
+                            className="object-cover opacity-70"
+                          />
+                        )}
+
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <span className="flex items-center justify-center w-10 h-10 rounded-full bg-white/95 text-green-700 shadow-lg text-sm pl-0.5">
+                            ▶
+                          </span>
+                        </div>
+
+                        <span className="absolute bottom-1.5 left-1/2 -translate-x-1/2 bg-black/70 text-white text-[9px] font-bold px-2 py-0.5 rounded-full">
+                          VIDEO
+                        </span>
+                      </div>
+                    ) : (
+                      <Image
+                        src={item.src}
+                        alt={`${gadget.name} thumbnail ${index}`}
+                        fill
+                        sizes="(max-width: 768px) 20vw, 10vw"
+                        className="object-contain p-1.5 transition-transform duration-500 group-hover:scale-110"
+                      />
+                    )}
+
+                    {selectedMedia === index && (
                       <span className="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-5 h-1 rounded-full bg-green-700" />
                     )}
                   </button>
@@ -207,16 +264,18 @@ export default function GadgetPage({ gadget }: GadgetPageProps) {
             )}
 
             <p className="text-xs text-gray-400 text-center mt-3">
-              {images.length > 1
-                ? `Select an image to explore ${gadget.name}`
-                : `Product image of ${gadget.name}`}
+              {media.length > 1
+                ? `Select a ${media[selectedMedia]?.type === "video" ? "video or image" : "media item"} to explore ${gadget.name}`
+                : `Product media of ${gadget.name}`}
             </p>
           </div>
 
           {/* =========================
               PRODUCT INFORMATION
           ========================== */}
+
           <div className="flex flex-col justify-center mt-2 lg:mt-0">
+
             {/* OFFER LABEL */}
             <div className="flex flex-wrap items-center gap-2">
               {gadget.offerLabel && (
@@ -250,7 +309,7 @@ export default function GadgetPage({ gadget }: GadgetPageProps) {
               {gadget.name}
             </h1>
 
-            {/* BENEFIT-FOCUSED SHORT DESCRIPTION */}
+            {/* SHORT DESCRIPTION */}
             {gadget.shortDescription && (
               <p className="text-gray-600 text-base md:text-lg leading-7 mt-4 max-w-xl">
                 {gadget.shortDescription}
@@ -259,6 +318,7 @@ export default function GadgetPage({ gadget }: GadgetPageProps) {
 
             {/* PRICE */}
             <div className="mt-6">
+
               {hasDiscount && (
                 <div className="flex items-center gap-3 flex-wrap">
                   <p className="text-sm md:text-base text-gray-400 line-through font-medium">
@@ -289,6 +349,7 @@ export default function GadgetPage({ gadget }: GadgetPageProps) {
 
             {/* QUICK BENEFIT STRIP */}
             <div className="grid grid-cols-3 gap-2 mt-6">
+
               <div className="rounded-xl bg-green-50 border border-green-100 p-3 text-center">
                 <div className="text-lg">💳</div>
                 <p className="text-[11px] md:text-xs font-semibold text-green-900 mt-1">
@@ -363,9 +424,12 @@ export default function GadgetPage({ gadget }: GadgetPageProps) {
             )}
 
             {/* URGENCY BOX */}
-            {(hasDiscount || hasLimitedStock || gadget.freeDelivery) && (
+            {(hasDiscount ||
+              hasLimitedStock ||
+              gadget.freeDelivery) && (
               <div className="mt-4 rounded-2xl border border-green-200 bg-green-50 p-4">
                 <div className="flex flex-col gap-2 text-sm">
+
                   {hasDiscount && (
                     <p className="font-bold text-green-900">
                       🔥 Special offer: Save ₦
@@ -409,7 +473,9 @@ export default function GadgetPage({ gadget }: GadgetPageProps) {
         {/* =========================
             TRUST / BENEFIT STRIP
         ========================== */}
+
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-12 md:mt-16">
+
           <div className="bg-white border border-gray-100 rounded-2xl p-4 text-center">
             <div className="text-2xl">🇳🇬</div>
             <h3 className="font-bold text-gray-900 text-sm mt-2">
@@ -454,7 +520,9 @@ export default function GadgetPage({ gadget }: GadgetPageProps) {
         {/* =========================
             PRODUCT DETAILS
         ========================== */}
+
         <div className="grid md:grid-cols-2 gap-6 md:gap-8 mt-14 md:mt-20">
+
           {/* FEATURES */}
           <div className="bg-white border border-gray-100 rounded-2xl p-6 md:p-8">
             <p className="text-sm font-semibold text-green-700 uppercase tracking-wide">
@@ -475,7 +543,9 @@ export default function GadgetPage({ gadget }: GadgetPageProps) {
                     ✓
                   </span>
 
-                  <span className="leading-6">{feature}</span>
+                  <span className="leading-6">
+                    {feature}
+                  </span>
                 </li>
               ))}
             </ul>
@@ -493,7 +563,8 @@ export default function GadgetPage({ gadget }: GadgetPageProps) {
 
             <ul className="mt-6 space-y-4">
               {gadget.whats_in_the_box.map((item) => {
-                const isBonus = /free|bonus|clipper|gift/i.test(item);
+                const isBonus =
+                  /free|bonus|clipper|gift/i.test(item);
 
                 return (
                   <li
@@ -522,7 +593,9 @@ export default function GadgetPage({ gadget }: GadgetPageProps) {
         {/* =========================
             MID-PAGE CTA
         ========================== */}
+
         <div className="mt-12 md:mt-16 rounded-3xl bg-green-700 px-6 py-8 md:px-10 md:py-10 text-center">
+
           {gadget.offerLabel && (
             <p className="text-green-100 text-sm font-bold uppercase tracking-wide">
               🔥 {gadget.offerLabel}
@@ -550,8 +623,8 @@ export default function GadgetPage({ gadget }: GadgetPageProps) {
           )}
 
           <p className="text-green-50 text-sm md:text-base mt-3 max-w-xl mx-auto">
-            Order online and enjoy the convenience of paying when your order
-            arrives.
+            Order online and enjoy the convenience of paying when your
+            order arrives.
           </p>
 
           {hasLimitedStock && (
@@ -579,10 +652,16 @@ export default function GadgetPage({ gadget }: GadgetPageProps) {
         {/* =========================
             ORDER SECTION
         ========================== */}
-        <div id="order" className="mt-14 md:mt-20 scroll-mt-6">
+
+        <div
+          id="order"
+          className="mt-14 md:mt-20 scroll-mt-6"
+        >
           <div className="bg-gray-950 rounded-3xl p-6 md:p-10 shadow-xl">
+
             {/* ORDER HEADER */}
             <div className="text-center mb-8">
+
               <div className="inline-flex items-center rounded-full bg-green-500/10 border border-green-500/20 px-3 py-1.5">
                 <span className="text-green-400 font-semibold text-xs">
                   SECURE YOUR ORDER
@@ -609,6 +688,7 @@ export default function GadgetPage({ gadget }: GadgetPageProps) {
 
               {/* ORDER SUMMARY */}
               <div className="max-w-md mx-auto mt-6 rounded-2xl bg-white/5 border border-white/10 p-4">
+
                 <div className="flex items-center justify-between gap-4">
                   <span className="text-gray-300 text-sm">
                     {gadget.name}
@@ -699,8 +779,10 @@ export default function GadgetPage({ gadget }: GadgetPageProps) {
       {/* =========================
           MOBILE STICKY CTA
       ========================== */}
+
       <div className="fixed bottom-0 left-0 right-0 z-40 md:hidden bg-white/95 backdrop-blur-md border-t border-gray-200 px-4 py-3 shadow-[0_-4px_20px_rgba(0,0,0,0.08)]">
         <div className="flex items-center gap-3 max-w-6xl mx-auto">
+
           <div className="min-w-0 flex-1">
             <p className="text-[11px] text-gray-500 font-medium truncate">
               {gadget.name}
@@ -761,5 +843,3 @@ export const getStaticProps: GetStaticProps<GadgetPageProps> = async ({
     },
   };
 };
-
-

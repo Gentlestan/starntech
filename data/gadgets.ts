@@ -119,13 +119,33 @@ export const gadgets = [
     "Pay when your order is delivered.",
   ],
 
-  images: [
-    "/images/gadgets/q16-earbuds-1.png",
-    "/images/gadgets/q16-earbuds-2.png",
-    "/images/gadgets/q16-earbuds-3.png",
-    "/images/gadgets/q16-earbuds-4.png",
-    "/images/gadgets/q16-earbuds-5.jpg",
-  ],
+ media: [
+  {
+    type: "video",
+    src: "/videos/q16-demo-video.mp4",
+    thumbnail: "/images/gadgets/q16-earbuds-1.jpg",
+  },
+  {
+    type: "image",
+    src: "/images/gadgets/q16-earbuds-1.jpg",
+  },
+  {
+    type: "image",
+    src: "/images/gadgets/q16-earbuds-2.png",
+  },
+  {
+    type: "image",
+    src: "/images/gadgets/q16-earbuds-3.png",
+  },
+  {
+    type: "image",
+    src: "/images/gadgets/q16-earbuds-4.png",
+  },
+  {
+    type: "image",
+    src: "/images/gadgets/q16-earbuds-5.jpg",
+  },
+],
 
   featured: true,
   available: true,
@@ -137,8 +157,8 @@ export const gadgets = [
   category: "Smartwatches",
 
 
-  price: 45000,
-  comparePrice: 58000,
+  price: 36000,
+  comparePrice: 48000,
   offerLabel: "LIMITED OFFER",
   stock: 15,
   freeDelivery: true,
@@ -242,14 +262,28 @@ export const gadgets = [
     "Pay when your order is delivered.",
   ],
 
-  images: [
-    "/images/gadgets/y13-smartwatch-1.png",
-    "/images/gadgets/y13-smartwatch-2.jpg",
-    "/images/gadgets/y13-smartwatch-3.jpg",
-    "/images/gadgets/y13-smartwatch-4.jpg",
-    "/images/gadgets/y13-smartwatch-5.png",
-  ],
-
+  media: [
+  {
+    type: "image",
+    src: "/images/gadgets/y13-smartwatch-1.png",
+  },
+  {
+    type: "image",
+    src: "/images/gadgets/y13-smartwatch-2.jpg",
+  },
+  {
+    type: "image",
+    src: "/images/gadgets/y13-smartwatch-3.jpg",
+  },
+  {
+    type: "image",
+    src: "/images/gadgets/y13-smartwatch-4.jpg",
+  },
+  {
+    type: "image",
+    src: "/images/gadgets/y13-smartwatch-5.png",
+  },
+],
   featured: true,
   available: true,
 },
@@ -260,8 +294,8 @@ export const gadgets = [
 
   category: "Smartwatches",
 
-  price: 42000,
-  comparePrice: 56000,
+  price: 35000,
+  comparePrice: 43000,
   offerLabel: "LIMITED OFFER",
   stock: 12,
   freeDelivery: true,
@@ -369,13 +403,33 @@ export const gadgets = [
     "Pay when your order is delivered.",
   ],
 
-  images: [
-    "/images/gadgets/wk89-smartwatch-1.png",
-    "/images/gadgets/wk89-smartwatch-2.png",
-    "/images/gadgets/wk89-smartwatch-3.png",
-    "/images/gadgets/wk89-smartwatch-4.png",
-    "/images/gadgets/wk89-smartwatch-5.png",
-  ],
+media: [
+  {
+    type: "video",
+    src: "/videos/wk89-demo-video.mp4",
+    thumbnail: "/images/gadgets/wk89-smartwatch-1.png",
+  },
+  {
+    type: "image",
+    src: "/images/gadgets/wk89-smartwatch-1.png",
+  },
+  {
+    type: "image",
+    src: "/images/gadgets/wk89-smartwatch-2.png",
+  },
+  {
+    type: "image",
+    src: "/images/gadgets/wk89-smartwatch-3.png",
+  },
+  {
+    type: "image",
+    src: "/images/gadgets/wk89-smartwatch-4.png",
+  },
+  {
+    type: "image",
+    src: "/images/gadgets/wk89-smartwatch-5.png",
+  },
+],
 
   featured: true,
 

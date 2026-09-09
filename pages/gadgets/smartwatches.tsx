@@ -12,27 +12,51 @@ export default function SmartwatchesPage() {
       <h1 className="text-3xl font-bold mb-8">Smartwatches</h1>
 
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {smartwatches.map((watch) => (
-          <Link
-            key={watch.slug}
-            href={`/gadgets/${watch.slug}`}
-            className="bg-white rounded-2xl border p-4 hover:shadow-lg transition"
-          >
-            <div className="relative aspect-square">
-              <Image
-                src={watch.images[0]}
-                alt={watch.name}
-                fill
-                className="object-contain"
-              />
-            </div>
+        {smartwatches.map((watch) => {
+          const firstMedia = watch.media?.[0];
 
-            <h2 className="font-semibold mt-4">{watch.name}</h2>
-            <p className="text-green-700 font-bold mt-2">
-              ₦{watch.price.toLocaleString()}
-            </p>
-          </Link>
-        ))}
+          const imageSrc =
+            firstMedia?.type === "video"
+              ? firstMedia.thumbnail
+              : firstMedia?.src;
+
+          return (
+            <Link
+              key={watch.slug}
+              href={`/gadgets/${watch.slug}`}
+              className="bg-white rounded-2xl border p-4 hover:shadow-lg transition"
+            >
+              <div className="relative aspect-square">
+                {imageSrc ? (
+                  <Image
+                    src={imageSrc}
+                    alt={watch.name}
+                    fill
+                    className="object-contain"
+                  />
+                ) : (
+                  <div className="absolute inset-0 flex items-center justify-center text-gray-400 text-sm">
+                    Product image coming soon
+                  </div>
+                )}
+
+                {firstMedia?.type === "video" && (
+                  <div className="absolute bottom-3 right-3">
+                    <span className="bg-black/70 text-white text-xs font-semibold px-3 py-1.5 rounded-full">
+                      ▶ VIDEO
+                    </span>
+                  </div>
+                )}
+              </div>
+
+              <h2 className="font-semibold mt-4">{watch.name}</h2>
+
+              <p className="text-green-700 font-bold mt-2">
+                ₦{watch.price.toLocaleString()}
+              </p>
+            </Link>
+          );
+        })}
       </div>
     </section>
   );
