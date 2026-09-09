@@ -265,11 +265,11 @@ export const gadgets = [
   media: [
   {
     type: "image",
-    src: "/images/gadgets/y13-smartwatch-1.png",
+    src: "/images/gadgets/y13-smartwatch-1.jpg",
   },
   {
     type: "image",
-    src: "/images/gadgets/y13-smartwatch-2.jpg",
+    src: "/images/gadgets/y13-smartwatch-2.png",
   },
   {
     type: "image",
@@ -282,6 +282,10 @@ export const gadgets = [
   {
     type: "image",
     src: "/images/gadgets/y13-smartwatch-5.png",
+  },
+  {
+    type: "image",
+    src: "/images/gadgets/y13-smartwatch-6.jpg",
   },
 ],
   featured: true,
