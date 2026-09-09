@@ -51,12 +51,21 @@ export default function GadgetOrderForm({
       const result = await response.json();
 
       if (!response.ok) {
-        throw new Error(
-          result.message || "Something went wrong. Please try again."
-        );
-      }
+  throw new Error(
+    result.message || "Something went wrong. Please try again."
+  );
+}
 
-      setSubmitted(true);
+// Track a successful order request as a Lead in Meta Pixel
+  if (typeof window !== "undefined" && (window as any).fbq) {
+    (window as any).fbq("track", "Lead", {
+      content_name: productName,
+      value: total,
+      currency: "NGN",
+    });
+  }
+
+  setSubmitted(true);
       form.reset();
       setQuantity(1);
     } catch (error) {
