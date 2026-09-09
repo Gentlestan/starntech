@@ -89,18 +89,6 @@ export default function GadgetsNavbar() {
             Earbuds
           </Link>
 
-         
-
-          {/* WHATSAPP */}
-          <a
-            href="https://wa.me/2348062991395"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-green-600 hover:bg-green-700 text-white px-4 py-3 rounded-md text-center font-medium transition"
-          >
-            Chat on WhatsApp
-          </a>
-
         </div>
       )}
 
