@@ -16,14 +16,6 @@ export default function GadgetsFooter() {
           </div>
 
           <div className="flex items-center gap-5 text-sm">
-            <a
-              href="https://wa.me/2348062991395"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-300 hover:text-green-400 transition"
-            >
-              WhatsApp
-            </a>
 
             <span className="text-gray-600">|</span>
 
