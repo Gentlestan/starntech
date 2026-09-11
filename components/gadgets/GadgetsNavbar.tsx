@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import Link from "next/link";
 
@@ -7,7 +8,6 @@ export default function GadgetsNavbar() {
   return (
     <header className="sticky top-0 z-50 bg-white border-b shadow-sm">
       <nav className="max-w-6xl mx-auto flex items-center justify-between p-4">
-
         {/* LOGO */}
         <Link
           href="/gadgets"
@@ -19,7 +19,6 @@ export default function GadgetsNavbar() {
 
         {/* DESKTOP MENU */}
         <div className="hidden md:flex items-center gap-6 text-sm font-medium">
-
           {/* HOME */}
           <Link
             href="/gadgets"
@@ -44,6 +43,13 @@ export default function GadgetsNavbar() {
             Earbuds
           </Link>
 
+          {/* SOLAR CAMERAS */}
+          <Link
+            href="/gadgets/solar-cameras"
+            className="text-gray-800 hover:text-green-600 transition"
+          >
+            Solar Cameras
+          </Link>
         </div>
 
         {/* MOBILE BUTTON */}
@@ -55,13 +61,11 @@ export default function GadgetsNavbar() {
         >
           {open ? "✕" : "☰"}
         </button>
-
       </nav>
 
       {/* MOBILE MENU */}
       {open && (
         <div className="md:hidden flex flex-col gap-4 p-4 border-t bg-white font-medium">
-
           {/* HOME */}
           <Link
             href="/gadgets"
@@ -89,9 +93,16 @@ export default function GadgetsNavbar() {
             Earbuds
           </Link>
 
+          {/* SOLAR CAMERAS */}
+          <Link
+            href="/gadgets/solar-cameras"
+            className="text-gray-800 hover:text-green-600 transition"
+            onClick={() => setOpen(false)}
+          >
+            Solar Cameras
+          </Link>
         </div>
       )}
-
     </header>
   );
 }

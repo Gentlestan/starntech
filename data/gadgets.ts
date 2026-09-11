@@ -439,4 +439,106 @@ media: [
 
   available: true,
 },
+
+{
+  slug: "v380-solar-camera",
+
+  name: "V380 Max 4G Solar Security Camera",
+
+  category: "Solar Cameras",
+
+  price: 67000,
+  comparePrice: 85000,
+  offerLabel: "BEST SELLER",
+  stock: 20,
+  freeDelivery: true,
+
+  cameraSupport:
+  "Tested before dispatch. Setup guidance available when needed.",
+
+  shortDescription:
+    "4G solar security camera with SIM support, night vision, motion detection and free nationwide delivery.",
+
+  description:
+    "Protect your home, shop or farm with the V380 4G Solar Security Camera. It works with a 4G SIM card, so it doesn't require Wi-Fi. It features HD live viewing, two-way audio, motion detection, infrared night vision and solar charging for reliable outdoor security.",
+
+  features: [
+    "Works without Wi-Fi (4G SIM)",
+    "Solar powered with rechargeable battery",
+    "HD live viewing",
+    "Infrared night vision",
+    "Motion detection alerts",
+    "Two-way audio",
+    "Remote viewing via V380 app",
+    "Supports microSD recording",
+    "Weather-resistant outdoor design",
+  ],
+
+  specifications: [
+    { name: "Network", value: "4G SIM Card" },
+    { name: "Power", value: "Solar Panel + Rechargeable Battery" },
+    { name: "Night Vision", value: "Infrared" },
+    { name: "Audio", value: "Two-way Audio" },
+    { name: "Storage", value: "MicroSD Card Supported" },
+    { name: "Mobile App", value: "V380 Pro" },
+    { name: "Installation", value: "Outdoor Wall Mount" },
+  ],
+
+  whats_in_the_box: [
+    "V380 Solar Camera",
+    "Solar Panel",
+    "Mounting Bracket",
+    "Charging Cable",
+    "Screws & Wall Plugs",
+    "User Manual",
+  ],
+
+  paymentMethod: "Payment on Delivery",
+
+  paymentDescription:
+    "Pay when your order is delivered. We'll contact you first to confirm your order and delivery details.",
+
+  deliveryMethod: "Free Nationwide Delivery",
+
+  deliveryDescription:
+    "Free delivery across Nigeria. Delivery is confirmed before dispatch.",
+
+  orderingProcess: [
+    "Fill the order form.",
+    "We call to confirm your order.",
+    "Your camera is dispatched.",
+    "Pay on delivery.",
+  ],
+
+  media: [
+    {
+      type: "video",
+      src: "/videos/v380-demo-video.mp4",
+      thumbnail: "/images/gadgets/v380-camera-1.png",
+    },
+    {
+      type: "image",
+      src: "/images/gadgets/v380-camera-1.png",
+    },
+    {
+      type: "image",
+      src: "/images/gadgets/v380-camera-2.jpg",
+    },
+    {
+      type: "image",
+      src: "/images/gadgets/v380-camera-3.jpg",
+    },
+    {
+      type: "image",
+      src: "/images/gadgets/v380-camera-4.jpg",
+    },
+    {
+      type: "image",
+      src: "/images/gadgets/v380-camera-5.jpg",
+    },
+  ],
+
+  featured: true,
+  available: true,
+},
 ];

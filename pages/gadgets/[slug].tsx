@@ -423,6 +423,15 @@ export default function GadgetPage({ gadget }: GadgetPageProps) {
               </div>
             )}
 
+            {gadget.cameraSupport && (
+            <div className="mt-4 px-1 text-sm text-gray-500">
+              <span className="font-semibold text-gray-700">
+                Camera Support:
+              </span>{" "}
+              {gadget.cameraSupport}
+            </div>
+          )}
+
             {/* URGENCY BOX */}
             {(hasDiscount ||
               hasLimitedStock ||
