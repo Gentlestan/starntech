@@ -56,14 +56,33 @@ export default function GadgetOrderForm({
   );
 }
 
-// Track a successful order request as a Lead in Meta Pixel
-  if (typeof window !== "undefined" && (window as any).fbq) {
-    (window as any).fbq("track", "Lead", {
-      content_name: productName,
-      value: total,
-      currency: "NGN",
-    });
+
+ // Track successful order as a Lead
+if (typeof window !== "undefined" && (window as any).fbq) {
+  const leadData = {
+    content_name: productName,
+    value: total,
+    currency: "NGN",
+  };
+
+  if (productName === "V380 Max 4G Solar Security Camera") {
+    // Engineering Pixel — V380 only
+    (window as any).fbq(
+      "trackSingle",
+      "1054762187425411",
+      "Lead",
+      leadData
+    );
+  } else {
+    // Gadget Store Pixel — all other products
+    (window as any).fbq(
+      "trackSingle",
+      "2326435488100673",
+      "Lead",
+      leadData
+    );
   }
+}
 
   setSubmitted(true);
       form.reset();
