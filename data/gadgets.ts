@@ -447,7 +447,7 @@ media: [
 
   category: "Solar Cameras",
 
-  price: 67000,
+  price: 70000,
   comparePrice: 85000,
   offerLabel: "BEST SELLER",
   stock: 20,

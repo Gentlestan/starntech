@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { gadgets } from "@/data/gadgets";
 import GadgetOrderForm from "@/components/gadgets/GadgetOrderForm";
+import Testimonials from "@/components/gadgets/Testimonials";
 
 type Gadget = (typeof gadgets)[number];
 
@@ -525,6 +526,8 @@ export default function GadgetPage({ gadget }: GadgetPageProps) {
             </p>
           </div>
         </div>
+
+        <Testimonials slug={gadget.slug} />
 
         {/* =========================
             PRODUCT DETAILS
