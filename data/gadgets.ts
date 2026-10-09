@@ -153,7 +153,7 @@ export const gadgets = [
 
   {
   slug: "y13-smart-watch",
-  name: "Y13 Smartwatch + Free Rechargeable Clipper",
+  name: "Y13 Smartwatch + 2 Straps + FREE Rechargeable Clipper",
   category: "Smartwatches",
 
 
@@ -263,6 +263,12 @@ export const gadgets = [
   ],
 
   media: [
+
+     {
+    type: "video",
+    src: "/videos/y13-demo-video.mp4",
+    thumbnail: "/images/gadgets/y13-smartwatch-1.jpg",
+  },
   {
     type: "image",
     src: "/images/gadgets/y13-smartwatch-1.jpg",
@@ -273,19 +279,11 @@ export const gadgets = [
   },
   {
     type: "image",
-    src: "/images/gadgets/y13-smartwatch-3.jpg",
+    src: "/images/gadgets/y13-smartwatch-3.png",
   },
   {
     type: "image",
     src: "/images/gadgets/y13-smartwatch-4.jpg",
-  },
-  {
-    type: "image",
-    src: "/images/gadgets/y13-smartwatch-5.png",
-  },
-  {
-    type: "image",
-    src: "/images/gadgets/y13-smartwatch-6.jpg",
   },
 ],
   featured: true,
