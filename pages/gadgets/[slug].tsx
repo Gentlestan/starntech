@@ -317,6 +317,43 @@ export default function GadgetPage({ gadget }: GadgetPageProps) {
               </p>
             )}
 
+            
+{"colourAvailability" in gadget && gadget.colourAvailability && (
+  <div className="mt-4 rounded-xl border border-gray-200 bg-white p-4">
+    <h3 className="text-sm font-bold text-gray-900">
+      Colour Availability
+    </h3>
+
+    <div className="mt-3 flex flex-wrap gap-3">
+      {gadget.colourAvailability.available.map((colour) => (
+        <div
+          key={colour}
+          className="inline-flex items-center gap-2 rounded-lg border border-green-200 bg-green-50 px-3 py-2 text-sm font-semibold text-green-800"
+        >
+          <span className="h-4 w-4 rounded-full border border-gray-300 bg-black" />
+          {colour} — Available
+          <span>✓</span>
+        </div>
+      ))}
+
+      {gadget.colourAvailability.outOfStock.map((colour) => (
+        <div
+          key={colour}
+          className="inline-flex items-center gap-2 rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-sm text-gray-500"
+        >
+          <span className="h-4 w-4 rounded-full border border-gray-300 bg-white" />
+          <span className="line-through">{colour}</span>
+          — Out of Stock
+        </div>
+      ))}
+    </div>
+
+    <p className="mt-3 text-sm font-medium text-gray-600">
+      {gadget.colourAvailability.notice}
+    </p>
+  </div>
+)}
+
             {/* PRICE */}
             <div className="mt-6">
 
@@ -688,6 +725,19 @@ export default function GadgetPage({ gadget }: GadgetPageProps) {
                 Fill out the form below. We'll contact you to confirm your
                 order, location and delivery details before dispatch.
               </p>
+
+              
+              {"colourAvailability" in gadget && gadget.colourAvailability && (
+                <div className="mx-auto mt-5 max-w-md rounded-xl border border-green-500/30 bg-green-500/10 p-4 text-left">
+                  <p className="font-bold text-white">
+                    Colour: Black only
+                  </p>
+                  <p className="mt-1 text-sm text-gray-300">
+                    White is currently out of stock. Your order will be for
+                    the black camera.
+                  </p>
+                </div>
+              )}
 
               {hasLimitedStock && (
                 <div className="inline-flex items-center gap-2 mt-5 rounded-full bg-orange-500/10 border border-orange-500/20 px-4 py-2">

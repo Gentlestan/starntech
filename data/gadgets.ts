@@ -460,6 +460,13 @@ media: [
   description:
     "Protect your home, shop or farm with the V380 4G Solar Security Camera. It works with a 4G SIM card, so it doesn't require Wi-Fi. It features HD live viewing, two-way audio, motion detection, infrared night vision and solar charging for reliable outdoor security.",
 
+
+  colourAvailability: {
+  available: ["Black"],
+  outOfStock: ["White"],
+  notice: "Only black is currently available. White is out of stock.",
+},
+
   features: [
     "Works without Wi-Fi (4G SIM)",
     "Solar powered with rechargeable battery",
