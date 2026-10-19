@@ -461,10 +461,10 @@ media: [
     "Protect your home, shop or farm with the V380 4G Solar Security Camera. It works with a 4G SIM card, so it doesn't require Wi-Fi. It features HD live viewing, two-way audio, motion detection, infrared night vision and solar charging for reliable outdoor security.",
 
 
-  colourAvailability: {
-  available: ["Black"],
-  outOfStock: ["White"],
-  notice: "Only black is currently available. White is out of stock.",
+ colourAvailability: {
+  available: ["Black", "White"],
+  outOfStock: [],
+  notice: "Available in both Black and White.",
 },
 
   features: [
@@ -519,15 +519,15 @@ media: [
     {
       type: "video",
       src: "/videos/v380-demo-video.mp4",
-      thumbnail: "/images/gadgets/v380-camera-1.png",
+      thumbnail: "/images/gadgets/v380-camera-1.jpg",
     },
     {
       type: "image",
-      src: "/images/gadgets/v380-camera-1.png",
+      src: "/images/gadgets/v380-camera-1.jpg",
     },
     {
       type: "image",
-      src: "/images/gadgets/v380-camera-2.jpg",
+      src: "/images/gadgets/v380-camera-2.png",
     },
     {
       type: "image",
@@ -535,15 +535,136 @@ media: [
     },
     {
       type: "image",
-      src: "/images/gadgets/v380-camera-4.jpg",
+      src: "/images/gadgets/v380-camera-4.png",
     },
-    {
-      type: "image",
-      src: "/images/gadgets/v380-camera-5.jpg",
-    },
+   
   ],
 
   featured: true,
   available: true,
 },
+
+
+{
+  slug: "world-vision-wireless-intercom",
+  name: "World Vision Wireless Intercom System",
+  category: "Security & Communication",
+  price: 50000,
+  comparePrice: 60000,
+  offerLabel: "LIMITED OFFER",
+  stock: 10,
+  freeDelivery: true,
+
+  shortDescription:
+    "World Vision Wireless Intercom System with clear voice communication, multiple channels, rechargeable battery, and up to 1 km wireless range.",
+
+  description:
+    "Make communication easier with the World Vision Wireless Intercom System. Designed for homes, estates, offices, hotels, schools, shops, and warehouses, this wireless intercom helps you communicate between different rooms, work areas, and security posts without running telephone wires between units. It features clear voice communication, multiple channels, a 433 MHz operating frequency, and a built-in rechargeable battery. With a communication range of up to 1 km under suitable conditions, it offers a convenient way to stay connected. Actual range may vary depending on walls, windows, building materials, interference, and the surrounding environment.",
+
+  features: [
+    "Wireless communication without telephone wiring between units",
+    "Clear voice communication",
+    "Multiple communication channels",
+    "433 MHz operating frequency",
+    "Long-range communication of up to 1 km under suitable conditions",
+    "Built-in rechargeable battery",
+    "Designed for simple plug-and-play setup",
+    "Suitable for homes, estates, offices, hotels, schools, shops, and warehouses",
+    "Can be placed on a desk or mounted on a suitable surface",
+    "Expandable system for additional compatible intercom units",
+    "No telephone line required for communication between units",
+    "Convenient communication between rooms, departments, and security posts",
+  ],
+
+  specifications: [
+    {
+      name: "Product Type",
+      value: "Wireless Intercom System",
+    },
+    {
+      name: "Brand",
+      value: "World Vision",
+    },
+    {
+      name: "Communication Type",
+      value: "Wireless voice communication",
+    },
+    {
+      name: "Operating Frequency",
+      value: "433 MHz",
+    },
+    {
+      name: "Maximum Communication Range",
+      value: "Up to 1 km under suitable conditions",
+    },
+    {
+      name: "Communication Channels",
+      value: "Multiple channels",
+    },
+    {
+      name: "Power Source",
+      value: "Mains power and built-in rechargeable battery",
+    },
+    {
+      name: "Installation",
+      value: "No telephone wiring required between units",
+    },
+    {
+      name: "Placement",
+      value: "Desk placement or suitable surface mounting",
+    },
+    {
+      name: "Range Considerations",
+      value: "Walls, windows, reinforced concrete, metal structures, interference, and building layout may reduce the effective range",
+    },
+    {
+      name: "Expandability",
+      value: "Supports compatible additional units, subject to system capacity",
+    },
+  ],
+
+  whats_in_the_box: [
+    "World Vision Wireless Intercom Units (package quantity to be confirmed)",
+    "Power Adapters (if included in the package)",
+    "User Manual (if included)",
+  ],
+
+  paymentMethod: "Payment on Delivery",
+
+  paymentDescription:
+    "Pay when your order is delivered. No online payment is required. We will contact you to confirm your order and delivery details before dispatch.",
+
+  deliveryMethod: "Free Nationwide Delivery",
+
+  deliveryDescription:
+    "Enjoy free nationwide delivery. Delivery details will be confirmed with you before dispatch.",
+
+  orderingProcess: [
+    "Fill out the order form and we will contact you to confirm your order.",
+    "We confirm your order and delivery details.",
+    "Your order is dispatched through GIG Logistics.",
+    "Pay according to the agreed payment-on-delivery arrangement.",
+  ],
+
+  media: [
+    {
+      type: "video",
+      src: "/videos/world-vision-intercom-demo.mp4",
+      thumbnail: "/images/gadgets/world-vision-intercom-1.jpg",
+    },
+    {
+      type: "image",
+      src: "/images/gadgets/world-vision-intercom-1.jpg",
+    },
+    {
+      type: "image",
+      src: "/images/gadgets/world-vision-intercom-2.jpg",
+    },
+    {
+      type: "image",
+      src: "/images/gadgets/world-vision-intercom-3.jpg",
+    },
+  ],
+},
+
 ];

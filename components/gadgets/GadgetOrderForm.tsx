@@ -403,7 +403,8 @@ if (typeof window !== "undefined" && (window as any).fbq) {
             required
             value={quantity}
             onChange={(event) => setQuantity(Number(event.target.value))}
-            className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm bg-white outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100"
+           className="w-full rounded-xl border-2 border-gray-400 px-4 py-3 text-base font-semibold text-gray-900 bg-white outline-none focus:border-green-700 focus:ring-2 focus:ring-green-200"
+
           >
             <option value={1}>1</option>
             <option value={2}>2</option>
@@ -417,7 +418,7 @@ if (typeof window !== "undefined" && (window as any).fbq) {
         <div>
           <label
             htmlFor="note"
-            className="block text-sm font-medium text-gray-800 mb-2"
+            className="block text-sm font-semibold text-gray-900 mb-2"
           >
             Additional Note{" "}
             <span className="text-gray-400 font-normal">

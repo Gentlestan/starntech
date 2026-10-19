@@ -330,7 +330,11 @@ export default function GadgetPage({ gadget }: GadgetPageProps) {
           key={colour}
           className="inline-flex items-center gap-2 rounded-lg border border-green-200 bg-green-50 px-3 py-2 text-sm font-semibold text-green-800"
         >
-          <span className="h-4 w-4 rounded-full border border-gray-300 bg-black" />
+          <span
+        className={`h-4 w-4 rounded-full border border-gray-400 ${
+          colour.toLowerCase() === "white" ? "bg-white" : "bg-black"
+        }`}
+      />
           {colour} — Available
           <span>✓</span>
         </div>
@@ -727,17 +731,18 @@ export default function GadgetPage({ gadget }: GadgetPageProps) {
               </p>
 
               
-              {"colourAvailability" in gadget && gadget.colourAvailability && (
-                <div className="mx-auto mt-5 max-w-md rounded-xl border border-green-500/30 bg-green-500/10 p-4 text-left">
-                  <p className="font-bold text-white">
-                    Colour: Black only
-                  </p>
-                  <p className="mt-1 text-sm text-gray-300">
-                    White is currently out of stock. Your order will be for
-                    the black camera.
-                  </p>
-                </div>
-              )}
+             
+          {"colourAvailability" in gadget && gadget.colourAvailability && (
+            <div className="mx-auto mt-5 max-w-md rounded-xl border border-green-500/30 bg-green-500/10 p-4 text-left">
+              <p className="font-bold text-white">
+                Available Colours: {gadget.colourAvailability.available.join(", ")}
+              </p>
+              <p className="mt-1 text-sm text-gray-300">
+                {gadget.colourAvailability.notice}
+              </p>
+            </div>
+          )}
+
 
               {hasLimitedStock && (
                 <div className="inline-flex items-center gap-2 mt-5 rounded-full bg-orange-500/10 border border-orange-500/20 px-4 py-2">
