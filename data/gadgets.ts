@@ -447,6 +447,16 @@ media: [
 
   price: 75000,
   comparePrice: 85000,
+
+colourPrices: {
+  Black: 75000,
+  White: 84000,
+},
+
+colourComparePrices: {
+  Black: 85000,
+  White: 94000,
+},
   offerLabel: "BEST SELLER",
   stock: 20,
   freeDelivery: true,

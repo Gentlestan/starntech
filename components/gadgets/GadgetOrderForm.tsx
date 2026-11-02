@@ -4,11 +4,13 @@ import { FormEvent, useState } from "react";
 type GadgetOrderFormProps = {
   productName: string;
   price: number;
+  colour?: string;
 };
 
 export default function GadgetOrderForm({
   productName,
   price,
+  colour,
 }: GadgetOrderFormProps) {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -29,6 +31,7 @@ export default function GadgetOrderForm({
 
     const order = {
       product: productName,
+      colour: colour || "",
       name: formData.get("name"),
       phone: formData.get("phone"),
       whatsapp: formData.get("whatsapp"),

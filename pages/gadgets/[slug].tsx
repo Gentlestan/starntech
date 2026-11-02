@@ -14,7 +14,8 @@ type GadgetPageProps = {
 
 export default function GadgetPage({ gadget }: GadgetPageProps) {
   const [selectedMedia, setSelectedMedia] = useState(0);
-
+  const [selectedColour, setSelectedColour] = useState("Black");
+  const hasColourPricing = "colourPrices" in gadget;
   // Product media: video first when available, followed by images
   const media = gadget.media?.slice(0, 6) ?? [];
 
@@ -23,11 +24,23 @@ export default function GadgetPage({ gadget }: GadgetPageProps) {
     /free|bonus|clipper|gift/i.test(item)
   );
 
-  const hasDiscount = gadget.comparePrice > gadget.price;
+  //const hasColourPricing = "colourPrices" in gadget;
 
-  const savings = hasDiscount
-    ? gadget.comparePrice - gadget.price
-    : 0;
+  const selectedPrice =
+  gadget.colourPrices?.[
+    selectedColour as keyof NonNullable<typeof gadget.colourPrices>
+  ] ?? gadget.price;
+
+const selectedComparePrice =
+  gadget.colourComparePrices?.[
+    selectedColour as keyof NonNullable<typeof gadget.colourComparePrices>
+  ] ?? gadget.comparePrice;
+
+const hasDiscount = selectedComparePrice > selectedPrice;
+
+const savings = hasDiscount
+  ? selectedComparePrice - selectedPrice
+  : 0;
 
   const hasLimitedStock =
     gadget.stock > 0 && gadget.stock <= 10;
@@ -317,46 +330,70 @@ export default function GadgetPage({ gadget }: GadgetPageProps) {
               </p>
             )}
 
-            
-{"colourAvailability" in gadget && gadget.colourAvailability && (
-  <div className="mt-4 rounded-xl border border-gray-200 bg-white p-4">
-    <h3 className="text-sm font-bold text-gray-900">
-      Colour Availability
-    </h3>
+                    
+        {"colourAvailability" in gadget && gadget.colourAvailability && (
+          <div className="mt-4 rounded-xl border border-gray-200 bg-white p-4">
+            <h3 className="text-sm font-bold text-gray-900">
+              Select Colour
+            </h3>
 
-    <div className="mt-3 flex flex-wrap gap-3">
-      {gadget.colourAvailability.available.map((colour) => (
-        <div
-          key={colour}
-          className="inline-flex items-center gap-2 rounded-lg border border-green-200 bg-green-50 px-3 py-2 text-sm font-semibold text-green-800"
-        >
-          <span
-        className={`h-4 w-4 rounded-full border border-gray-400 ${
-          colour.toLowerCase() === "white" ? "bg-white" : "bg-black"
-        }`}
-      />
-          {colour} — Available
-          <span>✓</span>
-        </div>
-      ))}
+            <div className="mt-3 flex flex-wrap gap-3">
+              {gadget.colourAvailability.available.map((colour) => {
+                const isSelected = selectedColour === colour;
 
-      {gadget.colourAvailability.outOfStock.map((colour) => (
-        <div
-          key={colour}
-          className="inline-flex items-center gap-2 rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-sm text-gray-500"
-        >
-          <span className="h-4 w-4 rounded-full border border-gray-300 bg-white" />
-          <span className="line-through">{colour}</span>
-          — Out of Stock
-        </div>
-      ))}
-    </div>
+                const colourPrice =
+                  gadget.colourPrices?.[
+                    colour as keyof NonNullable<typeof gadget.colourPrices>
+                  ] ?? gadget.price;
 
-    <p className="mt-3 text-sm font-medium text-gray-600">
-      {gadget.colourAvailability.notice}
-    </p>
-  </div>
-)}
+                return (
+                  <button
+                    key={colour}
+                    type="button"
+                    onClick={() => setSelectedColour(colour)}
+                    aria-pressed={isSelected}
+                    className={`inline-flex items-center gap-2 rounded-lg border px-3 py-2 text-sm font-semibold transition ${
+                      isSelected
+                        ? "border-blue-600 bg-blue-50 text-blue-800 ring-2 ring-blue-200"
+                        : "border-gray-200 bg-white text-gray-700 hover:border-gray-400"
+                    }`}
+                  >
+                    <span
+                      className={`h-4 w-4 rounded-full border border-gray-400 ${
+                        colour.toLowerCase() === "white"
+                          ? "bg-white"
+                          : "bg-black"
+                      }`}
+                    />
+
+                    {colour}
+
+                    <span className="font-bold">
+                      — ₦{colourPrice.toLocaleString("en-NG")}
+                    </span>
+
+                    {isSelected && <span>✓</span>}
+                  </button>
+                );
+              })}
+
+              {gadget.colourAvailability.outOfStock.map((colour) => (
+                <div
+                  key={colour}
+                  className="inline-flex items-center gap-2 rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-sm text-gray-500"
+                >
+                  <span className="h-4 w-4 rounded-full border border-gray-300 bg-white" />
+                  <span className="line-through">{colour}</span>
+                  — Out of Stock
+                </div>
+              ))}
+            </div>
+
+            <p className="mt-3 text-sm font-medium text-gray-600">
+              {gadget.colourAvailability.notice}
+            </p>
+          </div>
+        )}
 
             {/* PRICE */}
             <div className="mt-6">
@@ -365,7 +402,7 @@ export default function GadgetPage({ gadget }: GadgetPageProps) {
                 <div className="flex items-center gap-3 flex-wrap">
                   <p className="text-sm md:text-base text-gray-400 line-through font-medium">
                     Market price: ₦
-                    {gadget.comparePrice.toLocaleString("en-NG")}
+                    {selectedComparePrice.toLocaleString("en-NG")}
                   </p>
 
                   <span className="inline-flex items-center bg-green-100 text-green-800 rounded-full px-2.5 py-1 text-xs font-bold">
@@ -380,7 +417,7 @@ export default function GadgetPage({ gadget }: GadgetPageProps) {
 
               <div className="flex items-end gap-3 mt-1">
                 <p className="text-4xl md:text-5xl font-extrabold text-gray-950">
-                  ₦{gadget.price.toLocaleString("en-NG")}
+                  ₦{selectedPrice.toLocaleString("en-NG")}
                 </p>
               </div>
 
@@ -662,11 +699,11 @@ export default function GadgetPage({ gadget }: GadgetPageProps) {
           {hasDiscount && (
             <div className="mt-4 flex items-center justify-center gap-3 flex-wrap">
               <span className="text-green-100 line-through text-sm">
-                ₦{gadget.comparePrice.toLocaleString("en-NG")}
+                ₦{selectedComparePrice.toLocaleString("en-NG")}
               </span>
 
               <span className="text-white text-2xl md:text-3xl font-extrabold">
-                ₦{gadget.price.toLocaleString("en-NG")}
+                ₦{selectedPrice.toLocaleString("en-NG")}
               </span>
 
               <span className="bg-white/15 text-white rounded-full px-3 py-1 text-xs font-bold">
@@ -762,7 +799,7 @@ export default function GadgetPage({ gadget }: GadgetPageProps) {
                   </span>
 
                   <span className="text-white font-bold">
-                    ₦{gadget.price.toLocaleString("en-NG")}
+                    ₦{selectedPrice.toLocaleString("en-NG")}
                   </span>
                 </div>
 
@@ -774,7 +811,7 @@ export default function GadgetPage({ gadget }: GadgetPageProps) {
                       </span>
 
                       <span className="text-gray-400 text-sm line-through">
-                        ₦{gadget.comparePrice.toLocaleString("en-NG")}
+                        ₦{selectedComparePrice.toLocaleString("en-NG")}
                       </span>
                     </div>
 
@@ -829,7 +866,8 @@ export default function GadgetPage({ gadget }: GadgetPageProps) {
             {/* ORDER FORM */}
             <GadgetOrderForm
               productName={gadget.name}
-              price={gadget.price}
+              price={selectedPrice}
+              colour={hasColourPricing ? selectedColour : undefined}
             />
           </div>
         </div>
@@ -857,12 +895,12 @@ export default function GadgetPage({ gadget }: GadgetPageProps) {
 
             <div className="flex items-center gap-2">
               <p className="text-lg font-extrabold text-gray-950">
-                ₦{gadget.price.toLocaleString("en-NG")}
+                ₦{selectedPrice.toLocaleString("en-NG")}
               </p>
 
               {hasDiscount && (
                 <p className="text-xs text-gray-400 line-through">
-                  ₦{gadget.comparePrice.toLocaleString("en-NG")}
+                  ₦{selectedComparePrice.toLocaleString("en-NG")}
                 </p>
               )}
             </div>
