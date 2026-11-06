@@ -1,51 +1,43 @@
+
 import { useState } from "react";
 import Link from "next/link";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
 
+  const navLinks = [
+    { label: "Home", href: "/" },
+    { label: "Projects", href: "/projects" },
+    { label: "Blog", href: "/blog" },
+    { label: "Contact", href: "/contact" },
+  ];
+
   return (
     <header className="sticky top-0 z-50 bg-white border-b shadow-sm">
       <nav className="max-w-6xl mx-auto flex items-center justify-between p-4">
+
         {/* LOGO */}
         <Link
           href="/"
           className="font-bold text-xl text-gray-900 tracking-tight"
+          onClick={() => setOpen(false)}
         >
           Starntech
         </Link>
 
         {/* DESKTOP MENU */}
         <div className="hidden md:flex items-center gap-6 text-sm font-medium">
-          <Link
-            href="/"
-            className="text-gray-800 hover:text-green-600 transition"
-          >
-            Home
-          </Link>
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="text-gray-800 hover:text-green-600 transition"
+            >
+              {link.label}
+            </Link>
+          ))}
 
-          <Link
-            href="/projects"
-            className="text-gray-800 hover:text-green-600 transition"
-          >
-            Projects
-          </Link>
-
-          <Link
-            href="/blog"
-            className="text-gray-800 hover:text-green-600 transition"
-          >
-            Blog
-          </Link>
-
-          <Link
-            href="/contact"
-            className="text-gray-800 hover:text-green-600 transition"
-          >
-            Contact
-          </Link>
-
-          {/* WhatsApp CTA */}
+          {/* WHATSAPP CTA */}
           <a
             href="https://wa.me/2349017412351"
             target="_blank"
@@ -56,49 +48,40 @@ export default function Navbar() {
           </a>
         </div>
 
-        {/* MOBILE BUTTON */}
+        {/* MOBILE MENU BUTTON */}
         <button
+          type="button"
           className="md:hidden text-2xl text-gray-900"
           onClick={() => setOpen(!open)}
+          aria-label={open ? "Close menu" : "Open menu"}
+          aria-expanded={open}
         >
-          ☰
+          {open ? "✕" : "☰"}
         </button>
       </nav>
 
       {/* MOBILE MENU */}
       {open && (
         <div className="md:hidden flex flex-col gap-4 p-4 border-t bg-white font-medium">
-          <Link
-            href="/"
-            className="text-gray-800"
-            onClick={() => setOpen(false)}
-          >
-            Home
-          </Link>
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="text-gray-800 hover:text-green-600 transition"
+              onClick={() => setOpen(false)}
+            >
+              {link.label}
+            </Link>
+          ))}
 
-          <Link
-            href="/projects"
-            className="text-gray-800"
-            onClick={() => setOpen(false)}
+          <a
+            href="https://wa.me/2349017412351"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-green-600 hover:bg-green-700 text-white px-4 py-3 rounded-md text-center transition"
           >
-            Projects
-          </Link>
-
-          <Link
-            href="/blog"
-            className="text-gray-800"
-            onClick={() => setOpen(false)}
-          >
-            Blog
-          </Link>
-
-          <Link
-            href="/contact"
-            className="text-gray-800"
-            onClick={() => setOpen(false)}
-          >
-            Contact
-          </Link>
+            WhatsApp
+          </a>
         </div>
       )}
     </header>

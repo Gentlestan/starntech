@@ -1,10 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { gadgets } from "@/data/gadgets";
 import GadgetOrderForm from "@/components/gadgets/GadgetOrderForm";
 import Testimonials from "@/components/gadgets/Testimonials";
+import CameraUseCases from "@/components/gadgets/CameraUseCases";
+import CameraFeatures from "@/components/gadgets/CameraFeatures";
+import CameraHowItWorks from "@/components/gadgets/CameraHowItWorks";
+import CameraFAQ from "@/components/gadgets/CameraFAQ";
+import CameraSupport from "@/components/gadgets/CameraSupport";
 
 type Gadget = (typeof gadgets)[number];
 
@@ -15,26 +20,61 @@ type GadgetPageProps = {
 export default function GadgetPage({ gadget }: GadgetPageProps) {
   const [selectedMedia, setSelectedMedia] = useState(0);
   const [selectedColour, setSelectedColour] = useState("Black");
+  const [isOrderOpen, setIsOrderOpen] = useState(false);
+  const [selectedVariantName, setSelectedVariantName] = useState("16-inch");
+
+  useEffect(() => {
+  if (window.location.hash === "#order") {
+    setIsOrderOpen(true);
+  }
+}, []);
+
+
+  const isV380Camera = gadget.slug === "v380-solar-camera";
   const hasColourPricing = "colourPrices" in gadget;
-  // Product media: video first when available, followed by images
-  const media = gadget.media?.slice(0, 6) ?? [];
+  const variants = "variants" in gadget ? gadget.variants : undefined;
 
-  // Detect whether the product has a bonus/free item
-  const bonusItem = gadget.whats_in_the_box?.find((item) =>
-    /free|bonus|clipper|gift/i.test(item)
-  );
+const selectedVariant = variants?.find(
+  (variant) => variant.name === selectedVariantName
+) ?? variants?.[0];
 
-  //const hasColourPricing = "colourPrices" in gadget;
+// Filter the fan gallery to show the selected size.
+// Other products retain their existing gallery behaviour.
+const allMedia = gadget.media ?? [];
 
-  const selectedPrice =
+const variantMedia = selectedVariant
+  ? allMedia.filter((item) =>
+      item.src.includes(
+        selectedVariant.name === "16-inch" ? "16-inch" : "18-inch"
+      )
+    )
+  : [];
+
+const media = selectedVariant
+  ? variantMedia.length > 0
+    ? variantMedia
+    : allMedia
+  : allMedia.slice(0, 6);
+
+const bonusItem = gadget.whats_in_the_box?.find((item) =>
+  /free|bonus|clipper|gift/i.test(item)
+);
+
+const selectedPrice =
+  selectedVariant?.price ??
   gadget.colourPrices?.[
     selectedColour as keyof NonNullable<typeof gadget.colourPrices>
-  ] ?? gadget.price;
+  ] ??
+  gadget.price;
 
 const selectedComparePrice =
+  selectedVariant?.comparePrice ??
   gadget.colourComparePrices?.[
     selectedColour as keyof NonNullable<typeof gadget.colourComparePrices>
-  ] ?? gadget.comparePrice;
+  ] ??
+  gadget.comparePrice;
+
+const selectedStock = selectedVariant?.stock ?? gadget.stock;
 
 const hasDiscount = selectedComparePrice > selectedPrice;
 
@@ -42,10 +82,9 @@ const savings = hasDiscount
   ? selectedComparePrice - selectedPrice
   : 0;
 
-  const hasLimitedStock =
-    gadget.stock > 0 && gadget.stock <= 10;
+const hasLimitedStock = selectedStock > 0 && selectedStock <= 10;
 
-  const selectedItem = media[selectedMedia];
+const selectedItem = media[selectedMedia];
 
   return (
     <section className="bg-gradient-to-b from-gray-50 to-white py-6 md:py-12">
@@ -308,8 +347,8 @@ const savings = hasDiscount
             {/* STOCK URGENCY */}
             {hasLimitedStock && (
               <div className="mt-4 inline-flex w-fit items-center gap-2 bg-orange-50 border border-orange-200 text-orange-800 rounded-lg px-3 py-2 text-sm font-bold">
-                ⚡ Only {gadget.stock}{" "}
-                {gadget.stock === 1 ? "unit" : "units"} available
+                ⚡ Only {selectedStock}{" "}
+                {selectedStock === 1 ? "unit" : "units"} available
               </div>
             )}
 
@@ -318,18 +357,101 @@ const savings = hasDiscount
               {gadget.category}
             </p>
 
-            {/* TITLE */}
-            <h1 className="text-3xl md:text-5xl font-extrabold text-gray-950 mt-2 leading-tight">
-              {gadget.name}
-            </h1>
+          {/* TITLE AND PRODUCT INTRODUCTION */}
+<div className="mt-2">
+  {isV380Camera ? (
+    <>
+      <p className="text-sm font-bold uppercase tracking-wider text-green-700">
+        V380 Max 4G Solar Security Camera
+      </p>
 
-            {/* SHORT DESCRIPTION */}
-            {gadget.shortDescription && (
-              <p className="text-gray-600 text-base md:text-lg leading-7 mt-4 max-w-xl">
-                {gadget.shortDescription}
-              </p>
-            )}
+      <h1 className="text-3xl md:text-5xl font-extrabold text-gray-950 mt-3 leading-tight">
+        Let the Camera Be Your Eyes, Even When You're Not There.
+      </h1>
 
+      <p className="text-gray-700 text-base md:text-lg leading-7 mt-4 max-w-xl">
+        Whether you're at home, running your business or away from
+        your property, stay connected to what's happening around you.
+        Monitor your surroundings from your phone, receive motion
+        alerts and communicate through two-way audio.
+      </p>
+
+      <p className="text-gray-600 text-sm md:text-base leading-7 mt-3 max-w-xl">
+        No Wi-Fi router required. Simply connect a 4G SIM card,
+        enjoy solar-powered charging and monitor your property
+        even at night.
+      </p>
+    </>
+  ) : (
+    <>
+      <h1 className="text-3xl md:text-5xl font-extrabold text-gray-950 mt-2 leading-tight">
+        {gadget.name}
+      </h1>
+
+      {gadget.shortDescription && (
+        <p className="text-gray-600 text-base md:text-lg leading-7 mt-4 max-w-xl">
+          {gadget.shortDescription}
+        </p>
+      )}
+    </>
+  )}
+</div>
+
+
+
+
+        {variants && selectedVariant && (
+          <div className="mt-5 rounded-xl border border-gray-200 bg-white p-4">
+            <h3 className="text-sm font-bold text-gray-900">
+              Select Fan Size
+            </h3>
+
+            <div className="mt-3 grid grid-cols-2 gap-3">
+              {variants.map((variant) => {
+                const isSelected = selectedVariant.name === variant.name;
+
+                return (
+                  <button
+                    key={variant.name}
+                    type="button"
+                    onClick={() => {
+                      setSelectedVariantName(variant.name);
+                      setSelectedMedia(0);
+                    }}
+                    aria-pressed={isSelected}
+                    className={`rounded-xl border-2 p-3 text-left transition ${
+                      isSelected
+                        ? "border-green-700 bg-green-50 ring-2 ring-green-100"
+                        : "border-gray-200 bg-white hover:border-gray-400"
+                    }`}
+                  >
+                    <span className="block font-bold text-gray-900">
+                      {variant.name}
+                    </span>
+
+                    <span className="block mt-1 text-sm font-bold text-green-800">
+                      ₦{variant.price.toLocaleString("en-NG")}
+                    </span>
+
+                    <span className="block mt-1 text-xs text-gray-500">
+                      {variant.model}
+                    </span>
+
+                    <span className="block mt-2 text-xs text-gray-500">
+                      {variant.stock} available
+                    </span>
+
+                    {isSelected && (
+                      <span className="block mt-2 text-xs font-bold text-green-700">
+                        ✓ Selected
+                      </span>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
                     
         {"colourAvailability" in gadget && gadget.colourAvailability && (
           <div className="mt-4 rounded-xl border border-gray-200 bg-white p-4">
@@ -527,8 +649,8 @@ const savings = hasDiscount
 
                   {hasLimitedStock && (
                     <p className="font-semibold text-orange-800">
-                      ⚡ Only {gadget.stock}{" "}
-                      {gadget.stock === 1 ? "unit" : "units"} currently
+                      ⚡ Only {selectedStock}{" "}
+                      {selectedStock === 1 ? "unit" : "units"} currently
                       available.
                     </p>
                   )}
@@ -545,6 +667,7 @@ const savings = hasDiscount
             {/* PRIMARY CTA */}
             <Link
               href={`/gadgets/${gadget.slug}#order`}
+              onClick={() => setIsOrderOpen(true)}
               className="w-full mt-6 inline-flex items-center justify-center px-6 py-4.5 rounded-xl bg-green-700 text-white font-bold text-base md:text-lg hover:bg-green-800 active:scale-[0.99] transition shadow-lg shadow-green-700/20"
             >
               Order Now — Pay on Delivery
@@ -605,81 +728,125 @@ const savings = hasDiscount
           </div>
         </div>
 
+
+        {isV380Camera && <CameraUseCases />}
         <Testimonials slug={gadget.slug} />
 
-        {/* =========================
-            PRODUCT DETAILS
-        ========================== */}
+        {/* PRODUCT DETAILS GRID */}
 
-        <div className="grid md:grid-cols-2 gap-6 md:gap-8 mt-14 md:mt-20">
+          {gadget.slug === "v380-solar-camera" ? (
+            <>
+              {/* V380 SPECIFIC FEATURES */}
+              <CameraFeatures />
+              
 
-          {/* FEATURES */}
-          <div className="bg-white border border-gray-100 rounded-2xl p-6 md:p-8">
-            <p className="text-sm font-semibold text-green-700 uppercase tracking-wide">
-              Why you'll love it
-            </p>
+              {/* WHAT'S INCLUDED */}
+              <div className="bg-white border border-gray-100 rounded-2xl p-6 md:p-8">
+                <p className="text-sm font-semibold text-green-700 uppercase tracking-wide">
+                  In the package
+                </p>
 
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mt-2">
-              Key Features
-            </h2>
+                <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mt-2">
+                  What You Get
+                </h2>
 
-            <ul className="mt-6 space-y-4">
-              {gadget.features.map((feature) => (
-                <li
-                  key={feature}
-                  className="flex items-start gap-3 text-gray-700 text-sm md:text-base"
-                >
-                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-green-100 text-green-700 flex items-center justify-center text-xs font-bold">
-                    ✓
-                  </span>
+                <ul className="mt-6 space-y-4">
+                  {gadget.whats_in_the_box.map((item) => {
+                    const isBonus = /free|bonus|clipper|gift/i.test(item);
 
-                  <span className="leading-6">
-                    {feature}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
+                    return (
+                      <li
+                        key={item}
+                        className={`flex items-start gap-3 text-sm md:text-base ${
+                          isBonus
+                            ? "font-bold text-green-800 bg-green-50 rounded-xl p-3"
+                            : "text-gray-700"
+                        }`}
+                      >
+                        <span className="flex-shrink-0 w-6 h-6 rounded-full bg-green-100 text-green-700 flex items-center justify-center text-xs font-bold">
+                          ✓
+                        </span>
 
-          {/* WHAT'S INCLUDED */}
-          <div className="bg-white border border-gray-100 rounded-2xl p-6 md:p-8">
-            <p className="text-sm font-semibold text-green-700 uppercase tracking-wide">
-              In the package
-            </p>
+                        <span className="leading-6">
+                          {isBonus && "🎁 "}
+                          {item}
+                        </span>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+               <CameraHowItWorks />
+               <CameraFAQ />
+               <CameraSupport />
+            </>
+          ) : (
+            /* OTHER PRODUCTS: FEATURES AND PACKAGE SIDE BY SIDE */
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
+              {/* GENERAL FEATURES */}
+              <div className="bg-white border border-gray-100 rounded-2xl p-6 md:p-8">
+                <p className="text-sm font-semibold text-green-700 uppercase tracking-wide">
+                  Why you'll love it
+                </p>
 
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mt-2">
-              What You Get
-            </h2>
+                <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mt-2">
+                  Key Features
+                </h2>
 
-            <ul className="mt-6 space-y-4">
-              {gadget.whats_in_the_box.map((item) => {
-                const isBonus =
-                  /free|bonus|clipper|gift/i.test(item);
+                <ul className="mt-6 space-y-4">
+                  {gadget.features.map((feature) => (
+                    <li
+                      key={feature}
+                      className="flex items-start gap-3 text-gray-700 text-sm md:text-base"
+                    >
+                      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-green-100 text-green-700 flex items-center justify-center text-xs font-bold">
+                        ✓
+                      </span>
 
-                return (
-                  <li
-                    key={item}
-                    className={`flex items-start gap-3 text-sm md:text-base ${
-                      isBonus
-                        ? "font-bold text-green-800 bg-green-50 rounded-xl p-3"
-                        : "text-gray-700"
-                    }`}
-                  >
-                    <span className="flex-shrink-0 w-6 h-6 rounded-full bg-green-100 text-green-700 flex items-center justify-center text-xs font-bold">
-                      ✓
-                    </span>
+                      <span className="leading-6">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
 
-                    <span className="leading-6">
-                      {isBonus && "🎁 "}
-                      {item}
-                    </span>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-        </div>
+              {/* WHAT'S INCLUDED */}
+              <div className="bg-white border border-gray-100 rounded-2xl p-6 md:p-8">
+                <p className="text-sm font-semibold text-green-700 uppercase tracking-wide">
+                  In the package
+                </p>
 
+                <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mt-2">
+                  What You Get
+                </h2>
+
+                <ul className="mt-6 space-y-4">
+                  {gadget.whats_in_the_box.map((item) => {
+                    const isBonus = /free|bonus|clipper|gift/i.test(item);
+
+                    return (
+                      <li
+                        key={item}
+                        className={`flex items-start gap-3 text-sm md:text-base ${
+                          isBonus
+                            ? "font-bold text-green-800 bg-green-50 rounded-xl p-3"
+                            : "text-gray-700"
+                        }`}
+                      >
+                        <span className="flex-shrink-0 w-6 h-6 rounded-full bg-green-100 text-green-700 flex items-center justify-center text-xs font-bold">
+                          ✓
+                        </span>
+
+                        <span className="leading-6">
+                          {isBonus && "🎁 "}
+                          {item}
+                        </span>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            </div>
+          )}
         {/* =========================
             MID-PAGE CTA
         ========================== */}
@@ -719,8 +886,8 @@ const savings = hasDiscount
 
           {hasLimitedStock && (
             <p className="text-white text-sm font-bold mt-4">
-              ⚡ Only {gadget.stock}{" "}
-              {gadget.stock === 1 ? "unit" : "units"} available
+              ⚡ Only {selectedStock}{" "}
+              {selectedStock === 1 ? "unit" : "units"} available
             </p>
           )}
 
@@ -732,6 +899,7 @@ const savings = hasDiscount
 
           <Link
             href={`/gadgets/${gadget.slug}#order`}
+            onClick={() => setIsOrderOpen(true)}
             className="mt-6 inline-flex items-center justify-center bg-white text-green-800 px-7 py-4 rounded-xl font-bold hover:bg-gray-50 transition shadow-lg"
           >
             Order Now — Pay on Delivery
@@ -747,52 +915,75 @@ const savings = hasDiscount
           id="order"
           className="mt-14 md:mt-20 scroll-mt-6"
         >
-          <div className="bg-gray-950 rounded-3xl p-6 md:p-10 shadow-xl">
+          <div className="text-center mb-6">
+            <h2 className="text-2xl md:text-3xl font-extrabold text-gray-900">
+              Ready to place your order?
+            </h2>
 
-            {/* ORDER HEADER */}
-            <div className="text-center mb-8">
+            <p className="text-gray-600 text-sm md:text-base mt-2">
+              Complete your order and pay when your camera arrives.
+            </p>
 
-              <div className="inline-flex items-center rounded-full bg-green-500/10 border border-green-500/20 px-3 py-1.5">
-                <span className="text-green-400 font-semibold text-xs">
-                  SECURE YOUR ORDER
-                </span>
-              </div>
+            <button
+              type="button"
+              onClick={() => setIsOrderOpen((open) => !open)}
+              aria-expanded={isOrderOpen}
+              aria-controls="order-form-panel"
+              className="mt-4 inline-flex items-center justify-center gap-2 rounded-xl bg-green-700 px-7 py-3.5 text-white font-bold hover:bg-green-800 transition"
+            >
+              {isOrderOpen ? "Hide Order Form" : "Open Order Form"}
+              <span>{isOrderOpen ? "↑" : "→"}</span>
+            </button>
+          </div>
 
-              <h2 className="text-2xl md:text-4xl font-extrabold text-white mt-4">
-                Order {gadget.name}
-              </h2>
-
-              <p className="text-gray-300 max-w-2xl mx-auto mt-4 leading-7">
-                Fill out the form below. We'll contact you to confirm your
-                order, location and delivery details before dispatch.
-              </p>
-
-              
-             
-          {"colourAvailability" in gadget && gadget.colourAvailability && (
-            <div className="mx-auto mt-5 max-w-md rounded-xl border border-green-500/30 bg-green-500/10 p-4 text-left">
-              <p className="font-bold text-white">
-                Available Colours: {gadget.colourAvailability.available.join(", ")}
-              </p>
-              <p className="mt-1 text-sm text-gray-300">
-                {gadget.colourAvailability.notice}
-              </p>
-            </div>
-          )}
-
-
-              {hasLimitedStock && (
-                <div className="inline-flex items-center gap-2 mt-5 rounded-full bg-orange-500/10 border border-orange-500/20 px-4 py-2">
-                  <span className="text-orange-300 text-sm font-bold">
-                    ⚡ Only {gadget.stock}{" "}
-                    {gadget.stock === 1 ? "unit" : "units"} available
+                    {isOrderOpen && (
+            <div
+              id="order-form-panel"
+              className="bg-gray-950 rounded-3xl p-6 md:p-10 shadow-xl"
+            >
+              {/* ORDER HEADER */}
+              <div className="text-center mb-8">
+                <div className="inline-flex items-center rounded-full bg-green-500/10 border border-green-500/20 px-3 py-1.5">
+                  <span className="text-green-400 font-semibold text-xs">
+                    SECURE YOUR ORDER
                   </span>
                 </div>
-              )}
+
+                <h2 className="text-2xl md:text-4xl font-extrabold text-white mt-4">
+                  Order {gadget.name}
+                </h2>
+
+                <p className="text-gray-300 max-w-2xl mx-auto mt-4 leading-7">
+                  Fill out the form below. We'll contact you to confirm your
+                  order, location and delivery details before dispatch.
+                </p>
+
+                {"colourAvailability" in gadget &&
+                  gadget.colourAvailability && (
+                    <div className="mx-auto mt-5 max-w-md rounded-xl border border-green-500/30 bg-green-500/10 p-4 text-left">
+                      <p className="font-bold text-white">
+                        Available Colours:{" "}
+                        {gadget.colourAvailability.available.join(", ")}
+                      </p>
+
+                      <p className="mt-1 text-sm text-gray-300">
+                        {gadget.colourAvailability.notice}
+                      </p>
+                    </div>
+                  )}
+
+                {hasLimitedStock && (
+                  <div className="inline-flex items-center gap-2 mt-5 rounded-full bg-orange-500/10 border border-orange-500/20 px-4 py-2">
+                    <span className="text-orange-300 text-sm font-bold">
+                      ⚡ Only {selectedStock}{" "}
+                      {selectedStock === 1 ? "unit" : "units"} available
+                    </span>
+                  </div>
+                )}
+              </div>
 
               {/* ORDER SUMMARY */}
               <div className="max-w-md mx-auto mt-6 rounded-2xl bg-white/5 border border-white/10 p-4">
-
                 <div className="flex items-center justify-between gap-4">
                   <span className="text-gray-300 text-sm">
                     {gadget.name}
@@ -861,16 +1052,18 @@ const savings = hasDiscount
                   </div>
                 )}
               </div>
-            </div>
 
-            {/* ORDER FORM */}
-            <GadgetOrderForm
-              productName={gadget.name}
-              price={selectedPrice}
-              colour={hasColourPricing ? selectedColour : undefined}
-            />
+              {/* ORDER FORM */}
+              <GadgetOrderForm
+                productName={gadget.name}
+                price={selectedPrice}
+                colour={hasColourPricing ? selectedColour : undefined}
+                variant={selectedVariant?.name}
+                model={selectedVariant?.model}
+              />
+            </div>
+          )}
           </div>
-        </div>
 
         {/* FINAL REASSURANCE */}
         <div className="text-center mt-8 md:mt-10 pb-24 md:pb-4">
@@ -908,6 +1101,7 @@ const savings = hasDiscount
 
           <Link
             href={`/gadgets/${gadget.slug}#order`}
+            onClick={() => setIsOrderOpen(true)}
             className="flex-shrink-0 inline-flex items-center justify-center bg-green-700 hover:bg-green-800 text-white px-5 py-3 rounded-xl font-bold text-sm shadow-md shadow-green-700/20 transition"
           >
             Order Now →

@@ -5,12 +5,16 @@ type GadgetOrderFormProps = {
   productName: string;
   price: number;
   colour?: string;
+  variant?: string;
+  model?: string;
 };
 
 export default function GadgetOrderForm({
   productName,
   price,
   colour,
+  variant,
+  model,
 }: GadgetOrderFormProps) {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -32,6 +36,9 @@ export default function GadgetOrderForm({
     const order = {
       product: productName,
       colour: colour || "",
+      variant: variant || "",
+      model: model || "",
+      price,
       name: formData.get("name"),
       phone: formData.get("phone"),
       whatsapp: formData.get("whatsapp"),

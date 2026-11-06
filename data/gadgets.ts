@@ -450,12 +450,10 @@ media: [
 
 colourPrices: {
   Black: 75000,
-  White: 84000,
 },
 
 colourComparePrices: {
   Black: 85000,
-  White: 94000,
 },
   offerLabel: "BEST SELLER",
   stock: 20,
@@ -472,9 +470,9 @@ colourComparePrices: {
 
 
  colourAvailability: {
-  available: ["Black", "White"],
-  outOfStock: [],
-  notice: "Available in both Black and White.",
+  available: ["Black"],
+  outOfStock: ["White"],
+  notice: "Black is currently available. White is out of stock.",
 },
 
   features: [
@@ -554,7 +552,195 @@ colourComparePrices: {
   available: true,
 },
 
+{
+  slug: "colarhome-solar-rechargeable-fan",
+  name: "ColarHome Solar Rechargeable Fan (16-inch & 18-inch)",
+  category: "Solar Products",
 
+  price: 75000,
+  comparePrice: 85000,
+  offerLabel: "AVAILABLE IN 16-INCH & 18-INCH",
+  stock: 18,
+  freeDelivery: true,
+
+  shortDescription:
+    "ColarHome solar rechargeable fan with 25W solar panel, remote control, LED lighting, USB charging and three speed settings. Available in 16-inch and 18-inch models.",
+
+  description:
+    "Enjoy cooling and lighting with the ColarHome Solar Rechargeable Fan, designed for homes, shops and other spaces where reliable power is needed. It features a 25W solar panel, rechargeable battery, three speed settings, built-in LED light, USB charging port and remote control. It also includes two DC outputs for LED bulbs and operates quietly. Choose between the 16-inch CH-SF3 and 18-inch CH-SF04 models.",
+
+  // Customers select their preferred fan size.
+  variants: [
+    {
+      name: "16-inch",
+      model: "CH-SF3",
+      price: 75000,
+      comparePrice: 85000,
+      stock: 10,
+    },
+    {
+      name: "18-inch",
+      model: "CH-SF04",
+      price: 85000,
+      comparePrice: 95000,
+      stock: 8,
+    },
+  ],
+
+  features: [
+    "25W solar panel",
+    "Rechargeable battery",
+    "Remote control operation",
+    "Three adjustable speed settings",
+    "Built-in LED light",
+    "Two DC outputs for LED bulbs",
+    "USB charging port for compatible devices",
+    "Quiet operation",
+    "Metal protective grill",
+    "Durable ABS construction",
+    "Suitable for homes, shops and small businesses",
+    "Solar and rechargeable operation",
+  ],
+
+  specifications: [
+    {
+      name: "Brand",
+      value: "ColarHome",
+    },
+    {
+      name: "Product Type",
+      value: "Solar Rechargeable Fan",
+    },
+    {
+      name: "Available Sizes",
+      value: "16-inch and 18-inch",
+    },
+    {
+      name: "16-inch Model",
+      value: "CH-SF3",
+    },
+    {
+      name: "18-inch Model",
+      value: "CH-SF04",
+    },
+    {
+      name: "Solar Panel",
+      value: "25W",
+    },
+    {
+      name: "Speed Settings",
+      value: "3 speeds",
+    },
+    {
+      name: "Lighting",
+      value: "Built-in LED light",
+    },
+    {
+      name: "DC Outputs",
+      value: "2 DC outputs for LED bulbs",
+    },
+    {
+      name: "USB Port",
+      value: "USB charging output",
+    },
+    {
+      name: "Control Method",
+      value: "Remote control",
+    },
+    {
+      name: "Operation",
+      value: "Quiet operation",
+    },
+    {
+      name: "Fan Grill",
+      value: "Metal",
+    },
+    {
+      name: "Body Material",
+      value: "ABS",
+    },
+    {
+      name: "16-inch Battery",
+      value: "6Ah / 7.4V",
+    },
+    {
+      name: "16-inch Fan Power",
+      value: "15–25W",
+    },
+    {
+      name: "18-inch Battery",
+      value: "Large-capacity rechargeable battery",
+    },
+  ],
+
+  whats_in_the_box: [
+    "ColarHome Solar Rechargeable Fan",
+    "Solar Panel",
+    "Remote Control",
+    "Charging Accessories",
+    "User Accessories",
+  ],
+
+  paymentMethod: "Payment on Delivery",
+
+  paymentDescription:
+    "Pay when your order is delivered. Our team will contact you to confirm your selected fan size and delivery details before dispatch.",
+
+  deliveryMethod: "Free Nationwide Delivery",
+
+  deliveryDescription:
+    "Enjoy free nationwide delivery. We will confirm your order and delivery details before dispatch.",
+
+  orderingProcess: [
+    "Select your preferred fan size: 16-inch or 18-inch.",
+    "Fill out the order form with your contact and delivery details.",
+    "Our team contacts you to confirm your selected model and order.",
+    "Your fan is dispatched for free nationwide delivery.",
+    "Pay when your order is delivered.",
+  ],
+
+  media: [
+  // 16-inch CH-SF3
+  {
+    type: "video",
+    src: "/videos/colarhome-16-inch-demo.mp4",
+    thumbnail: "/images/solar-products/colarhome-ch-sf3-16-inch-1.jpg",
+  },
+  {
+    type: "image",
+    src: "/images/solar-products/colarhome-ch-sf3-16-inch-1.jpg",
+  },
+  {
+    type: "image",
+    src: "/images/solar-products/colarhome-ch-sf3-16-inch-2.jpg",
+  },
+  {
+    type: "image",
+    src: "/images/solar-products/colarhome-ch-sf3-16-inch-3.jpg",
+  },
+
+  // 18-inch CH-SF04
+  {
+    type: "video",
+    src: "/videos/colarhome-18-inch-demo.mp4",
+    thumbnail: "/images/solar-products/colarhome-ch-sf04-18-inch-1.jpg",
+  },
+  {
+    type: "image",
+    src: "/images/solar-products/colarhome-ch-sf04-18-inch-1.jpg",
+  },
+  {
+    type: "image",
+    src: "/images/solar-products/colarhome-ch-sf04-18-inch-2.jpg",
+  },
+  {
+    type: "image",
+    src: "/images/solar-products/colarhome-ch-sf04-18-inch-3.jpg",
+  },
+],
+  featured: true,
+  available: true,
+},
 {
   slug: "world-vision-wireless-intercom",
   name: "World Vision Wireless Intercom System",

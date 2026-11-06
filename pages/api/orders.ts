@@ -44,6 +44,7 @@ export default async function handler(
     const {
       product,
       colour,
+      variant,
       name,
       phone,
       whatsapp,
@@ -99,6 +100,40 @@ export default async function handler(
     // Calculate the correct price on the server
     let unitPrice = gadget.price;
     let orderColour = "";
+    let orderVariant = "";
+    let orderModel = "";
+
+    // Apply size/variant pricing to products that support variants
+      if ("variants" in gadget) {
+        if (typeof variant !== "string" || !variant.trim()) {
+          return res.status(400).json({
+            success: false,
+            message: "Please select a product size.",
+          });
+        }
+
+        const selectedVariant = gadget.variants?.find(
+          (item) => item.name === variant
+        );
+
+        if (!selectedVariant) {
+          return res.status(400).json({
+            success: false,
+            message: "The selected product size is unavailable.",
+          });
+        }
+
+        if (orderQuantity > selectedVariant.stock) {
+          return res.status(400).json({
+            success: false,
+            message: "The requested quantity exceeds available stock.",
+          });
+        }
+
+        unitPrice = selectedVariant.price;
+        orderVariant = selectedVariant.name;
+        orderModel = selectedVariant.model;
+      }
 
     // Apply colour-specific pricing only to products that support it
     if ("colourPrices" in gadget) {
@@ -141,6 +176,8 @@ export default async function handler(
     // Clean customer information for email display
     const safeProduct = escapeHtml(product);
     const safeColour = escapeHtml(orderColour);
+    const safeVariant = escapeHtml(orderVariant);
+    const safeModel = escapeHtml(orderModel);
     const safeName = escapeHtml(name);
     const safePhone = escapeHtml(phone);
     const safeWhatsapp = escapeHtml(whatsapp || "Not provided");
@@ -170,7 +207,7 @@ export default async function handler(
 
     await sheets.spreadsheets.values.append({
       spreadsheetId: process.env.GOOGLE_SHEET_ID,
-      range: "Sheet1!A:N",
+      range: "Sheet1!A:P",
       valueInputOption: "USER_ENTERED",
       requestBody: {
         values: [
@@ -191,6 +228,8 @@ export default async function handler(
             orderColour,
             unitPrice,
             orderTotal,
+            orderVariant,
+            orderModel,
           ],
         ],
       },

@@ -43,12 +43,12 @@ export default function GadgetsNavbar() {
             Earbuds
           </Link>
 
-          {/* SOLAR CAMERAS */}
+          {/* SOLAR SOLUTIONS */}
           <Link
-            href="/gadgets/solar-cameras"
+            href="/gadgets/solar-solutions"
             className="text-gray-800 hover:text-green-600 transition"
           >
-            Solar Cameras
+            Solar Solutions
           </Link>
         </div>
 
@@ -94,12 +94,13 @@ export default function GadgetsNavbar() {
           </Link>
 
           {/* SOLAR CAMERAS */}
+          {/* SOLAR SOLUTIONS */}
           <Link
-            href="/gadgets/solar-cameras"
+            href="/gadgets/solar-solutions"
             className="text-gray-800 hover:text-green-600 transition"
             onClick={() => setOpen(false)}
           >
-            Solar Cameras
+            Solar Solutions
           </Link>
         </div>
       )}
