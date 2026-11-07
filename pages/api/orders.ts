@@ -7,6 +7,7 @@ import { gadgets } from "../../data/gadgets";
 type ResponseData = {
   success: boolean;
   message: string;
+  orderTotal?: number;
 };
 
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -298,9 +299,10 @@ export default async function handler(
     }
 
     return res.status(200).json({
-      success: true,
-      message: "Order submitted successfully.",
-    });
+  success: true,
+  message: "Order submitted successfully.",
+  orderTotal,
+});
   } catch (error) {
     console.error("Order submission error:", error);
 

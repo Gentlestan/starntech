@@ -1,5 +1,5 @@
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 
 type GadgetOrderFormProps = {
   productName: string;
@@ -19,8 +19,24 @@ export default function GadgetOrderForm({
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [quantity, setQuantity] = useState(1);
+  const formRef = useRef<HTMLFormElement>(null);
 
   const total = price * quantity;
+
+  useEffect(() => {
+  const resetOrderForm = () => {
+    formRef.current?.reset();
+    setQuantity(1);
+  };
+
+  window.addEventListener("pageshow", resetOrderForm);
+  window.addEventListener("popstate", resetOrderForm);
+
+  return () => {
+    window.removeEventListener("pageshow", resetOrderForm);
+    window.removeEventListener("popstate", resetOrderForm);
+  };
+}, []);
 
   const formatPrice = (value: number) => {
     return `₦${value.toLocaleString("en-NG")}`;
@@ -67,36 +83,35 @@ export default function GadgetOrderForm({
 }
 
 
- // Track successful order as a Lead
+ 
+// Track successful order as a Purchase
 if (typeof window !== "undefined" && (window as any).fbq) {
-  const leadData = {
-    content_name: productName,
-    value: total,
-    currency: "NGN",
-  };
+  const purchaseData = {
+  content_name: productName,
+  value: result.orderTotal,
+  currency: "NGN",
+};
 
   if (productName === "V380 Max 4G Solar Security Camera") {
     // Engineering Pixel — V380 only
     (window as any).fbq(
       "trackSingle",
       "1054762187425411",
-      "Lead",
-      leadData
+      "Purchase",
+      purchaseData
     );
   } else {
     // Gadget Store Pixel — all other products
     (window as any).fbq(
       "trackSingle",
       "2326435488100673",
-      "Lead",
-      leadData
+      "Purchase",
+      purchaseData
     );
   }
 }
 
-  setSubmitted(true);
-      form.reset();
-      setQuantity(1);
+  window.location.href = "/gadgets/thank-you";
     } catch (error) {
       console.error("Order submission error:", error);
 
