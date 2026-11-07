@@ -1,4 +1,3 @@
-
 import { FormEvent, useEffect, useRef, useState } from "react";
 
 type GadgetOrderFormProps = {
@@ -19,24 +18,25 @@ export default function GadgetOrderForm({
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [quantity, setQuantity] = useState(1);
+
   const formRef = useRef<HTMLFormElement>(null);
 
   const total = price * quantity;
 
   useEffect(() => {
-  const resetOrderForm = () => {
-    formRef.current?.reset();
-    setQuantity(1);
-  };
+    const resetOrderForm = () => {
+      formRef.current?.reset();
+      setQuantity(1);
+    };
 
-  window.addEventListener("pageshow", resetOrderForm);
-  window.addEventListener("popstate", resetOrderForm);
+    window.addEventListener("pageshow", resetOrderForm);
+    window.addEventListener("popstate", resetOrderForm);
 
-  return () => {
-    window.removeEventListener("pageshow", resetOrderForm);
-    window.removeEventListener("popstate", resetOrderForm);
-  };
-}, []);
+    return () => {
+      window.removeEventListener("pageshow", resetOrderForm);
+      window.removeEventListener("popstate", resetOrderForm);
+    };
+  }, []);
 
   const formatPrice = (value: number) => {
     return `₦${value.toLocaleString("en-NG")}`;
@@ -77,41 +77,39 @@ export default function GadgetOrderForm({
       const result = await response.json();
 
       if (!response.ok) {
-  throw new Error(
-    result.message || "Something went wrong. Please try again."
-  );
-}
+        throw new Error(
+          result.message || "Something went wrong. Please try again."
+        );
+      }
 
+      // Track successful order as a Purchase
+      if (typeof window !== "undefined" && (window as any).fbq) {
+        const purchaseData = {
+          content_name: productName,
+          value: result.orderTotal,
+          currency: "NGN",
+        };
 
- 
-// Track successful order as a Purchase
-if (typeof window !== "undefined" && (window as any).fbq) {
-  const purchaseData = {
-  content_name: productName,
-  value: result.orderTotal,
-  currency: "NGN",
-};
+        if (productName === "V380 Max 4G Solar Security Camera") {
+          // Engineering Pixel — V380 only
+          (window as any).fbq(
+            "trackSingle",
+            "1054762187425411",
+            "Purchase",
+            purchaseData
+          );
+        } else {
+          // Gadget Store Pixel — all other products
+          (window as any).fbq(
+            "trackSingle",
+            "2326435488100673",
+            "Purchase",
+            purchaseData
+          );
+        }
+      }
 
-  if (productName === "V380 Max 4G Solar Security Camera") {
-    // Engineering Pixel — V380 only
-    (window as any).fbq(
-      "trackSingle",
-      "1054762187425411",
-      "Purchase",
-      purchaseData
-    );
-  } else {
-    // Gadget Store Pixel — all other products
-    (window as any).fbq(
-      "trackSingle",
-      "2326435488100673",
-      "Purchase",
-      purchaseData
-    );
-  }
-}
-
-  window.location.href = "/gadgets/thank-you";
+      window.location.href = "/gadgets/thank-you";
     } catch (error) {
       console.error("Order submission error:", error);
 
@@ -274,12 +272,16 @@ if (typeof window !== "undefined" && (window as any).fbq) {
         </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-5">
+      <form
+        ref={formRef}
+        onSubmit={handleSubmit}
+        className="space-y-5"
+      >
         {/* Name */}
         <div>
           <label
             htmlFor="name"
-            className="block text-sm font-medium text-gray-800 mb-2"
+            className="block text-sm font-semibold text-gray-900 mb-2"
           >
             Full Name *
           </label>
@@ -291,7 +293,7 @@ if (typeof window !== "undefined" && (window as any).fbq) {
             required
             autoComplete="name"
             placeholder="Enter your full name"
-            className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100"
+            className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-base font-medium text-gray-900 placeholder:text-gray-400 outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100"
           />
         </div>
 
@@ -299,7 +301,7 @@ if (typeof window !== "undefined" && (window as any).fbq) {
         <div>
           <label
             htmlFor="phone"
-            className="block text-sm font-medium text-gray-800 mb-2"
+            className="block text-sm font-semibold text-gray-900 mb-2"
           >
             Phone Number *
           </label>
@@ -312,7 +314,7 @@ if (typeof window !== "undefined" && (window as any).fbq) {
             autoComplete="tel"
             inputMode="tel"
             placeholder="08012345678"
-            className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100"
+            className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-base font-medium text-gray-900 placeholder:text-gray-400 outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100"
           />
 
           <p className="text-xs text-gray-500 mt-1.5">
@@ -324,7 +326,7 @@ if (typeof window !== "undefined" && (window as any).fbq) {
         <div>
           <label
             htmlFor="whatsapp"
-            className="block text-sm font-medium text-gray-800 mb-2"
+            className="block text-sm font-semibold text-gray-900 mb-2"
           >
             WhatsApp Number{" "}
             <span className="text-gray-400 font-normal">
@@ -339,7 +341,7 @@ if (typeof window !== "undefined" && (window as any).fbq) {
             autoComplete="tel"
             inputMode="tel"
             placeholder="If different from your phone number"
-            className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100"
+            className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-base font-medium text-gray-900 placeholder:text-gray-400 outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100"
           />
 
           <p className="text-xs text-gray-500 mt-1.5">
@@ -352,7 +354,7 @@ if (typeof window !== "undefined" && (window as any).fbq) {
           <div>
             <label
               htmlFor="state"
-              className="block text-sm font-medium text-gray-800 mb-2"
+              className="block text-sm font-semibold text-gray-900 mb-2"
             >
               State *
             </label>
@@ -364,14 +366,14 @@ if (typeof window !== "undefined" && (window as any).fbq) {
               required
               autoComplete="address-level1"
               placeholder="e.g. FCT Abuja"
-              className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100"
+              className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-base font-medium text-gray-900 placeholder:text-gray-400 outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100"
             />
           </div>
 
           <div>
             <label
               htmlFor="city"
-              className="block text-sm font-medium text-gray-800 mb-2"
+              className="block text-sm font-semibold text-gray-900 mb-2"
             >
               City / Town *
             </label>
@@ -383,7 +385,7 @@ if (typeof window !== "undefined" && (window as any).fbq) {
               required
               autoComplete="address-level2"
               placeholder="e.g. Gwarinpa"
-              className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100"
+              className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-base font-medium text-gray-900 placeholder:text-gray-400 outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100"
             />
           </div>
         </div>
@@ -392,7 +394,7 @@ if (typeof window !== "undefined" && (window as any).fbq) {
         <div>
           <label
             htmlFor="address"
-            className="block text-sm font-medium text-gray-800 mb-2"
+            className="block text-sm font-semibold text-gray-900 mb-2"
           >
             Delivery Address *
           </label>
@@ -404,7 +406,7 @@ if (typeof window !== "undefined" && (window as any).fbq) {
             rows={3}
             autoComplete="street-address"
             placeholder="House number, street name, estate, landmark..."
-            className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm outline-none resize-none focus:border-green-600 focus:ring-2 focus:ring-green-100"
+            className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-base font-medium text-gray-900 placeholder:text-gray-400 outline-none resize-none focus:border-green-600 focus:ring-2 focus:ring-green-100"
           />
 
           <p className="text-xs text-gray-500 mt-1.5">
@@ -417,7 +419,7 @@ if (typeof window !== "undefined" && (window as any).fbq) {
         <div>
           <label
             htmlFor="quantity"
-            className="block text-sm font-medium text-gray-800 mb-2"
+            className="block text-sm font-semibold text-gray-900 mb-2"
           >
             Quantity *
           </label>
@@ -428,8 +430,7 @@ if (typeof window !== "undefined" && (window as any).fbq) {
             required
             value={quantity}
             onChange={(event) => setQuantity(Number(event.target.value))}
-           className="w-full rounded-xl border-2 border-gray-400 px-4 py-3 text-base font-semibold text-gray-900 bg-white outline-none focus:border-green-700 focus:ring-2 focus:ring-green-200"
-
+            className="w-full rounded-xl border-2 border-gray-400 px-4 py-3 text-base font-semibold text-gray-900 bg-white outline-none focus:border-green-700 focus:ring-2 focus:ring-green-200"
           >
             <option value={1}>1</option>
             <option value={2}>2</option>
@@ -456,7 +457,7 @@ if (typeof window !== "undefined" && (window as any).fbq) {
             name="note"
             rows={3}
             placeholder="Any question or special delivery instruction?"
-            className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm outline-none resize-none focus:border-green-600 focus:ring-2 focus:ring-green-100"
+            className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-base font-medium text-gray-900 placeholder:text-gray-400 outline-none resize-none focus:border-green-600 focus:ring-2 focus:ring-green-100"
           />
         </div>
 
@@ -501,4 +502,3 @@ if (typeof window !== "undefined" && (window as any).fbq) {
     </div>
   );
 }
-

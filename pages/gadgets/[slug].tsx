@@ -10,6 +10,7 @@ import CameraFeatures from "@/components/gadgets/CameraFeatures";
 import CameraHowItWorks from "@/components/gadgets/CameraHowItWorks";
 import CameraFAQ from "@/components/gadgets/CameraFAQ";
 import CameraSupport from "@/components/gadgets/CameraSupport";
+import OrderNowButton from "@/components/gadgets/OrderNowButton";
 
 type Gadget = (typeof gadgets)[number];
 
@@ -665,14 +666,11 @@ const selectedItem = media[selectedMedia];
             )}
 
             {/* PRIMARY CTA */}
-            <Link
-              href={`/gadgets/${gadget.slug}#order`}
+            <OrderNowButton
+              slug={gadget.slug}
               onClick={() => setIsOrderOpen(true)}
-              className="w-full mt-6 inline-flex items-center justify-center px-6 py-4.5 rounded-xl bg-green-700 text-white font-bold text-base md:text-lg hover:bg-green-800 active:scale-[0.99] transition shadow-lg shadow-green-700/20"
-            >
-              Order Now — Pay on Delivery
-              <span className="ml-2">→</span>
-            </Link>
+              className="w-full mt-6 text-base md:text-lg shadow-lg shadow-green-700/20"
+            />
 
             <p className="text-xs text-gray-500 text-center mt-3">
               No online payment required. We confirm your order before
@@ -729,8 +727,21 @@ const selectedItem = media[selectedMedia];
         </div>
 
 
-        {isV380Camera && <CameraUseCases />}
-        <Testimonials slug={gadget.slug} />
+          {isV380Camera && (
+      <>
+        <CameraUseCases />
+
+        <div className="mt-8 mb-8 text-center">
+          <OrderNowButton
+            slug={gadget.slug}
+            onClick={() => setIsOrderOpen(true)}
+            className="w-full sm:w-auto text-base md:text-lg shadow-lg shadow-green-700/20"
+          />
+        </div>
+      </>
+    )}
+
+    <Testimonials slug={gadget.slug} />
 
         {/* PRODUCT DETAILS GRID */}
 
@@ -738,6 +749,14 @@ const selectedItem = media[selectedMedia];
             <>
               {/* V380 SPECIFIC FEATURES */}
               <CameraFeatures />
+
+              <div className="mt-8 mb-8 text-center">
+                <OrderNowButton
+                  slug={gadget.slug}
+                  onClick={() => setIsOrderOpen(true)}
+                  className="w-full sm:w-auto text-base md:text-lg shadow-lg shadow-green-700/20"
+                />
+              </div>
               
 
               {/* WHAT'S INCLUDED */}
@@ -778,6 +797,15 @@ const selectedItem = media[selectedMedia];
               </div>
                <CameraHowItWorks />
                <CameraFAQ />
+
+                  <div className="mt-8 mb-8 text-center">
+                    <OrderNowButton
+                      slug={gadget.slug}
+                      onClick={() => setIsOrderOpen(true)}
+                      className="w-full sm:w-auto text-base md:text-lg shadow-lg shadow-green-700/20"
+                    />
+                  </div>
+
                <CameraSupport />
             </>
           ) : (
@@ -897,14 +925,11 @@ const selectedItem = media[selectedMedia];
             </p>
           )}
 
-          <Link
-            href={`/gadgets/${gadget.slug}#order`}
+          <OrderNowButton
+            slug={gadget.slug}
             onClick={() => setIsOrderOpen(true)}
-            className="mt-6 inline-flex items-center justify-center bg-white text-green-800 px-7 py-4 rounded-xl font-bold hover:bg-gray-50 transition shadow-lg"
-          >
-            Order Now — Pay on Delivery
-            <span className="ml-2">→</span>
-          </Link>
+            className="mt-6 bg-white text-green-800 px-7 py-4 hover:bg-gray-50 shadow-lg"
+          />
         </div>
 
         {/* =========================
@@ -1099,13 +1124,11 @@ const selectedItem = media[selectedMedia];
             </div>
           </div>
 
-          <Link
-            href={`/gadgets/${gadget.slug}#order`}
+          <OrderNowButton
+            slug={gadget.slug}
             onClick={() => setIsOrderOpen(true)}
-            className="flex-shrink-0 inline-flex items-center justify-center bg-green-700 hover:bg-green-800 text-white px-5 py-3 rounded-xl font-bold text-sm shadow-md shadow-green-700/20 transition"
-          >
-            Order Now →
-          </Link>
+            className="flex-shrink-0 px-3 py-2.5 text-xs"
+          />
         </div>
       </div>
     </section>
