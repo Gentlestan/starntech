@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { useEffect, useState } from "react";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Image from "next/image";
@@ -89,6 +90,18 @@ const selectedItem = media[selectedMedia];
 
   return (
     <section className="bg-gradient-to-b from-gray-50 to-white py-6 md:py-12">
+      {selectedItem.type === "video" &&
+        selectedItem.src === "/videos/v380-demo-video.mp4" &&
+        selectedItem.thumbnail && (
+          <Head>
+            <link
+              rel="preload"
+              as="image"
+              href={selectedItem.thumbnail}
+              fetchPriority="high"
+            />
+          </Head>
+        )}
       <div className="max-w-6xl mx-auto px-4">
 
         {/* PREMIUM GALLERY ANIMATIONS */}
