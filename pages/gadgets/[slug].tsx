@@ -196,7 +196,7 @@ const selectedItem = media[selectedMedia];
                     poster={selectedItem.thumbnail}
                     controls
                     playsInline
-                    preload="metadata"
+                    preload="none"
                     className="absolute inset-0 h-full w-full object-contain bg-black"
                   />
                 ) : (
@@ -729,7 +729,7 @@ const selectedItem = media[selectedMedia];
 
           {isV380Camera && (
       <>
-        <CameraUseCases />
+        <CameraUseCases />F
 
         <div className="mt-8 mb-8 text-center">
           <OrderNowButton
