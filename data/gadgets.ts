@@ -523,30 +523,29 @@ colourComparePrices: {
     "Pay on delivery.",
   ],
 
-  media: [
-    {
-      type: "video",
-      src: "/videos/v380-demo-video.mp4",
-      thumbnail: "/images/gadgets/v380-camera-1.jpg",
-    },
-    {
-      type: "image",
-      src: "/images/gadgets/v380-camera-1.jpg",
-    },
-    {
-      type: "image",
-      src: "/images/gadgets/v380-camera-2.png",
-    },
-    {
-      type: "image",
-      src: "/images/gadgets/v380-camera-3.jpg",
-    },
-    {
-      type: "image",
-      src: "/images/gadgets/v380-camera-4.png",
-    },
-   
-  ],
+ media: [
+  {
+    type: "image",
+    src: "/images/gadgets/v380-camera-1.jpg",
+  },
+  {
+    type: "image",
+    src: "/images/gadgets/v380-camera-2.png",
+  },
+  {
+    type: "image",
+    src: "/images/gadgets/v380-camera-3.jpg",
+  },
+  {
+    type: "image",
+    src: "/images/gadgets/v380-camera-4.png",
+  },
+  {
+    type: "video",
+    src: "/videos/v380-demo-video.mp4",
+    thumbnail: "/images/gadgets/v380-camera-1.jpg",
+  },
+],
 
   featured: true,
   available: true,
