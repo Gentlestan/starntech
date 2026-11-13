@@ -12,6 +12,14 @@ import CameraHowItWorks from "@/components/gadgets/CameraHowItWorks";
 import CameraFAQ from "@/components/gadgets/CameraFAQ";
 import CameraSupport from "@/components/gadgets/CameraSupport";
 import OrderNowButton from "@/components/gadgets/OrderNowButton";
+import ColarFanIntro from "@/components/gadgets/colar/ColarFanIntro";
+import ColarFanSizeSelector from "@/components/gadgets/colar/ColarFanSizeSelector";
+import ColarFanHeatSection from "@/components/gadgets/colar/ColarFanHeatSection";
+import ColarFanModels from "@/components/gadgets/colar/ColarFanModels";
+import ColarFanBenefits from "@/components/gadgets/colar/ColarFanBenefits";
+import ColarFanTrust from "@/components/gadgets/colar/ColarFanTrust";
+import ColarFanFAQ from "@/components/gadgets/colar/ColarFanFAQ";
+
 
 type Gadget = (typeof gadgets)[number];
 
@@ -185,6 +193,19 @@ const selectedItem = media[selectedMedia];
         >
           ← Back to Gadgets
         </Link>
+        
+          {gadget.slug === "colarhome-solar-rechargeable-fan" &&
+            variants &&
+            selectedVariant && (
+              <ColarFanSizeSelector
+                variants={variants}
+                selectedVariantName={selectedVariantName}
+                onSelect={(variantName) => {
+                  setSelectedVariantName(variantName);
+                  setSelectedMedia(0);
+                }}
+              />
+            )}
 
         {/* =========================
             PRODUCT HERO
@@ -398,14 +419,20 @@ const selectedItem = media[selectedMedia];
     </>
   ) : (
     <>
-      <h1 className="text-3xl md:text-5xl font-extrabold text-gray-950 mt-2 leading-tight">
-        {gadget.name}
-      </h1>
+      {gadget.slug === "colarhome-solar-rechargeable-fan" ? (
+        <ColarFanIntro />
+      ) : (
+        <>
+          <h1 className="text-3xl md:text-5xl font-extrabold text-gray-950 mt-2 leading-tight">
+            {gadget.name}
+          </h1>
 
-      {gadget.shortDescription && (
-        <p className="text-gray-600 text-base md:text-lg leading-7 mt-4 max-w-xl">
-          {gadget.shortDescription}
-        </p>
+          {gadget.shortDescription && (
+            <p className="text-gray-600 text-base md:text-lg leading-7 mt-4 max-w-xl">
+              {gadget.shortDescription}
+            </p>
+          )}
+        </>
       )}
     </>
   )}
@@ -413,8 +440,9 @@ const selectedItem = media[selectedMedia];
 
 
 
-
-        {variants && selectedVariant && (
+        {gadget.slug !== "colarhome-solar-rechargeable-fan" &&
+          variants &&
+          selectedVariant && (
           <div className="mt-5 rounded-xl border border-gray-200 bg-white p-4">
             <h3 className="text-sm font-bold text-gray-900">
               Select Fan Size
@@ -692,6 +720,39 @@ const selectedItem = media[selectedMedia];
           </div>
         </div>
 
+        {gadget.slug === "colarhome-solar-rechargeable-fan" &&
+          selectedVariant && (
+            <ColarFanHeatSection
+              imageSrc={
+                media.find((item) => item.type === "image")?.src ??
+                media.find((item) => item.type === "video")?.thumbnail
+              }
+              imageAlt={`${selectedVariant.name} ColarHome Solar Fan`}
+              onOrderClick={() => setIsOrderOpen(true)}
+            />
+          )}
+
+
+          {gadget.slug === "colarhome-solar-rechargeable-fan" &&
+          variants && (
+            <ColarFanModels
+              variants={variants}
+              selectedVariantName={selectedVariantName}
+              onSelectVariant={(variantName) => {
+                setSelectedVariantName(variantName);
+                setSelectedMedia(0);
+              }}
+              onOrderClick={() => {
+                setIsOrderOpen(true);
+
+                document.getElementById("order")?.scrollIntoView({
+                  behavior: "smooth",
+                  block: "start",
+                });
+              }}
+            />
+          )}
+
         {/* =========================
             TRUST / BENEFIT STRIP
         ========================== */}
@@ -820,8 +881,52 @@ const selectedItem = media[selectedMedia];
                   </div>
 
                <CameraSupport />
-            </>
-          ) : (
+              </>
+              ) : gadget.slug === "colarhome-solar-rechargeable-fan" ? (
+                <>
+                  {/* SECTION 4: WHY CHOOSE COLAR */}
+                  <ColarFanBenefits
+                    imageSrc={media.find((item) => item.type === "image")?.src}
+                    imageAlt={`${selectedVariant?.name ?? "ColarHome"} Solar Fan`}
+                    selectedVariantName={selectedVariantName}
+                    onOrderClick={() => {
+                      setIsOrderOpen(true);
+                      document.getElementById("order")?.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start",
+                      });
+                    }}
+                  />
+
+                  {/* SECTION 5: WHY BUY FROM STARNTECH */}
+                 <ColarFanTrust
+                  imageSrc={media.find((item) => item.type === "image")?.src}
+                  imageAlt={`${selectedVariant?.name ?? "ColarHome"} Solar Fan`}
+                  onOrderClick={() => {
+                    setIsOrderOpen(true);
+                    document.getElementById("order")?.scrollIntoView({
+                      behavior: "smooth",
+                      block: "start",
+                    });
+                  }}
+                />
+
+                {/* SECTION 6: FAQ AND FINAL ORDER */}
+                  <ColarFanFAQ
+                    imageSrc={media.find((item) => item.type === "image")?.src}
+                    imageAlt={`${selectedVariant?.name ?? "ColarHome"} Solar Fan`}
+                    selectedVariantName={selectedVariantName}
+                    onOrderClick={() => {
+                      setIsOrderOpen(true);
+
+                      document.getElementById("order")?.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start",
+                      });
+                    }}
+                  />
+                </>
+              ) : (
             /* OTHER PRODUCTS: FEATURES AND PACKAGE SIDE BY SIDE */
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
               {/* GENERAL FEATURES */}

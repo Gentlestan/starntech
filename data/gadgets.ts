@@ -704,38 +704,38 @@ colourComparePrices: {
   {
     type: "video",
     src: "/videos/colarhome-16-inch-demo.mp4",
-    thumbnail: "/images/solar-products/colarhome-ch-sf3-16-inch-1.jpg",
+    thumbnail: "/images/colarhome-ch-sf3-16-inch-2.jpg",
   },
   {
     type: "image",
-    src: "/images/solar-products/colarhome-ch-sf3-16-inch-1.jpg",
+    src: "/images/colarhome-ch-sf3-16-inch-1.png",
   },
   {
     type: "image",
-    src: "/images/solar-products/colarhome-ch-sf3-16-inch-2.jpg",
+    src: "/images/colarhome-ch-sf3-16-inch-2.jpg",
   },
   {
     type: "image",
-    src: "/images/solar-products/colarhome-ch-sf3-16-inch-3.jpg",
+    src: "/images/colarhome-ch-sf3-16-inch-3.jpg",
   },
 
   // 18-inch CH-SF04
   {
     type: "video",
     src: "/videos/colarhome-18-inch-demo.mp4",
-    thumbnail: "/images/solar-products/colarhome-ch-sf04-18-inch-1.jpg",
+    thumbnail: "/images/colarhome-ch-sf04-18-inch-1.png",
   },
   {
     type: "image",
-    src: "/images/solar-products/colarhome-ch-sf04-18-inch-1.jpg",
+    src: "/images/colarhome-ch-sf04-18-inch-1.png",
   },
   {
     type: "image",
-    src: "/images/solar-products/colarhome-ch-sf04-18-inch-2.jpg",
+    src: "/images/colarhome-ch-sf04-18-inch-2.png",
   },
   {
     type: "image",
-    src: "/images/solar-products/colarhome-ch-sf04-18-inch-3.jpg",
+    src: "/images/colarhome-ch-sf04-18-inch-3.png",
   },
 ],
   featured: true,
