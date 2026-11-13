@@ -135,6 +135,23 @@ const hasLimitedStock = selectedStock > 0 && selectedStock <= 10;
 
 const selectedItem = media[selectedMedia];
 
+
+// DYNAMIC SEO METADATA
+const seoTitle =
+  gadget.slug === "v380-solar-camera"
+    ? "V380 Max 4G Solar Security Camera | Starntech"
+    : gadget.slug === "colarhome-solar-rechargeable-fan"
+      ? "ColarHome Solar Rechargeable Fan – 16-inch & 18-inch | Starntech"
+      : `${gadget.name} | Starntech`;
+
+const seoDescription =
+  gadget.slug === "v380-solar-camera"
+    ? "Monitor your property with the V380 Max 4G solar security camera. Enjoy night vision, motion alerts, two-way audio and solar-powered charging."
+    : gadget.slug === "colarhome-solar-rechargeable-fan"
+      ? "Compare the 16-inch CH-SF3 with a 6,000mAh battery and 18-inch CH-SF04 with a 12,000mAh battery. Both include a 25W solar panel. Pay on delivery."
+      : gadget.shortDescription ||
+        `Shop the ${gadget.name} at Starntech. Order conveniently with nationwide delivery.`;
+
   return (
     <section className="bg-gradient-to-b from-gray-50 to-white py-6 md:py-12">
       {selectedItem.type === "video" &&
@@ -273,15 +290,16 @@ const selectedItem = media[selectedMedia];
                     className="absolute inset-0 h-full w-full object-contain bg-black"
                   />
                 ) : (
-                  <Image
-                    key={selectedItem.src}
-                    src={selectedItem.src}
-                    alt={`${gadget.name} - image ${selectedMedia + 1}`}
-                    fill
-                    priority={selectedMedia === 0}
-                    sizes="(max-width: 1024px) 100vw, 50vw"
-                    className="hero-float object-contain p-5 md:p-8"
-                  />
+                 <Image
+                  key={selectedItem.src}
+                  src={selectedItem.src}
+                  alt={`${gadget.name} - image ${selectedMedia + 1}`}
+                  fill
+                  loading="eager"
+                  fetchPriority={selectedMedia === 0 ? "high" : "auto"}
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="hero-float object-contain p-5 md:p-8"
+                />
                 )
               ) : (
                 <div className="absolute inset-0 flex items-center justify-center text-gray-400">
