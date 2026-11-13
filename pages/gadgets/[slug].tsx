@@ -52,6 +52,7 @@ const selectedVariant = variants?.find(
 // Other products retain their existing gallery behaviour.
 const allMedia = gadget.media ?? [];
 
+
 const variantMedia = selectedVariant
   ? allMedia.filter((item) =>
       item.src.includes(
@@ -60,11 +61,19 @@ const variantMedia = selectedVariant
     )
   : [];
 
+const orderedVariantMedia = [
+  ...variantMedia.filter((item) => item.type === "image"),
+  ...variantMedia.filter((item) => item.type === "video"),
+];
+
 const media = selectedVariant
   ? variantMedia.length > 0
-    ? variantMedia
+    ? gadget.slug === "colarhome-solar-rechargeable-fan"
+      ? orderedVariantMedia
+      : variantMedia
     : allMedia
   : allMedia.slice(0, 6);
+
 
 const bonusItem = gadget.whats_in_the_box?.find((item) =>
   /free|bonus|clipper|gift/i.test(item)
