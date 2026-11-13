@@ -1,3 +1,4 @@
+import dynamic from "next/dynamic";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import { GetStaticPaths, GetStaticProps } from "next";
@@ -12,13 +13,42 @@ import CameraHowItWorks from "@/components/gadgets/CameraHowItWorks";
 import CameraFAQ from "@/components/gadgets/CameraFAQ";
 import CameraSupport from "@/components/gadgets/CameraSupport";
 import OrderNowButton from "@/components/gadgets/OrderNowButton";
-import ColarFanIntro from "@/components/gadgets/colar/ColarFanIntro";
-import ColarFanSizeSelector from "@/components/gadgets/colar/ColarFanSizeSelector";
-import ColarFanHeatSection from "@/components/gadgets/colar/ColarFanHeatSection";
-import ColarFanModels from "@/components/gadgets/colar/ColarFanModels";
-import ColarFanBenefits from "@/components/gadgets/colar/ColarFanBenefits";
-import ColarFanTrust from "@/components/gadgets/colar/ColarFanTrust";
-import ColarFanFAQ from "@/components/gadgets/colar/ColarFanFAQ";
+// Colar components — dynamically loaded
+const ColarFanIntro = dynamic(
+  () => import("@/components/gadgets/colar/ColarFanIntro"),
+  { ssr: true }
+);
+
+const ColarFanSizeSelector = dynamic(
+  () => import("@/components/gadgets/colar/ColarFanSizeSelector"),
+  { ssr: true }
+);
+
+const ColarFanHeatSection = dynamic(
+  () => import("@/components/gadgets/colar/ColarFanHeatSection"),
+  { ssr: true }
+);
+
+const ColarFanModels = dynamic(
+  () => import("@/components/gadgets/colar/ColarFanModels"),
+  { ssr: true }
+);
+
+const ColarFanBenefits = dynamic(
+  () => import("@/components/gadgets/colar/ColarFanBenefits"),
+  { ssr: true }
+);
+
+const ColarFanTrust = dynamic(
+  () => import("@/components/gadgets/colar/ColarFanTrust"),
+  { ssr: true }
+);
+
+const ColarFanFAQ = dynamic(
+  () => import("@/components/gadgets/colar/ColarFanFAQ"),
+  { ssr: true }
+);
+
 
 
 type Gadget = (typeof gadgets)[number];
