@@ -4,6 +4,12 @@ import { google } from "googleapis";
 import { Resend } from "resend";
 import { gadgets } from "../../data/gadgets";
 
+import {
+  colar1000Packages,
+  type Colar1000PackageId,
+} from "../../data/colar1000";
+
+
 type ResponseData = {
   success: boolean;
   message: string;
@@ -42,6 +48,171 @@ export default async function handler(
   }
 
   try {
+        // COLAR1000 ORDERS
+    if (req.body?.orderType === "colar1000") {
+      const {
+        packageId,
+        customerName,
+        customerPhone,
+        deliveryState,
+        deliveryCity,
+        deliveryAddress,
+        additionalNotes,
+      } = req.body;
+
+      if (
+        typeof packageId !== "string" ||
+        !Object.prototype.hasOwnProperty.call(colar1000Packages, packageId) ||
+        !customerName?.trim() ||
+        !customerPhone?.trim() ||
+        !deliveryState?.trim() ||
+        !deliveryCity?.trim() ||
+        !deliveryAddress?.trim()
+      ) {
+        return res.status(400).json({
+          success: false,
+          message: "Please fill in all required order details.",
+        });
+      }
+
+      const selectedPackage =
+        colar1000Packages[packageId as Colar1000PackageId];
+
+      const orderTotal = selectedPackage.price;
+      const unitPrice = selectedPackage.unitPrice;
+      const orderQuantity = selectedPackage.quantity;
+
+      const paymentArrangement =
+        deliveryState === "FCT"
+          ? "Pay on Delivery (subject to address confirmation)"
+          : "Advance bank transfer required before dispatch";
+
+      // Clean customer information for email display
+      const safeProduct = escapeHtml(selectedPackage.name);
+      const safeName = escapeHtml(customerName);
+      const safePhone = escapeHtml(customerPhone);
+      const safeState = escapeHtml(deliveryState);
+      const safeCity = escapeHtml(deliveryCity);
+      const safeAddress = escapeHtml(deliveryAddress);
+      const safeGift = escapeHtml(selectedPackage.freeGift);
+      const safeNotes = escapeHtml(additionalNotes || "");
+      const safePayment = escapeHtml(paymentArrangement);
+
+      // Save Colar1000 order to the existing Google Sheet
+      const auth = new google.auth.GoogleAuth({
+        credentials: {
+          client_email: process.env.GOOGLE_CLIENT_EMAIL,
+          private_key: process.env.GOOGLE_PRIVATE_KEY?.replace(
+            /\\n/g,
+            "\n"
+          ),
+        },
+        scopes: [
+          "https://www.googleapis.com/auth/spreadsheets",
+        ],
+      });
+
+      const sheets = google.sheets({
+        version: "v4",
+        auth,
+      });
+
+      await sheets.spreadsheets.values.append({
+        spreadsheetId: process.env.GOOGLE_SHEET_ID,
+        range: "Sheet1!A:P",
+        valueInputOption: "USER_ENTERED",
+        requestBody: {
+          values: [
+            [
+              new Date().toLocaleString("en-NG", {
+                timeZone: "Africa/Lagos",
+              }),
+              selectedPackage.name,
+              customerName,
+              customerPhone,
+              "",
+              deliveryState,
+              deliveryCity,
+              deliveryAddress,
+              orderQuantity,
+              additionalNotes || "",
+              "Pending",
+              "",
+              unitPrice,
+              orderTotal,
+              "",
+              selectedPackage.output,
+            ],
+          ],
+        },
+      });
+
+      // Email notification
+      try {
+        const emailResult = await resend.emails.send({
+          from: "StarnTech Orders <onboarding@resend.dev>",
+          to: process.env.ORDER_NOTIFICATION_EMAIL!,
+          subject: `New Order - ${selectedPackage.name}`,
+          html: `
+            <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #222;">
+              <h2 style="color: #15803d;">New Colar1000 Order</h2>
+              <hr />
+
+              <h3>Product Details</h3>
+              <p>
+                <strong>Product:</strong> ${safeProduct}<br />
+                <strong>Output:</strong> ${escapeHtml(selectedPackage.output)}<br />
+                <strong>Quantity:</strong> ${orderQuantity}<br />
+                <strong>Unit Price:</strong> ${formatNaira(unitPrice)}<br />
+                <strong>Order Total:</strong> ${formatNaira(orderTotal)}<br />
+                <strong>Free Gift:</strong> ${safeGift}
+              </p>
+
+              <h3>Customer Details</h3>
+              <p>
+                <strong>Name:</strong> ${safeName}<br />
+                <strong>Phone:</strong> ${safePhone}
+              </p>
+
+              <h3>Delivery Details</h3>
+              <p>
+                <strong>State:</strong> ${safeState}<br />
+                <strong>City:</strong> ${safeCity}<br />
+                <strong>Address:</strong> ${safeAddress}
+              </p>
+
+              <h3>Payment Arrangement</h3>
+              <p>${safePayment}</p>
+
+              ${
+                additionalNotes
+                  ? `<h3>Customer Note</h3><p>${safeNotes}</p>`
+                  : ""
+              }
+
+              <hr />
+              <p><strong>Status:</strong> Pending</p>
+              <p style="color: #666; font-size: 13px;">
+                Automatically generated by the StarnTech Gadget Store.
+              </p>
+            </div>
+          `,
+        });
+
+        if (emailResult.error) {
+          console.error("Colar1000 order email error:", emailResult.error);
+        }
+      } catch (emailError) {
+        console.error("Colar1000 order email error:", emailError);
+      }
+
+      return res.status(200).json({
+        success: true,
+        message: "Order submitted successfully.",
+        orderTotal,
+      });
+    }
+
     const {
       product,
       colour,
@@ -285,7 +456,7 @@ export default async function handler(
             <hr />
             <p><strong>Status:</strong> Pending</p>
             <p style="color: #666; font-size: 13px;">
-              Automatically generated by the StarnTech Gadget Store.
+             Automatically generated by Starntech Engineering.
             </p>
           </div>
         `,
