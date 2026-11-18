@@ -4,17 +4,13 @@ import Colar1000TechnicalDetails from "./Colar1000TechnicalDetails";
 import Colar1000OrderForm from "./Colar1000OrderForm";
 import { useState, type ReactNode } from "react";
 import type { Colar1000OrderData } from "./Colar1000OrderForm";
-import { colar1000Packages } from "../../../data/colar1000";
+import Colar1000Warranty from "./Colar1000Warranty";
+import Colar1000HeroCTA from "./ctas/Colar1000HeroCTA";
+import Colar1000OrderCTA from "./ctas/Colar1000OrderCTA";
+import type { Colar1000Model } from "./types";
+import Colar1000StickyOrderButton from "./Colar1000StickyOrderButton";
 
-export type Colar1000Model = {
-  id: "neo" | "pro" | "plus";
-  name: string;
-  output: string;
-  offer: string;
-  quantity: number;
-  description: string;
-  featured?: boolean;
-};
+
 
 type Colar1000LandingTemplateProps = {
   model: Colar1000Model;
@@ -86,8 +82,8 @@ const [activeImage, setActiveImage] = useState(0);
   }
 };
 
-  const pageDescription = `Discover the ${model.name} ${model.output} portable solar power station. ${model.offer} and receive a free 18-inch Colar solar fan.`;
-    const packageDetails = colar1000Packages[model.id];
+  const pageDescription = `Discover the ${model.name} portable solar power station with ${model.output} inverter output and a 1,004.8Wh LiFePO4 battery. ${model.offer} and get a free 18-inch Colar solar fan.`;
+
 
     return (
     <>
@@ -105,19 +101,22 @@ const [activeImage, setActiveImage] = useState(0);
             <div className="max-w-3xl mx-auto text-center">
               <p className="text-sm font-bold uppercase tracking-widest text-green-300">
                 Starntech Christmas Special
-              </p>
+                </p>
 
-              <h1 className="text-4xl md:text-6xl font-extrabold leading-tight mt-5">
-                Meet the {model.name}
-              </h1>
+                <h1 className="text-4xl md:text-6xl font-extrabold leading-tight mt-5">
+                Reliable Backup Power with the {model.name}
+                </h1>
 
-              <p className="text-2xl md:text-3xl font-bold text-green-300 mt-4">
+                <p className="text-base md:text-lg font-semibold text-green-200 mt-4">
+                Portable Solar Power Station
+                </p>
+
+                <p className="text-xl md:text-2xl font-bold text-green-300 mt-4">
                 {model.output} Inverter Output
-              </p>
+                <span className="mx-2 text-green-500">·</span>
+                1,004.8Wh LiFePO4 Battery
+                </p>
 
-              <p className="text-base md:text-lg text-gray-200 leading-8 mt-6">
-                {model.description}
-              </p>
 
               {/* PRODUCT IMAGE GALLERY */}
                 <div className="max-w-2xl mx-auto mt-10">
@@ -152,58 +151,7 @@ const [activeImage, setActiveImage] = useState(0);
                 </div>
                 </div>
 
-              <div className="max-w-xl mx-auto mt-9 rounded-3xl bg-white p-6 md:p-8 text-gray-950 shadow-2xl">
-                <p className="text-sm font-extrabold uppercase tracking-wider text-green-700">
-                    Your Christmas Gift Offer
-                </p>
-
-                <h2 className="text-2xl md:text-3xl font-extrabold mt-3">
-                    {model.offer}
-                </h2>
-
-                <p className="text-sm font-semibold text-gray-500 mt-5">
-                    Package Price
-                </p>
-
-                <p className="text-4xl md:text-5xl font-extrabold text-green-800 mt-1">
-                    ₦{packageDetails.price.toLocaleString("en-NG")}
-                </p>
-
-                <p className="text-sm text-gray-600 mt-2">
-                    {packageDetails.quantity} {packageDetails.quantity === 1 ? "unit" : "units"} included
-                </p>
-
-                <div className="flex items-center gap-4 mt-6 rounded-2xl bg-green-50 p-4 text-left">
-                    <img
-                    src="/images/colarhome-ch-sf04-18-inch-1.png"
-                    alt="Free 18-inch Colar Solar Fan"
-                    className="w-28 h-28 object-contain rounded-xl bg-white"
-                    />
-
-                    <div>
-                    <p className="text-xs font-extrabold uppercase tracking-wide text-green-700">
-                        FREE GIFT INCLUDED
-                    </p>
-                    <p className="text-base font-extrabold text-gray-900 mt-1">
-                        1 × 18-inch Colar Solar Fan
-                    </p>
-                    <p className="text-sm text-gray-600 mt-1">
-                        Included with this package at no extra cost.
-                    </p>
-                    </div>
-                </div>
-
-                <p className="text-xs text-gray-500 mt-4">
-                    Transportation cost is separate.
-                </p>
-
-                <a
-                    href="#colar1000-order"
-                    className="block w-full rounded-xl bg-green-700 hover:bg-green-800 text-white font-extrabold text-center px-6 py-4 mt-7 transition"
-                >
-                    Order Now
-                </a>
-                </div>
+             <Colar1000HeroCTA model={model} />
 
               <p className="text-sm text-green-100 mt-7 leading-6">
                 Abuja (FCT): Pay on Delivery in covered areas, subject to
@@ -232,15 +180,15 @@ const [activeImage, setActiveImage] = useState(0);
             </p>
 
             <h2 className="text-3xl md:text-4xl font-extrabold text-gray-950 mt-4">
-                500W and 1,000Wh Are Not the Same Thing
+                {model.output} and 1,004.8Wh: What's the Difference?
             </h2>
 
-            <p className="text-gray-600 leading-8 mt-5">
-                Two important specifications determine how a portable power
-                station performs: its inverter output and its battery capacity.
-                Understanding the difference helps you choose wisely.
-            </p>
+           <p className="text-gray-600 leading-8 mt-5">
+                These two ratings tell you different things: how much power
+                the unit can supply and how much energy its battery stores.
+                </p>
             </div>
+
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
             <div className="rounded-3xl border border-green-200 bg-green-50 p-7 md:p-9">
@@ -255,17 +203,15 @@ const [activeImage, setActiveImage] = useState(0);
                 </h3>
 
                 <p className="text-gray-700 leading-7 mt-4">
-                Watts describe the amount of electrical power the inverter
-                can supply at a particular moment.
-                </p>
-
-                <p className="text-gray-700 leading-7 mt-3">
-                An appliance's running power and starting surge must both
-                be considered when checking compatibility.
+                Watts tell you how much electrical power the inverter
+                can supply at a time. The combined running wattage of
+                connected appliances must stay within the unit's rated
+                output. Appliances with motors may also require extra
+                power when starting.
                 </p>
 
                 <p className="text-sm font-semibold text-green-900 mt-5">
-                Think of watts as the power available to run your appliances.
+                Watts determine how much power your appliances can draw.
                 </p>
             </div>
 
@@ -280,39 +226,37 @@ const [activeImage, setActiveImage] = useState(0);
                 Watt-hours (Wh)
                 </h3>
 
-               <p className="text-gray-700 leading-7 mt-4">
-                    Watt-hours measure how much energy a battery can store. Each
-                    Colar1000 unit comes with a 1,004.8Wh LiFePO4 battery, providing
-                    stored energy to power your essential appliances and devices.
-                    </p>
-
-               <p className="text-gray-700 leading-7 mt-3">
-                Your actual backup time will depend on the appliances you connect
-                and how much power they consume.
+                <p className="text-gray-700 leading-7 mt-4">
+                Watt-hours measure how much energy the battery stores.
+                Each Colar1000 has a 1,004.8Wh LiFePO4 battery. The
+                energy available determines how long your appliances
+                can run.
                 </p>
 
                 <p className="text-sm font-semibold text-blue-900 mt-5">
-                Think of watt-hours as the amount of energy stored for use.
+                Watt-hours tell you how much stored energy is available.
                 </p>
             </div>
             </div>
 
             <div className="rounded-3xl bg-gray-950 text-white p-7 md:p-10 mt-8">
             <h3 className="text-2xl font-extrabold">
-                Does a Higher Wattage Mean Longer Runtime?
+                Does Higher Wattage Mean Longer Runtime?
             </h3>
 
             <p className="text-gray-300 leading-8 mt-4">
-                Not necessarily. A higher inverter rating gives you more
-                potential power output, but it does not automatically mean
-                the battery stores more energy.
+                No. A higher inverter rating means the unit can supply
+                more power at a time, but it does not mean the battery
+                stores more energy.
             </p>
 
             <p className="text-gray-300 leading-8 mt-3">
-                Runtime depends on the appliance's actual power consumption,
-                usable battery energy, inverter efficiency and operating
-                conditions.
+                Actual runtime depends on the appliances connected,
+                their power consumption and the energy available from
+                the battery.
             </p>
+
+
             </div>
 
             <div className="rounded-2xl border border-orange-200 bg-orange-50 p-6 mt-8">
@@ -331,110 +275,131 @@ const [activeImage, setActiveImage] = useState(0);
         </section>
 
 
-            {/* APPLIANCE COMPATIBILITY GUIDE */}
-            <section className="bg-gray-50 py-16 md:py-24">
-            <div className="max-w-7xl mx-auto px-5">
-                <div className="max-w-3xl mx-auto text-center">
-                <p className="text-sm font-bold uppercase tracking-widest text-green-700">
-                    Choose With Confidence
-                </p>
+        {/* APPLIANCE COMPATIBILITY GUIDE */}
+        <section className="bg-gray-50 py-16 md:py-24">
+        <div className="max-w-7xl mx-auto px-5">
+            <div className="max-w-3xl mx-auto text-center">
+            <p className="text-sm font-bold uppercase tracking-widest text-green-700">
+                What Can It Power?
+            </p>
 
-                <h2 className="text-3xl md:text-4xl font-extrabold text-gray-950 mt-4">
-                    What Can Your Colar1000 Power?
-                </h2>
+            <h2 className="text-3xl md:text-4xl font-extrabold text-gray-950 mt-4">
+                Appliances You Can Run with the {model.name}
+            </h2>
 
-                <p className="text-gray-600 leading-8 mt-5">
-                    The answer depends on the wattage of your appliances, their
-                    starting power requirements and the power station's inverter
-                    capacity. Here is how to understand the difference.
-                </p>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-12">
-                <div className="bg-white rounded-2xl border border-gray-200 p-6">
-                    <div className="text-3xl">📱</div>
-                    <h3 className="text-lg font-extrabold text-gray-950 mt-4">
-                    Phones and Small Electronics
-                    </h3>
-                    <p className="text-sm text-gray-600 leading-7 mt-3">
-                    Phone chargers, tablets and similar low-power devices
-                    are examples of loads to consider. Check the charger's
-                    actual input requirements.
-                    </p>
-                </div>
-
-                <div className="bg-white rounded-2xl border border-gray-200 p-6">
-                    <div className="text-3xl">💻</div>
-                    <h3 className="text-lg font-extrabold text-gray-950 mt-4">
-                    Laptops and Routers
-                    </h3>
-                    <p className="text-sm text-gray-600 leading-7 mt-3">
-                    Many laptops and internet routers have relatively modest
-                    power requirements. Check their power adapters and the
-                    available output connections.
-                    </p>
-                </div>
-
-                <div className="bg-white rounded-2xl border border-gray-200 p-6">
-                    <div className="text-3xl">📺</div>
-                    <h3 className="text-lg font-extrabold text-gray-950 mt-4">
-                    Televisions and Lighting
-                    </h3>
-                    <p className="text-sm text-gray-600 leading-7 mt-3">
-                    LED televisions and LED lighting may be suitable depending
-                    on their individual wattage and the combined load.
-                    </p>
-                </div>
-
-                <div className="bg-white rounded-2xl border border-gray-200 p-6">
-                    <div className="text-3xl">🌀</div>
-                    <h3 className="text-lg font-extrabold text-gray-950 mt-4">
-                    Fans
-                    </h3>
-                    <p className="text-sm text-gray-600 leading-7 mt-3">
-                    Fan compatibility depends on its motor type, running
-                    consumption and starting surge. Check the fan's label
-                    before connecting it.
-                    </p>
-                </div>
-
-                <div className="bg-white rounded-2xl border border-gray-200 p-6">
-                    <div className="text-3xl">🍹</div>
-                    <h3 className="text-lg font-extrabold text-gray-950 mt-4">
-                    Blenders and Small Motors
-                    </h3>
-                    <p className="text-sm text-gray-600 leading-7 mt-3">
-                    Motor-driven appliances can draw considerably more power
-                    when starting. Their running wattage alone is not enough
-                    to determine compatibility.
-                    </p>
-                </div>
-               
-                </div>
-
-                <div className="rounded-3xl bg-gray-950 text-white p-7 md:p-10 mt-10">
-                <h3 className="text-2xl font-extrabold">
-                    Check Before You Connect
-                </h3>
-
-                <p className="text-gray-300 leading-8 mt-4">
-                    Add together the running wattage of appliances you intend
-                    to use simultaneously. The combined load must remain within
-                    the power station's rated output. Also check whether any
-                    appliance requires extra starting power.
-                </p>
-
-                <p className="text-sm font-semibold text-green-300 mt-5">
-                    Not sure whether your appliance is compatible? Ask Starntech
-                    before placing your order.
-                </p>
-                </div>
+            <p className="text-gray-600 leading-8 mt-5">
+                With {model.output} of inverter output and a 1,004.8Wh
+                battery, the {model.name} can power a range of everyday
+                appliances. What you can run together depends on their
+                combined power requirements.
+            </p>
             </div>
-            </section>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-12">
+            <div className="bg-white rounded-2xl border border-gray-200 p-6">
+                <div className="text-3xl">📱</div>
+                <h3 className="text-lg font-extrabold text-gray-950 mt-4">
+                Phones and Small Electronics
+                </h3>
+                <p className="text-sm text-gray-600 leading-7 mt-3">
+                Charge mobile phones, tablets and other small electronic
+                devices.
+                </p>
+            </div>
+
+            <div className="bg-white rounded-2xl border border-gray-200 p-6">
+                <div className="text-3xl">💻</div>
+                <h3 className="text-lg font-extrabold text-gray-950 mt-4">
+                Laptops and Routers
+                </h3>
+                <p className="text-sm text-gray-600 leading-7 mt-3">
+                Keep your laptops, Wi-Fi routers and other suitable
+                office or communication devices running.
+                </p>
+            </div>
+
+            <div className="bg-white rounded-2xl border border-gray-200 p-6">
+                <div className="text-3xl">📺</div>
+                <h3 className="text-lg font-extrabold text-gray-950 mt-4">
+                TVs and LED Lighting
+                </h3>
+                <p className="text-sm text-gray-600 leading-7 mt-3">
+                Power suitable televisions, LED bulbs and other
+                low-power lighting appliances.
+                </p>
+            </div>
+
+            <div className="bg-white rounded-2xl border border-gray-200 p-6">
+                <div className="text-3xl">🌀</div>
+                <h3 className="text-lg font-extrabold text-gray-950 mt-4">
+                Fans
+                </h3>
+                <p className="text-sm text-gray-600 leading-7 mt-3">
+                Run suitable standing fans, table fans and other
+                fans whose power requirements are within the
+                inverter's capacity.
+                </p>
+            </div>
+
+            <div className="bg-white rounded-2xl border border-gray-200 p-6">
+                <div className="text-3xl">🍹</div>
+                <h3 className="text-lg font-extrabold text-gray-950 mt-4">
+                Blenders and Small Appliances
+                </h3>
+                <p className="text-sm text-gray-600 leading-7 mt-3">
+                Some small kitchen appliances may be suitable.
+                Check their power ratings and starting requirements
+                before connecting them.
+                </p>
+            </div>
+
+            {model.id === "plus" && (
+                <div className="bg-green-50 rounded-2xl border border-green-200 p-6">
+                <div className="text-3xl">❄️</div>
+                <h3 className="text-lg font-extrabold text-gray-950 mt-4">
+                    Selected Refrigerators and Freezers
+                </h3>
+                <p className="text-sm text-gray-700 leading-7 mt-3">
+                    The 500W Colar1000 Plus can power selected
+                    refrigerators and chest freezers, including
+                    suitable models featured in our compatibility
+                    guide below.
+                </p>
+                <p className="text-sm font-semibold text-green-800 mt-4">
+                    See the selected fridge and freezer models below.
+                </p>
+                </div>
+            )}
+            </div>
+
+            <div className="rounded-3xl bg-gray-950 text-white p-7 md:p-10 mt-10">
+            <h3 className="text-2xl font-extrabold">
+                Planning to Run Multiple Appliances?
+            </h3>
+
+            <p className="text-gray-300 leading-8 mt-4">
+                Add together the running wattage of the appliances
+                you want to use at the same time. Their combined
+                demand must stay within the {model.output} inverter
+                output. Appliances with motors and compressors may
+                also need extra power when starting.
+            </p>
+
+            <p className="text-sm font-semibold text-green-300 mt-5">
+                Not sure whether your appliance is suitable? Send
+                Starntech its model number or power rating so we
+                can help you check before you order.
+            </p>
+            </div>
+        </div>
+        </section>
+
 
 
             {freezerSection}
 
+{/* MID-PAGE ORDER CTA */}
+<Colar1000OrderCTA model={model} variant="mid" />
 
 {/* SOLAR CHARGING GUIDE */}
 <section className="bg-white py-16 md:py-24">
@@ -494,7 +459,8 @@ const [activeImage, setActiveImage] = useState(0);
       </p>
     </div>
 
-  
+
+
         {/* SOLAR PANEL ASSISTANCE */}
         <div className="max-w-3xl mx-auto mt-12">
         <div className="rounded-3xl border-2 border-green-200 bg-white p-7 md:p-10 text-center">
@@ -505,21 +471,21 @@ const [activeImage, setActiveImage] = useState(0);
             </h3>
 
             <p className="text-gray-600 leading-8 mt-5">
-            Not sure which solar panel is right for your power station?
-            Don't worry. Starntech can help you choose a compatible solar
-            panel based on your location, budget and charging needs.
+            Choosing the right solar panel is important for getting
+            the best charging performance from your Colar1000.
+            Not every panel is suitable for every model.
             </p>
 
             <p className="text-gray-600 leading-8 mt-4">
-            Whether you're considering a 320W, 400W or 500W panel,
-            speak with us before purchasing. We'll help you find a
-            suitable option for your Colar1000 model.
+            Tell us your Colar1000 model, location and charging
+            needs. Our team will help you identify a suitable
+            solar panel for your setup.
             </p>
 
             <div className="rounded-2xl bg-green-50 p-6 mt-7">
             <p className="text-lg font-extrabold text-green-900">
-                Buy your power station from us, and let us help you
-                get the right solar setup too.
+                Buy your Colar1000 from Starntech and let us help
+                you choose the right solar setup.
             </p>
             </div>
         </div>
@@ -527,54 +493,12 @@ const [activeImage, setActiveImage] = useState(0);
         </div>
         </section>
 
+       {/* FINAL ORDER INVITATION */}
+        <Colar1000OrderCTA model={model} variant="final" />
 
 
-
-
-      {/* FREE GIFT PROMOTION */}
-            <section className="bg-green-50 py-16 md:py-20">
-            <div className="max-w-5xl mx-auto px-5">
-                <div className="rounded-3xl bg-white border-2 border-green-200 p-7 md:p-12 text-center shadow-sm">
-                <p className="text-sm font-extrabold uppercase tracking-widest text-green-700">
-                    Limited Christmas Gift Offer
-                </p>
-
-                <div className="text-5xl mt-5">🎁</div>
-
-                <h2 className="text-3xl md:text-4xl font-extrabold text-gray-950 mt-5">
-                    Your Colar Solar Fan Is FREE!
-                </h2>
-
-                <p className="text-lg text-gray-600 leading-8 mt-5 max-w-2xl mx-auto">
-                    Purchase {model.offer.toLowerCase()} and receive
-                    one FREE 18-inch Colar Solar Fan as our Christmas gift to you.
-                </p>
-
-                <div className="bg-green-50 rounded-2xl p-6 mt-8 max-w-xl mx-auto">
-                    <p className="text-sm font-bold uppercase text-green-800">
-                    Your gift
-                    </p>
-
-                    <p className="text-2xl font-extrabold text-green-900 mt-2">
-                    1 FREE 18-inch Colar Solar Fan
-                    </p>
-                </div>
-
-                <a
-                    href="#colar1000-order"
-                    className="inline-block w-full sm:w-auto rounded-xl bg-green-700 hover:bg-green-800 text-white font-extrabold text-center px-10 py-4 mt-8 transition"
-                >
-                    Order Now
-                </a>
-
-                <p className="text-sm text-gray-500 mt-5 leading-6">
-                    Abuja (FCT): Pay on Delivery in covered areas, subject to address
-                    confirmation. Outside Abuja: advance payment is required before
-                    dispatch.
-                </p>
-                </div>
-            </div>
-            </section>
+             {/* WARRANTY SUPPORT */}
+         <Colar1000Warranty />
         {/* ORDER FORM */}
         <section
             id="colar1000-order"
@@ -589,6 +513,7 @@ const [activeImage, setActiveImage] = useState(0);
         </div>
         </section>
       </main>
+      <Colar1000StickyOrderButton />
     </>
   );
 }
