@@ -85,7 +85,8 @@ export default function Colar1000OrderForm({
 
   const selectedPackage = packages[packageId];
 
-const isAbuja = deliveryState === "FCT";
+const isPayOnDeliveryAvailable =
+deliveryState === "FCT" || deliveryState === "Lagos";
 
 const canSubmit = Boolean(
   customerName.trim() &&
@@ -305,10 +306,10 @@ const canSubmit = Boolean(
                 arrangement available for your location.
               </p>
             </div>
-          ) : isAbuja ? (
+          ) : isPayOnDeliveryAvailable ? (
             <div className="rounded-2xl border border-green-200 bg-green-50 p-5">
               <p className="text-xs uppercase font-bold tracking-wider text-green-800">
-                Abuja delivery
+               Abuja & Lagos delivery
               </p>
 
               <h4 className="text-xl font-extrabold text-green-900 mt-2">
@@ -316,9 +317,9 @@ const canSubmit = Boolean(
               </h4>
 
               <p className="text-sm text-green-800 leading-6 mt-2">
-                Receive your order and pay when it arrives.
-                Our team will first confirm that your delivery
-                address is within our Abuja service area.
+                Pay when your order arrives. Our team will confirm
+                your delivery address and arrangements before processing
+                your order.
               </p>
             </div>
           ) : (
@@ -328,14 +329,18 @@ const canSubmit = Boolean(
               </p>
 
               <h4 className="text-xl font-extrabold text-amber-900 mt-2">
-                Advance Payment Required
+                 FULL PAYMENT REQUIRED BEFORE DELIVERY
               </h4>
-
               <p className="text-sm text-amber-900 leading-6 mt-2">
-                Orders outside Abuja require full payment by bank
-                transfer before dispatch. Our team will confirm
-                the order and provide payment instructions before
-                you make payment.
+                Orders outside Abuja and Lagos require full payment
+                before delivery. Our team will confirm your order
+                and provide payment instructions.
+              </p>
+
+              <p className="text-sm font-extrabold text-red-700 mt-3">
+                If you are ordering outside Abuja and are not comfortable
+                making full payment before delivery, kindly do not place
+                your order. Thank you for your understanding.
               </p>
             </div>
           )}
