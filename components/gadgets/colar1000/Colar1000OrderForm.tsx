@@ -1,5 +1,5 @@
 
-import { useState, type FormEvent } from "react";
+import { useRef, useState, type FormEvent } from "react";
 import {
   colar1000Packages,
   type Colar1000PackageId,
@@ -82,6 +82,11 @@ export default function Colar1000OrderForm({
   const [deliveryAddress, setDeliveryAddress] = useState("");
 
   const [additionalNotes, setAdditionalNotes] = useState("");
+  const [showPaymentConfirmation, setShowPaymentConfirmation] =
+  useState(false);
+
+  const formRef = useRef<HTMLFormElement>(null);
+  const confirmedPaymentRef = useRef(false);
 
   const selectedPackage = packages[packageId];
 
@@ -101,6 +106,13 @@ const canSubmit = Boolean(
 
     if (!canSubmit || isSubmitting) return;
 
+      if (!isPayOnDeliveryAvailable && !confirmedPaymentRef.current) {
+    setShowPaymentConfirmation(true);
+    return;
+  }
+
+  confirmedPaymentRef.current = false;
+
     const order: Colar1000OrderData = {
       packageId,
       customerName,
@@ -113,6 +125,16 @@ const canSubmit = Boolean(
 
     await onSubmit(order);
   }
+  function confirmFullPayment() {
+  confirmedPaymentRef.current = true;
+  setShowPaymentConfirmation(false);
+  formRef.current?.requestSubmit();
+}
+
+function cancelFullPayment() {
+  confirmedPaymentRef.current = false;
+  setShowPaymentConfirmation(false);
+}
 
   const formatPrice = (amount: number) =>
     `₦${amount.toLocaleString("en-NG")}`;
@@ -137,7 +159,7 @@ const canSubmit = Boolean(
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-8">
+      <form ref={formRef} onSubmit={handleSubmit} className="space-y-8">
         {/* PACKAGE SELECTION */}
         <div>
           <h3 className="text-lg font-bold text-gray-900 mb-4">
@@ -417,7 +439,50 @@ const canSubmit = Boolean(
           Submitting an order request does not mean payment has been collected.
           Our team will contact you to confirm the details.
         </p>
-      </form>
+            </form>
+
+      {showPaymentConfirmation && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="payment-confirmation-title"
+        >
+          <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl">
+            <h2
+              id="payment-confirmation-title"
+              className="text-xl font-extrabold text-gray-900"
+            >
+              Confirm Payment Before Dispatch
+            </h2>
+
+            <p className="mt-4 text-sm leading-6 text-gray-700">
+              You selected a delivery location outside Lagos and Abuja.
+              Full payment is required before your order can be dispatched.
+              Are you willing to make full payment before dispatch?
+            </p>
+
+            <div className="mt-6 flex flex-col gap-3">
+              <button
+                type="button"
+                onClick={confirmFullPayment}
+                className="w-full rounded-xl bg-green-700 px-5 py-3 font-bold text-white hover:bg-green-800"
+              >
+                YES, I AGREE
+              </button>
+
+              <button
+                type="button"
+                onClick={cancelFullPayment}
+                className="w-full rounded-xl border border-gray-300 px-5 py-3 font-bold text-gray-700 hover:bg-gray-50"
+              >
+                NO, CANCEL MY ORDER
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
     </section>
   );
 }
